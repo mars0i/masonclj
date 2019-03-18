@@ -8,9 +8,9 @@ FIXME
 
 ## License
 
-This software is copyright 2019 by [Marshall
+This software is copyright 2016, 2017, 2018, 2019 by [Marshall
 Abrams](http://members.logical.net/~marshall/), and is distributed under
-the [Gnu General Public License version
-3.0](http://www.gnu.org/copyleft/gpl.html) as specified in the file
+the [Gnu Lesser General Public License version
+3.0](https://www.gnu.org/licenses/lgpl.html) as specified in the file
 LICENSE, except where noted, or where code has been included that was
 released under a different license.
