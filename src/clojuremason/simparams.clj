@@ -1,5 +1,5 @@
 ;; This software is copyright 2016, 2017, 2018, 2019 by Marshall Abrams, 
-;; and is distributed under the Gnu General Public License version 3.0 
+;; and is distributed under the Gnu Lesser General Public License version 3.0 
 ;; as specified in the the file LICENSE.
 
 ;; Defines a defparams macro that will define a subclass of MASON's
@@ -237,7 +237,8 @@
                                                (:methods addl-opts-map)))} 
          gen-class-opts# (into gen-class-opts# (dissoc addl-opts-map :exposes-methods :methods))
          this# (vary-meta 'this assoc :tag qualified-sim-class#)] ; add type hint to Sim arg of bean accessors to avoid reflection
-         ;; Note re type-hinting the newval param of the setters below, see WhatIsThisBranch.md in branch type-hinted-newval.
+         ;; Note re type-hinting the newval param of the setters below, see WhatIsThisBranch.md 
+         ;; in branch type-hinted-newval in the pasta repo.
 
      ;; GENERATE HTML TABLE DOCUMENTING VARIABLES POSSIBLY VISIBLE IN GUI
      ;; Note this will only happen whem Sim.clj is recompiled.
