@@ -12,7 +12,7 @@
 ;; or like this:
 ;;     :aot [myproject.Sim myproject.UI]
 
-(ns clojuremason.simparams
+(ns masonclj.simparams
   (:require [clojure.string :as s]))
 
 (def sim-class-sym 'Sim)
