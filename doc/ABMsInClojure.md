@@ -1,6 +1,7 @@
 ABMsInClojure.md
 ===
 ## Notes on writing agent-based models in Clojure
+
 Marshall Abrams
 
 These remarks are the result of my sometimes biased intuitions and
@@ -43,6 +44,35 @@ Info and Code tabs, respectively.
 
 
 ### FP and ABMs: general challenges
+
+A central idea of agent-based models is that agents persist over time,
+and that their internal states change, or their relationships to each
+other and the environment change, or all of the above.  For example, a
+model might include organisms with internal energy levels that change,
+and that move around in an environment.
+
+It's very natural to model agents as persistent data structures with
+internal states that are imperatively modified, and to treat the
+environment in which they move as a persistent data structure in which
+agents' locations are imperatively modified.  There are various ways to
+do just this in Clojure, but you lose a lot of the conveniences of that
+Clojure provides.  For example, you can define agents as `deftypes` that
+are set up to be imperatively modified, or you can put atoms in the
+fields of a `defrecord`, but `deftypes` are less convienient that
+`defrecords`, and constantly `swap`ing on atoms clutters your code.
+
+TALK ABOUT IDENTITY OVER TIME HERE
+
+For an environment, you can use a core.matrix or Java matrices or arrays
+that you modify imperatively.  This is OK, but you have to be careful.
+It is sometimes reasonable to update environments functionally; this
+works if you can structure your code so that all changes of
+relationships to the environment or of relationships between agents
+happen simultaneously.  For some models, this will be unreasonable,
+though.  In practice, even if you structure you code to update large-scale
+things like positions in environments in a functional manner, you will
+probably want to do selected updates imperatively.
+
 
 
 
