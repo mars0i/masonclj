@@ -1,7 +1,7 @@
 # masonclj
 
 A very small library to ease use of MASON with Clojure.  It provides a
-single namespace, `masonclj.simparams., which defines a single macro,
+single namespace, `masonclj.simparams`, which defines a single macro,
 `defparams`, for use in a Clojure source file that's intended to
 subclass MASON's `sim.engine.SimState` (which will be done, along
 with other things, by `defparams`).
