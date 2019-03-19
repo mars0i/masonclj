@@ -1,4 +1,4 @@
-# clojuremason
+# masonclj
 
 Library to ease use of MASON with Clojure.
 
