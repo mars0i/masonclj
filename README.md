@@ -4,7 +4,7 @@ Library to ease use of MASON with Clojure.
 
 ## Usage
 
-See [doc/defparam.md](doc/defparam.md).
+See [doc/defparams.md](doc/defparams.md).
 
 ## License
 
