@@ -6,7 +6,7 @@ Library to ease use of MASON with Clojure.
 
 1. Add a dependency to `mars0i/masonclj "0.1.0"` (or whatever is the latest
 version number in project.clj or pom.xml here).  For example, if you are
-using Leingingent, add `[mars0i/masonclj "0.1.0"]` to the
+using Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
 `:dependencies` vector in project.clj.
 
 2. See [doc/defparams.md](doc/defparams.md).
