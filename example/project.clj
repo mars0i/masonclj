@@ -6,11 +6,26 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/tools.cli "0.4.1"]
                  [mars0i/masonclj "0.1.0"]
-                 [mason "19"]]
+                 [mason "19"]
+                 ;; libs used by Mason:
+                 [javax.media/jmf "2.1.1e"]
+                 [com.lowagie/itext "1.2.3"] ; version that comes with MASON. Not in maven.org: [com.lowagie/itext "1.2"] 
+                 [org.jfree/jcommon "1.0.21"]
+                 [org.jfree/jfreechart "1.0.17"]
+                 [org.beanshell/bsh "2.0b4"]
+                 
+                 ;; FIXME TEMPORARY just to get it to compile while stripping down pasta code:
+                 [org.clojure/math.numeric-tower "0.0.4"]
+                 [org.clojure/tools.cli "0.4.1"]
+                 [org.clojure/data.csv "0.1.3"]
+                 [org.clojure/algo.generic "0.1.2"]
+                 [com.rpl/specter "1.0.0"]
+                 
+                ]
   :main ^:skip-aot example.core
-  :aot [pasta.mush pasta.snipe pasta.popenv pasta.Sim pasta.UI pasta.core]
+  :aot [example.mush example.snipe example.popenv example.Sim example.UI example.core]
   :jvm-opts ["-Xms2g"]
-  :source-paths ["src/clj"]
+  :source-paths ["src"]
   :profiles {:nogui {:main example.Sim} ; execute this with 'lein with-profile nogui run'
              :gui   {:main example.UI}      ; execute this with 'lein with-profile gui run'
              :core  {:main example.core}
@@ -18,6 +33,6 @@
                                     ["compile" "example.snipe"
                                      "example.Sim"
                                      "example.core"]]
-                       :main pasta.core}}
+                       :main example.core}}
   :target-path "target/%s"
 )
