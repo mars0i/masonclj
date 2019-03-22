@@ -44,9 +44,9 @@
 ;    (when (> shade 255)
 ;      (println "SHADE:" shade max-energy (dissoc snipe :sim-data$)))
 ;    shade))
-(defn k-snipe-color-fn [max-energy snipe] (Color. (snipe-shade-fn max-energy snipe) 0 0))
+;(defn k-snipe-color-fn [max-energy snipe] (Color. (snipe-shade-fn max-energy snipe) 0 0))
 (defn r-snipe-color-fn [max-energy snipe] (Color. 0 0 (snipe-shade-fn max-energy snipe)))
-(defn s-snipe-color-fn [max-energy snipe] (Color. (snipe-shade-fn max-energy snipe) 0 (snipe-shade-fn max-energy snipe)))
+;(defn s-snipe-color-fn [max-energy snipe] (Color. (snipe-shade-fn max-energy snipe) 0 (snipe-shade-fn max-energy snipe)))
 ;(defn s-snipe-color-fn [max-energy snipe] (Color. 0 (snipe-shade-fn max-energy snipe) 0))
 ;(def mush-pos-nutrition-shade 150)
 ;(def mush-neg-nutrition-shade 200)
@@ -182,19 +182,19 @@
                                                                   (proxy-super draw snipe graphics (DrawInfo2D. info (* 0.75 org-offset) (* 0.55 org-offset)))))])] ; end of constructor arg
                                 (getChildIndex [snipe idxs] (if (pos? (:mush-pref snipe)) 0 1)))) ; determines which ShapePortrayal2D is chosen
         ;; k-snipes and s-snipes include pointers to display mush-prefs:
-        k-snipe-portrayal (make-fnl-circled-portrayal Color/red
-                             (OrientedPortrayal2D.
-                               (proxy [OvalPortrayal2D] [(* 1.1 snipe-size)]
-                                 (draw [snipe graphics info] ; override method in super
-                                   (set! (.-paint this) (k-snipe-color-fn effective-max-energy snipe)) ; superclass var
-                                   (proxy-super draw snipe graphics (DrawInfo2D. info org-offset org-offset)))) ; see above re last arg
-                               0 0.6 Color/red OrientedPortrayal2D/SHAPE_LINE))
+        ;k-snipe-portrayal (make-fnl-circled-portrayal Color/red
+        ;                     (OrientedPortrayal2D.
+        ;                       (proxy [OvalPortrayal2D] [(* 1.1 snipe-size)]
+        ;                         (draw [snipe graphics info] ; override method in super
+        ;                           (set! (.-paint this) (k-snipe-color-fn effective-max-energy snipe)) ; superclass var
+        ;                           (proxy-super draw snipe graphics (DrawInfo2D. info org-offset org-offset)))) ; see above re last arg
+        ;                       0 0.6 Color/red OrientedPortrayal2D/SHAPE_LINE))
         ;; This s-snipe is just an OrientedPortrayal2D on an (undrawn) SimplePortrayal2D (p. 226 of v19 manual):
-        s-snipe-portrayal (make-fnl-circled-portrayal Color/red
-                             (proxy [OrientedPortrayal2D] [(SimplePortrayal2D.) 0 0.425 Color/black OrientedPortrayal2D/SHAPE_KITE] ; color will be overridden
-                               (draw [snipe graphics info] ; override method in super
-                                 (set! (.-paint this) (s-snipe-color-fn effective-max-energy snipe)) ; superclass var
-                                 (proxy-super draw snipe graphics (DrawInfo2D. info org-offset org-offset))))) ; see above re last arg
+        ;s-snipe-portrayal (make-fnl-circled-portrayal Color/red
+        ;                     (proxy [OrientedPortrayal2D] [(SimplePortrayal2D.) 0 0.425 Color/black OrientedPortrayal2D/SHAPE_KITE] ; color will be overridden
+        ;                       (draw [snipe graphics info] ; override method in super
+        ;                         (set! (.-paint this) (s-snipe-color-fn effective-max-energy snipe)) ; superclass var
+        ;                         (proxy-super draw snipe graphics (DrawInfo2D. info org-offset org-offset))))) ; see above re last arg
         west-snipe-field-portrayal (:west-snipe-field-portrayal ui-config)
         ;east-snipe-field-portrayal (:east-snipe-field-portrayal ui-config)
         ;west-mush-field-portrayal (:west-mush-field-portrayal ui-config)
@@ -213,9 +213,9 @@
     ;(.setPortrayalForClass east-mush-field-portrayal example.mush.Mush east-mush-portrayal)
     ;(.setPortrayalForClass shady-east-mush-field-portrayal example.mush.Mush shady-east-mush-portrayal)
     ;; west snipes:
-    (.setPortrayalForClass west-snipe-field-portrayal example.snipe.KSnipe k-snipe-portrayal)
+    ;(.setPortrayalForClass west-snipe-field-portrayal example.snipe.KSnipe k-snipe-portrayal)
     (.setPortrayalForClass west-snipe-field-portrayal example.snipe.RSnipe r-snipe-portrayal)
-    (.setPortrayalForClass west-snipe-field-portrayal example.snipe.SSnipe s-snipe-portrayal)
+    ;(.setPortrayalForClass west-snipe-field-portrayal example.snipe.SSnipe s-snipe-portrayal)
     ;; east snipes:
     ;(.setPortrayalForClass east-snipe-field-portrayal example.snipe.KSnipe k-snipe-portrayal)
     ;(.setPortrayalForClass east-snipe-field-portrayal example.snipe.RSnipe r-snipe-portrayal)
