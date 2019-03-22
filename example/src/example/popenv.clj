@@ -56,9 +56,9 @@
     (.clear mush-field)
     (add-mushs! rng cfg-data mush-field subenv-key)
     (.clear snipe-field)
-    (add-snipes! rng cfg-data$ snipe-field subenv-key (:num-k-snipes cfg-data) sn/make-rand-k-snipe curr-snipe-id$)
+    ;(add-snipes! rng cfg-data$ snipe-field subenv-key (:num-k-snipes cfg-data) sn/make-rand-k-snipe curr-snipe-id$)
     (add-snipes! rng cfg-data$ snipe-field subenv-key (:num-r-snipes cfg-data) sn/make-rand-r-snipe curr-snipe-id$)
-    (add-snipes! rng cfg-data$ snipe-field subenv-key (:num-s-snipes cfg-data) sn/make-rand-s-snipe curr-snipe-id$)
+    ;(add-snipes! rng cfg-data$ snipe-field subenv-key (:num-s-snipes cfg-data) sn/make-rand-s-snipe curr-snipe-id$)
     (SubEnv. snipe-field mush-field [])))
 
 (defn make-snipe-map
@@ -102,12 +102,12 @@
   (let [cfg-data @cfg-data$
         {:keys [snipe-field mush-field dead-snipes]} subenv
         [snipe-field' newly-died] (snipes-die cfg-data snipe-field)
-        snipe-field' (add-snipes-to-min rng cfg-data$ snipe-field' :k-min-pop-sizes sn/k-snipe? subenv-key sn/make-rand-k-snipe curr-snipe-id$)
+        ;snipe-field' (add-snipes-to-min rng cfg-data$ snipe-field' :k-min-pop-sizes sn/k-snipe? subenv-key sn/make-rand-k-snipe curr-snipe-id$)
         snipe-field' (add-snipes-to-min rng cfg-data$ snipe-field' :r-min-pop-sizes sn/r-snipe? subenv-key sn/make-rand-r-snipe curr-snipe-id$)
-        snipe-field' (add-snipes-to-min rng cfg-data$ snipe-field' :s-min-pop-sizes sn/s-snipe? subenv-key sn/make-rand-s-snipe curr-snipe-id$)
-        [snipe-field' k-newly-culled] (cull-snipes-to-max rng cfg-data$ snipe-field' :k-max-pop-sizes sn/k-snipe?)
+        ;snipe-field' (add-snipes-to-min rng cfg-data$ snipe-field' :s-min-pop-sizes sn/s-snipe? subenv-key sn/make-rand-s-snipe curr-snipe-id$)
+        ;[snipe-field' k-newly-culled] (cull-snipes-to-max rng cfg-data$ snipe-field' :k-max-pop-sizes sn/k-snipe?)
         [snipe-field' r-newly-culled] (cull-snipes-to-max rng cfg-data$ snipe-field' :r-max-pop-sizes sn/r-snipe?)
-        [snipe-field' s-newly-culled] (cull-snipes-to-max rng cfg-data$ snipe-field' :s-max-pop-sizes sn/s-snipe?)
+        ;[snipe-field' s-newly-culled] (cull-snipes-to-max rng cfg-data$ snipe-field' :s-max-pop-sizes sn/s-snipe?)
         [snipe-field' carrying-newly-culled] (obey-carrying-capacity rng cfg-data snipe-field')
         snipe-field' (move-snipes rng cfg-data snipe-field')     ; only the living get to move
         snipe-field' (age-snipes snipe-field')]
@@ -115,7 +115,9 @@
              mush-field 
              (conj dead-snipes  ; each timestep adds a separate collection of dead snipes
                    (concat newly-died
-                           k-newly-culled r-newly-culled s-newly-culled
+                           ;k-newly-culled 
+                           r-newly-culled 
+                           ;s-newly-culled
                            carrying-newly-culled)))))
 
 (defn next-popenv
@@ -434,12 +436,15 @@
                                                  [west-snipe-field' :west]  ; assigned to a subenv
                                                  [east-snipe-field' :east])]
             (add-organism-to-rand-loc! rng @cfg-data$ child-snipe-field env-width env-height ; add newborn of same type as parent
-                                       (organism-setter (cond (sn/k-snipe? snipe') (partial sn/make-newborn-k-snipe rng cfg-data$ subenv-key 
-				                                                            (next-snipe-id curr-snipe-id$))
-                                                              (sn/r-snipe? snipe') (partial sn/make-newborn-r-snipe rng cfg-data$ subenv-key
-				                                                            (next-snipe-id curr-snipe-id$))
-                                                              :else                (partial sn/make-newborn-s-snipe rng cfg-data$ subenv-key
-				                                                            (next-snipe-id curr-snipe-id$)))))))))
+                                       (organism-setter ;(cond 
+                                                          ;(sn/k-snipe? snipe') (partial sn/make-newborn-k-snipe rng cfg-data$ subenv-key 
+				                              ;                              (next-snipe-id curr-snipe-id$))
+                                                              ;(sn/r-snipe? snipe') 
+                                                        (partial sn/make-newborn-r-snipe rng cfg-data$ subenv-key (next-snipe-id curr-snipe-id$))
+                                                              ;:else                (partial sn/make-newborn-s-snipe rng cfg-data$ subenv-key
+				                              ;                              (next-snipe-id curr-snipe-id$))
+                                                         ;)
+                                                        ))))))
     [west-snipe-field' east-snipe-field']))
 
  ; newborn should be like parent
