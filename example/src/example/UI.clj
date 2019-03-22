@@ -7,7 +7,7 @@
 (ns example.UI
   (:require [example.Sim :as sim]
             [clojure.math.numeric-tower :as math])
-  (:import [example mush snipe Sim]
+  (:import [example snipe Sim] ; mush 
            [sim.engine Steppable Schedule Stoppable]
            [sim.field.grid ObjectGrid2D] ; normally doesn't belong in UI: a hack to use a field portrayal to display a background pattern
            [sim.portrayal DrawInfo2D SimpleInspector SimplePortrayal2D]
@@ -48,16 +48,16 @@
 (defn r-snipe-color-fn [max-energy snipe] (Color. 0 0 (snipe-shade-fn max-energy snipe)))
 (defn s-snipe-color-fn [max-energy snipe] (Color. (snipe-shade-fn max-energy snipe) 0 (snipe-shade-fn max-energy snipe)))
 ;(defn s-snipe-color-fn [max-energy snipe] (Color. 0 (snipe-shade-fn max-energy snipe) 0))
-(def mush-pos-nutrition-shade 150)
-(def mush-neg-nutrition-shade 200)
-(defn west-mush-color-fn 
-  ([shade] (Color. shade shade (int (* 0.6 shade))))
-  ([shade alpha] (Color. shade shade (int (* 0.6 shade)) alpha)))
+;(def mush-pos-nutrition-shade 150)
+;(def mush-neg-nutrition-shade 200)
+;(defn west-mush-color-fn 
+;  ([shade] (Color. shade shade (int (* 0.6 shade))))
+;  ([shade alpha] (Color. shade shade (int (* 0.6 shade)) alpha)))
 ;(defn east-mush-color-fn 
 ;  ([shade] (Color. shade shade shade))
 ;  ([shade alpha] (Color. shade shade shade alpha)))
-(def mush-high-size-appearance 1.0) ; we don't scale mushroom size to modeled size, but
-(def mush-low-size-appearance 0.875) ; we display the low-size mushroom smaller
+;(def mush-high-size-appearance 1.0) ; we don't scale mushroom size to modeled size, but
+;(def mush-low-size-appearance 0.875) ; we display the low-size mushroom smaller
 (def org-offset 0.6) ; with simple hex portrayals to display grid, organisms off center; pass this to DrawInfo2D to correct.
 
 (defn -init-instance-state
@@ -69,7 +69,7 @@
                ;:superimposed-display (atom nil) ; ditto
                ;:superimposed-display-frame (atom nil) ; ditto
                :west-snipe-field-portrayal (HexaObjectGridPortrayal2D.)
-               :west-mush-field-portrayal (HexaObjectGridPortrayal2D.)
+               ;:west-mush-field-portrayal (HexaObjectGridPortrayal2D.)
                ;:shady-east-mush-field-portrayal (HexaObjectGridPortrayal2D.)
                ;:east-snipe-field-portrayal (HexaObjectGridPortrayal2D.)
                ;:east-mush-field-portrayal (HexaObjectGridPortrayal2D.)
@@ -132,21 +132,21 @@
         ;east (:east popenv)
         max-energy (:max-energy sim-data)
         birth-threshold (:birth-threshold sim-data)
-        mush-pos-nutrition (:mush-pos-nutrition sim-data)
-        mush-high-size (:mush-high-size sim-data)
+        ;mush-pos-nutrition (:mush-pos-nutrition sim-data)
+        ;mush-high-size (:mush-high-size sim-data)
         effective-max-energy (min birth-threshold max-energy)
         west-display @(:west-display ui-config)
         ;east-display @(:east-display ui-config)
         ;superimposed-display @(:superimposed-display ui-config)
         ;; These portrayals should be local to setup-portrayals because proxy needs to capture the correct 'this', and we need sim-data:
         ;; Different mushroom portrayals for west and east environments:
-        west-mush-portrayal (proxy [OvalPortrayal2D] []
-                              (draw [mush graphics info]  ; override method in super
-                                (let [size  (if (= mush-high-size (:size mush)) mush-high-size-appearance mush-low-size-appearance)
-                                      shade (if (neg? (:nutrition mush)) mush-neg-nutrition-shade mush-pos-nutrition-shade)]
-                                  (set! (.-scale this) size)                       ; superclass vars
-                                  (set! (.-paint this) (west-mush-color-fn shade))
-                                  (proxy-super draw mush graphics (DrawInfo2D. info org-offset org-offset))))) ; last arg centers organism in hex cell
+        ;west-mush-portrayal (proxy [OvalPortrayal2D] []
+        ;                      (draw [mush graphics info]  ; override method in super
+        ;                        (let [size  (if (= mush-high-size (:size mush)) mush-high-size-appearance mush-low-size-appearance)
+        ;                              shade (if (neg? (:nutrition mush)) mush-neg-nutrition-shade mush-pos-nutrition-shade)]
+        ;                          (set! (.-scale this) size)                       ; superclass vars
+        ;                          (set! (.-paint this) (west-mush-color-fn shade))
+        ;                          (proxy-super draw mush graphics (DrawInfo2D. info org-offset org-offset))))) ; last arg centers organism in hex cell
         ;east-mush-portrayal (proxy [OvalPortrayal2D] []
         ;                      (draw [mush graphics info]  ; override method in super
         ;                        (let [size  (if (= mush-high-size (:size mush)) mush-high-size-appearance mush-low-size-appearance)
@@ -197,19 +197,19 @@
                                  (proxy-super draw snipe graphics (DrawInfo2D. info org-offset org-offset))))) ; see above re last arg
         west-snipe-field-portrayal (:west-snipe-field-portrayal ui-config)
         ;east-snipe-field-portrayal (:east-snipe-field-portrayal ui-config)
-        west-mush-field-portrayal (:west-mush-field-portrayal ui-config)
+        ;west-mush-field-portrayal (:west-mush-field-portrayal ui-config)
         ;shady-east-mush-field-portrayal (:shady-east-mush-field-portrayal ui-config)
         ;east-mush-field-portrayal (:east-mush-field-portrayal ui-config)
         ]
     ;; connect fields to their portrayals
-    (.setField west-mush-field-portrayal (:mush-field west))
+    ;(.setField west-mush-field-portrayal (:mush-field west))
     ;(.setField east-mush-field-portrayal (:mush-field east))
     ;(.setField shady-east-mush-field-portrayal (:mush-field east))
     (.setField west-snipe-field-portrayal (:snipe-field west))
     ;(.setField east-snipe-field-portrayal (:snipe-field east))
     ;; connect portrayals to agents:
     ;; mushs:
-    (.setPortrayalForClass west-mush-field-portrayal example.mush.Mush west-mush-portrayal)
+    ;(.setPortrayalForClass west-mush-field-portrayal example.mush.Mush west-mush-portrayal)
     ;(.setPortrayalForClass east-mush-field-portrayal example.mush.Mush east-mush-portrayal)
     ;(.setPortrayalForClass shady-east-mush-field-portrayal example.mush.Mush shady-east-mush-portrayal)
     ;; west snipes:
@@ -228,7 +228,7 @@
                                                           ]} (:popenv @sim-data$)]
                                               (.setField west-snipe-field-portrayal (:snipe-field west))
                                               ;(.setField east-snipe-field-portrayal (:snipe-field east))
-                                              (.setField west-mush-field-portrayal (:mush-field west))
+                                              ;(.setField west-mush-field-portrayal (:mush-field west))
                                               ;(.setField east-mush-field-portrayal (:mush-field east))
                                               ;(.setField shady-east-mush-field-portrayal (:mush-field east))
                                               ))))
@@ -284,7 +284,7 @@
         width  (hex-scale-width  (int (* display-size (:env-width sim-data))))
         height (hex-scale-height (int (* display-size (:env-height sim-data))))
         ;bg-field-portrayal (:bg-field-portrayal ui-config)
-        west-mush-field-portrayal (:west-mush-field-portrayal ui-config)
+        ;west-mush-field-portrayal (:west-mush-field-portrayal ui-config)
         ;shady-west-mush-field-portrayal (:shady-west-mush-field-portrayal ui-config)
         ;shady-east-mush-field-portrayal (:shady-east-mush-field-portrayal ui-config)
         ;east-mush-field-portrayal (:east-mush-field-portrayal ui-config)
@@ -305,7 +305,7 @@
     ;(reset! (:superimposed-display ui-config) superimposed-display)
     ;(reset! (:superimposed-display-frame ui-config) superimposed-display-frame)
     (attach-portrayals! west-display [;[bg-field-portrayal "west bg"] ; two separate bg portrayals so line between subenvs will be visible
-                                      [west-mush-field-portrayal "west mush"]
+                                      ;[west-mush-field-portrayal "west mush"]
                                       [west-snipe-field-portrayal "west snip"]]
                         0 0 width height)
     ;(attach-portrayals! east-display [;[bg-field-portrayal "east bg"]
