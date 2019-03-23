@@ -105,9 +105,9 @@
 (defn curr-popenv [^Sim sim] (:popenv @(.simData sim)))
 ;; NOTE these get called on every tick in GUI even if not reported:
 (defn -getPopSize    [^Sim this] (stats/get-pop-size @(.simData this)))
-(defn -getKSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :k-snipe (curr-popenv this)))
-(defn -getRSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :r-snipe (curr-popenv this)))
-(defn -getSSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :s-snipe (curr-popenv this)))
+;(defn -getKSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :k-snipe (curr-popenv this)))
+;(defn -getRSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :r-snipe (curr-popenv this)))
+;(defn -getSSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :s-snipe (curr-popenv this)))
 
 ;; no good reason to put this into the defsim macro since it doesn't include any
 ;; field-specific code.  Easier to redefine if left here.
@@ -210,19 +210,19 @@
     (pe/setup-popenv-config! sim-data$)
     (swap! sim-data$ assoc :popenv (pe/make-popenv rng sim-data$)) ; create new popenv
     ;; Run it:
-    (when-let [write-csv (:write-csv @sim-data$)]
-      (let [initial-basename (:csv-basename @sim-data$) ; might be nil
-            basename (or initial-basename (str "pasta" seed))
-            data-filename (str basename "_data.csv")
-            header-filename (str basename "_header.csv")
-            add-to-file? (.exists (clojure.java.io/file data-filename)) ; should we create new file, or add to an older one?
-            writer (clojure.java.io/writer data-filename :append add-to-file?)]
-        (swap! sim-data$ assoc :csv-writer writer) ; store handle
-	(if initial-basename                 ; if we do have a shared basename
-	  (when @first-run-shared-basename$  ; write parameters only during the first run when there is a shared basename
-	    (reset! first-run-shared-basename$ false)
-	    (stats/write-params-to-file @sim-data$))
-	  (stats/write-params-to-file @sim-data$)) ; if no shared basename, every run gets its own params file
-        (when-not add-to-file?  ; if not adding to existing file, write a separate header file (whether old file is from prev run or earlier process)
-	  (m2c/spit-csv header-filename [stats/csv-header]))))
+    ;(when-let [write-csv (:write-csv @sim-data$)]
+    ;  (let [initial-basename (:csv-basename @sim-data$) ; might be nil
+    ;        basename (or initial-basename (str "pasta" seed))
+    ;        data-filename (str basename "_data.csv")
+    ;        header-filename (str basename "_header.csv")
+    ;        add-to-file? (.exists (clojure.java.io/file data-filename)) ; should we create new file, or add to an older one?
+    ;        writer (clojure.java.io/writer data-filename :append add-to-file?)]
+    ;    (swap! sim-data$ assoc :csv-writer writer) ; store handle
+    ;    (if initial-basename    ;             ; if we do have a shared basename
+    ;      (when @first-run-shared-basename$  ; write parameters only during the first run when there is a shared basename
+    ;        ;(reset! first-run-shared-basename$ false)
+    ;        ;(stats/write-params-to-file @sim-data$))
+    ;      (stats/write-params-to-file @sim-data$)) ; if no shared basename, every run gets its own params file
+    ;    (when-not add-to-file?  ; if not adding to existing file, write a separate header file (whether old file is from prev run or earlier process)
+    ;     (m2c/spit-csv header-filename [stats/csv-header]))))
     (run-sim this rng sim-data$ seed)))
