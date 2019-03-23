@@ -95,9 +95,11 @@
                ]
   :exposes-methods {finish superFinish} ; name for function to call finish() in the superclass
   :methods [[getPopSize [] long] ; additional options here. this one is for def below; it will get merged into the generated :methods component.
-            [getKSnipeFreq [] double]
-            [getRSnipeFreq [] double]
-            [getSSnipeFreq [] double]])
+            ;[getKSnipeFreq [] double]
+            ;[getRSnipeFreq [] double]
+            ;[getSSnipeFreq [] double]
+            ]
+  )
 
 (defn curr-step [^Sim sim] (.getSteps (.schedule sim)))
 (defn curr-popenv [^Sim sim] (:popenv @(.simData sim)))
