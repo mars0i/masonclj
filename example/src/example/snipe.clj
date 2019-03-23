@@ -75,7 +75,7 @@
 ;; size mushrooms, which may be the poisonous kind in their environment--or not.
 ;; Their children might have either size preference.  This means that the ones
 ;; that have the "right" preference can usually reproduce more quickly than k-snipes.
-(defrecord RSnipe [id mush-pref energy subenv x y age lifespan circled$ cfg-data$] ; r-snipe that prefers small mushrooms
+(defrecord RSnipe [id mush-pref energy subenv x y age circled$ cfg-data$] ; r-snipe that prefers small mushrooms
   Propertied
   (properties [original-snipe] (make-properties id cfg-data$))
   Object
@@ -84,13 +84,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SNIPE MAKER FUNCTIONS
 
-(defn calc-lifespan
-  [rng cfg-data]
-  (let [mean (:lifespan-mean cfg-data)
-        sd (:lifespan-sd cfg-data)]
-    (if (pos? mean)
-      (math/round (ran/next-gaussian rng mean sd))
-      0)))
+;(defn calc-lifespan
+;  [rng cfg-data]
+;;  (let [mean (:lifespan-mean cfg-data)
+;        sd (:lifespan-sd cfg-data)]
+;    (if (pos? mean)
+;      (math/round (ran/next-gaussian rng mean sd))
+;      0)))
+
+(defn make-r-snipe
+  [rng cfg-data$ energy subenv new-id x y]
+  (let [extreme-pref (:extreme-pref @cfg-data$)]
+    (if (< (ran/next-double rng) 0.5)
+      (RSnipe. new-id (- extreme-pref) energy subenv x y 0  (atom false) cfg-data$)
+      (RSnipe. new-id extreme-pref energy subenv x y 0  (atom false) cfg-data$))))
 
 ;(defn make-k-snipe 
 ;  [rng cfg-data$ energy subenv new-id x y]
@@ -104,13 +111,6 @@
 ;           (calc-lifespan rng @cfg-data$) ; lifespan
 ;           (atom false)      ; is snipe displayed circled in the GUI?
 ;           cfg-data$))       ; contains global parameters for snipe operation
-
-(defn make-r-snipe
-  [rng cfg-data$ energy subenv new-id x y]
-  (let [extreme-pref (:extreme-pref @cfg-data$)]
-    (if (< (ran/next-double rng) 0.5)
-      (RSnipe. new-id (- extreme-pref) energy subenv x y 0 (calc-lifespan rng @cfg-data$) (atom false) cfg-data$)
-      (RSnipe. new-id extreme-pref energy subenv x y 0 (calc-lifespan rng @cfg-data$) (atom false) cfg-data$))))
 
 ;(defn make-s-snipe 
 ;  [rng cfg-data$ energy subenv new-id x y]
