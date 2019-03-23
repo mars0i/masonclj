@@ -68,10 +68,6 @@
                 [env-display-size   12.0    double                  false       ["-G" "How large to display the env in gui by default." :parse-fn #(Double. %)]]
                 [use-gui           false    boolean                 false       ["-g" "If -g, use GUI; otherwise use GUI if and only if +g or there are no commandline options." :parse-fn #(Boolean. %)]]
                 [extreme-pref        1.0    double                  true        ["-x" "Absolute value of r-snipe preferences." :parse-fn #(Double. %)]]
-                ;[report-every        0      double                  true        ["-i" "Report basic stats every i ticks after the first one (0 = never); format depends on -w." :parse-fn #(Double. %)]]
-                [r-max-pop-sizes    nil clojure.lang.IPersistentMap true        ["-U" "Comma-separated times and target subpop sizes to cull r-snipes to, e.g. time,size,time,size" :parse-fn string-to-map]]
-                [r-min-pop-sizes    nil clojure.lang.IPersistentMap true        ["-Y" "Comma-separated times and target subpop sizes to increase r-snipes to, e.g. time,size,time,size" :parse-fn string-to-map]]
-                [csv-writer         nil java.io.BufferedWriter false]
                 [max-subenv-pop-size 0      long    false] ; maximum per-subenvironment population size
                 [seed               nil     long    false] ; convenience field to store Sim's seed
                 [in-gui           false     boolean false] ; convenience field to store Boolean re whether in GUI
