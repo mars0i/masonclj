@@ -23,7 +23,7 @@
                  
                 ]
   :main ^:skip-aot example.core
-  :aot [example.mush example.snipe example.popenv example.Sim example.UI example.core]
+  :aot [example.snipe example.popenv example.Sim example.UI example.core]
   :jvm-opts ["-Xms2g"]
   :source-paths ["src"]
   :profiles {:nogui {:main example.Sim} ; execute this with 'lein with-profile nogui run'
