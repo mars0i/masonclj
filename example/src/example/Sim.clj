@@ -9,15 +9,16 @@
             [clojure.data.csv :as csv]
             [clojure.java.io]
             [masonclj.simparams :as sp]
-            [utils.map2csv :as m2c]
+            ;[utils.map2csv :as m2c]
             [example.snipe :as sn]
             [example.popenv :as pe]
-            [example.stats :as stats])
+            [example.stats :as stats]
+            )
   (:import [sim.engine Steppable Schedule Stoppable]
            [sim.util Interval]
            [ec.util MersenneTwisterFast]
            [java.lang String]
-           [java.io BufferedWriter]
+           ;[java.io BufferedWriter]
            [example.popenv PopEnv]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -136,10 +137,12 @@
 (defn -stop
   [^Sim this]
   (let [^SimData sim-data$ (.simData this)
-        ^BufferedWriter writer (:csv-writer @sim-data$)]
-    (when writer
-      (.close writer)
-      (swap! sim-data$ :csv-writer nil))))
+        ;^BufferedWriter writer (:csv-writer @sim-data$)
+        ]
+    ;(when writer
+    ;  (.close writer)
+    ;  (swap! sim-data$ :csv-writer nil))
+    ))
 
 (defn cleanup
   [^Sim this]
@@ -152,11 +155,13 @@
 	steps (.getSteps schedule)]
     (.stop stoppable)
     (when (pos? report-every)
-      (stats/report-stats sim-data seed steps)
-      (when (not (:write-csv sim-data))
-        (stats/write-params-to-console sim-data)))
-    (when-let [^BufferedWriter writer (:csv-writer sim-data)]
-      (.close writer))))
+      ;(stats/report-stats sim-data seed steps)
+      ;(when (not (:write-csv sim-data))
+      ;  (stats/write-params-to-console sim-data))
+     )
+    ;(when-let [^BufferedWriter writer (:csv-writer sim-data)]
+    ;  (.close writer))
+    ))
 
 ;; This should not call the corresponding function in the superclass; that
 ;; function will call this one.  So if you want to call this function
@@ -193,7 +198,7 @@
                                   (stats/report-stats @sim-data$ seed steps))))
                           report-every))))
 
-(def first-run-shared-basename$ (atom true)) ; when different runs share a basename, some things happen once
+;(def first-run-shared-basename$ (atom true)) ; when different runs share a basename, some things happen once
 
 (defn -start
   "Function that's called to (re)start a new simulation run."
