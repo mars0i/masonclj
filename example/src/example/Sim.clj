@@ -12,7 +12,7 @@
             ;[utils.map2csv :as m2c]
             [example.snipe :as sn]
             [example.popenv :as pe]
-            [example.stats :as stats]
+            ;[example.stats :as stats]
             )
   (:import [sim.engine Steppable Schedule Stoppable]
            [sim.util Interval]
@@ -77,7 +77,7 @@
                 [env-display-size   12.0    double                  false       ["-G" "How large to display the env in gui by default." :parse-fn #(Double. %)]]
                 [use-gui           false    boolean                 false       ["-g" "If -g, use GUI; otherwise use GUI if and only if +g or there are no commandline options." :parse-fn #(Boolean. %)]]
                 [extreme-pref        1.0    double                  true        ["-x" "Absolute value of r-snipe preferences." :parse-fn #(Double. %)]]
-                [report-every        0      double                  true        ["-i" "Report basic stats every i ticks after the first one (0 = never); format depends on -w." :parse-fn #(Double. %)]]
+                ;[report-every        0      double                  true        ["-i" "Report basic stats every i ticks after the first one (0 = never); format depends on -w." :parse-fn #(Double. %)]]
                 [write-csv         false    boolean                 false       ["-w" "Write data to file instead of printing it to console." :parse-fn #(Boolean. %)]]
                 [csv-basename       nil java.lang.String            false       ["-F" "Base name of files to append data to.  Otherwise new filenames generated from seed." :parse-fn #(String. %)]]
                 [k-max-pop-sizes    nil clojure.lang.IPersistentMap true        ["-T" "Comma-separated times and target subpop sizes to cull k-snipes to, e.g. time,size,time,size" :parse-fn string-to-map]] ; issue #63 for commentary:
@@ -102,13 +102,17 @@
             ]
   )
 
-(defn curr-step [^Sim sim] (.getSteps (.schedule sim)))
-(defn curr-popenv [^Sim sim] (:popenv @(.simData sim)))
-;; NOTE these get called on every tick in GUI even if not reported:
-(defn -getPopSize    [^Sim this] (stats/get-pop-size @(.simData this)))
+;; NOTE called on every tick by GUI even if Model window is not displayed:
+(defn -getPopSize
+  [^Sim this] 
+  (count (:snipe-map (:popenv @(.simData this)))))
+;(defn -getPopSize    [^Sim this] (stats/get-pop-size @(.simData this)))
 ;(defn -getKSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :k-snipe (curr-popenv this)))
 ;(defn -getRSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :r-snipe (curr-popenv this)))
 ;(defn -getSSnipeFreq [^Sim this] (stats/maybe-get-freq-for-gui (curr-step this) :s-snipe (curr-popenv this)))
+
+(defn curr-step [^Sim sim] (.getSteps (.schedule sim)))
+(defn curr-popenv [^Sim sim] (:popenv @(.simData sim)))
 
 ;; no good reason to put this into the defsim macro since it doesn't include any
 ;; field-specific code.  Easier to redefine if left here.
@@ -150,15 +154,15 @@
         sim-data @sim-data$
         ^Stoppable stoppable (:stoppable sim-data)
         seed (:seed sim-data)
-        report-every (:report-every sim-data)
+        ;report-every (:report-every sim-data)
         ^Schedule schedule (.schedule this)
 	steps (.getSteps schedule)]
     (.stop stoppable)
-    (when (pos? report-every)
+    ;(when (pos? report-every)
       ;(stats/report-stats sim-data seed steps)
       ;(when (not (:write-csv sim-data))
       ;  (stats/write-params-to-console sim-data))
-     )
+    ;)
     ;(when-let [^BufferedWriter writer (:csv-writer sim-data)]
     ;  (.close writer))
     ))
@@ -180,7 +184,7 @@
 (defn run-sim
   [^Sim sim-sim rng sim-data$ seed]
   (let [^Schedule schedule (.schedule sim-sim)
-        report-every (:report-every @sim-data$)
+        ;report-every (:report-every @sim-data$)
         max-ticks (:max-ticks @sim-data$)
         ;; This runs the simulation:
         ^Stoppable stoppable (.scheduleRepeating schedule Schedule/EPOCH 0 ; epoch = starting at beginning, 0 means run this first during timestep
@@ -190,13 +194,14 @@
                                           (swap! sim-data$ update :popenv pe/next-popenv rng sim-data$))))]
     (swap! sim-data$ assoc :stoppable stoppable) ; make it available to finish()
     ;; maybe report stats periodically
-    (when (pos? report-every)
-      (.scheduleRepeating schedule report-every 1 ; first tick to report at; ordering within tick
-                          (reify Steppable
-                            (step [this sim-state]
-                              (let [steps (.getSteps schedule)] ; can't get this from above; we want the live value, not an old value from the closure. TODO use curr-step in simd-ata$ ??
-                                  (stats/report-stats @sim-data$ seed steps))))
-                          report-every))))
+    ;(when (pos? report-every)
+    ;  (.scheduleRepeating schedule report-every 1 ; first tick to report at; ordering within tick
+    ;                      (reify Steppable
+    ;                        (step [this sim-state]
+    ;                          (let [steps (.getSteps schedule)] ; can't get this from above; we want the live value, not an old value from the closure. TODO use curr-step in simd-ata$ ??
+    ;                              (report-stats @sim-data$ seed steps))))
+    ;                      report-every))
+    ))
 
 ;(def first-run-shared-basename$ (atom true)) ; when different runs share a basename, some things happen once
 
