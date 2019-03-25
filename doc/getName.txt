@@ -1,0 +1,10 @@
+
+
+;; getName()
+(defn -getName-void [this] "free-agent") ; override method in super. should cause this to be displayed as title of config window of gui, but it doesn't.
+;; Obscure corner of the already obscure gen-class corner: When a method has multiple arities in the super,
+;; you have to distinguish them by tacking type specifiers on to the name of the method.
+;; https://groups.google.com/forum/#!topic/clojure/TVRsy4Gnf70
+;; https://puredanger.github.io/tech.puredanger.com/2011/08/12/subclassing-in-clojure (in which Alex Miller of all people learns from random others)
+;; http://stackoverflow.com/questions/32773861/clojure-gen-class-for-overloaded-and-overridden-methods
+;; http://dishevelled.net/Tricky-uses-of-Clojure-gen-class-and-AOT-compilation.html
