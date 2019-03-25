@@ -38,13 +38,21 @@
                :west-display-frame (atom nil) ; will be replaced in init because we need to pass the display to it
                :west-snipe-field-portrayal (HexaObjectGridPortrayal2D.)}])
 
-;; see doc/getName.md
-(defn -getName-void [this] "pasta") ; override method in super. Should cause this string to be displayed as title of config window of gui, but it doesn't.
+(defn -getName-void
+  "Suppsoed to override method in super. Should cause the returned 
+  string to be displayed as title of config window of gui, but it 
+  doesn't.  See doc/getName.txt for explanation."
+  [this]
+  "pasta")
 
-;; Override methods in sim.display.GUIState so that UI can make graphs, etc.
-(defn -getSimulationInspectedObject [this] (.state this))
-;; This makes the controls for the sim state in the Model tab (and does other things?):
+(defn -getSimulationInspectedObject
+  "Override methods in sim.display.GUIState so that UI can make graphs, etc."
+  [this]
+  (.state this))
+
 (defn -getInspector [this]
+  "This function makes the controls for the sim state in the Model tab
+  (and does other things?)."
   (let [i (.superGetInspector this)]
     (.setVolatile i true)
     i))
