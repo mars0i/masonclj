@@ -33,6 +33,6 @@
                                     ["compile" "example.snipe"
                                      "example.Sim"
                                      "example.core"]]
-                       :main example.core}}
+                       :main example.core}} ; core decides whether to run Sim or UI (which runs Sim)
   :target-path "target/%s"
 )
