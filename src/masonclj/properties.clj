@@ -6,23 +6,30 @@
     (:require [masonclj.utils :as u])
     (:import [sim.util Properties SimpleProperties Propertied]))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MAKE-PROPERTIES
+;; Function that generates a MASON Properties object that can be used
+;; to track an agent's identity over time even though it's a
+;; defrecord whose JVM identity keeps changing as it's updated.
+
 ;; Predicate that indicates that we are looking at the index of
 ;; circled$ in make-properties' internal sequences:
 (def circled-idx? zero?)
+
+;; More informative sequence accessor abbreviations:
 (def data-field-key first)
 (def data-type second)
 (def data-description u/third)
 
-;; TODO? There's no reason to use vectors to extract the elements 
-;; needed in the Properties methods.  I could use the original
-;; 3-term sequences, or maps.
-;;
 ;; Current version of next function does not allow any fields to be
 ;; modifiable from the GUI.  The code could be extended to allow this.
 ;; Code below makes use of the fact that in Clojure, vectors can be treated
 ;; as functions of indexes, returning the indexed item; that keywords such
 ;; as :x can be treated as functions of maps; and that defrecords such as
 ;; snipes can be treated as maps.
+;; TODO:
+;; I should probably rewrite this to use something other than vectors--maps
+;; maybe.
 (defn make-properties
   "Return a Properties subclass for use by Propertied's properties method so
   that certain fields can be displayed in the GUI on request.
@@ -34,7 +41,8 @@
   time-slice, for example.)  fields consists of zero or more 3-element sequences,
   in which the first element is a key for a field in the agent, the second 
   element is a Java type for the field, and the third element is a string 
-  describing the field."
+  describing the field.  This function assumes that the defrecord contains a
+  field named circled$ containing an atom containing a boolean."
   [id get-curr-obj & fields]
   (let [data-field-keys (map data-field-key fields)
         data-types (map data-type fields)
