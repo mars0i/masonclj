@@ -13,6 +13,10 @@
 (def data-type second)
 (def data-description u/third)
 
+;; TODO? There's no reason to use vectors to extract the elements 
+;; needed in the Properties methods.  I could use the original
+;; 3-term sequences, or maps.
+;;
 ;; Current version of next function does not allow any fields to be
 ;; modifiable from the GUI.  The code could be extended to allow this.
 ;; Code below makes use of the fact that in Clojure, vectors can be treated
