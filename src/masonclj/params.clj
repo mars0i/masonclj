@@ -12,8 +12,9 @@
 ;; or like this:
 ;;     :aot [myproject.Sim myproject.UI]
 
-(ns masonclj.simparams
-  (:require [clojure.string :as s]))
+(ns masonclj.params
+  (:require [clojure.string :as s]
+            [masonclj.utils :as u]))
 
 (def sim-class-sym 'Sim)
 (def data-class-sym 'data)
@@ -26,42 +27,13 @@
 (def gui-vars-html-filename "gui_vars_table.html") ; will contain html for documentation of vars in GUI
 
 
-;; Positional functions
-;; clojure.core's first and second return nil if xs is too short (because
-;; they're defined using next), while nth throws an exception in that case.  
-;; For the principle of least surprise, and since count is O(1) in most 
-;; cases (and all cases here), I'm reproducing the nil-if-too-short 
-;; functionality in the defs below.  Also, I sometimes positively want this 
-;; behavior.
-
-(defn third 
-  "Returns the third element of xs or nil if xs is too short."
-  [xs] 
-  (if (>= (count xs) 3)
-    (nth xs 2)
-    nil))
-
-(defn fourth 
-  "Returns the fourth element of xs or nil if xs is too short."
-  [xs] 
-  (if (>= (count xs) 4)
-    (nth xs 3)
-    nil))
-
-(defn fifth
-  "Returns the fifth element of xs or nil if xs is too short."
-  [xs] 
-  (if (>= (count xs) 5)
-    (nth xs 4)
-    nil))
-
 ;; Positional function abbreviations for accessing components 
 ;; of the fields argument below:
 (def field-sym  first)
 (def field-init second)
-(def field-type third)
-(def field-ui?  fourth)
-(def field-description (comp second fifth))
+(def field-type u/third)
+(def field-ui?  u/fourth)
+(def field-description (comp second u/fifth))
 
 (defn get-class-prefix
   "Given a Java/Clojure class identifier symbol or string, or class object (found
