@@ -1,9 +1,9 @@
-Use of masonclj.simparams/defparams
+Use of masonclj.params/defparams
 ====
 
 ### Rationale
 
-`masonclj.simparams/defparams` is a macro with two goals:
+`masonclj.params/defparams` is a macro with two goals:
 
     1. Generate a series of coordinated definitions.
     2. Move global configuration data into its own namespace.
@@ -63,7 +63,7 @@ Example of the use of `defparams` in Sim.clj in my pasta repo:
 
 ```clojure
 ;;              field name   initial-value  type   in ui? with range?  info for clojure's cli commandline option function
-(masonclj.simparams/defparams [[num-k-snipes       25      long    [0 500]     ["-K" "Size of k-snipe subpopulation" :parse-fn #(Long. %)]]
+(masonclj.params/defparams [[num-k-snipes       25      long    [0 500]     ["-K" "Size of k-snipe subpopulation" :parse-fn #(Long. %)]]
                 [mush-prob           0.2    double  [0.0 1.0]   ["-M" "Average frequency of mushrooms." :parse-fn #(Double. %)]]
                 [mush-low-size       4.0    double  true        ["-s" "Size of small mushrooms (mean of light distribution)" :parse-fn #(Double. %)]]
                 [mush-mid-size       0      double  false] ; calculated from the previous values
@@ -194,7 +194,7 @@ To see what your `defparams` call does, you can pass the  quoted
 expression containing it to `macroexpand-1`.  You might also want to
 pass the output of `macroexand-1` to `pprint`.  Note that first you
 should switch to the namespace of your main `Sim` class, and
-`(use 'masonclj.simparams)`.
+`(use 'masonclj.params)`.
 
 For example, the `defparams` example above expands to the following code.
 I've added comments that are not generated with the code.
@@ -284,7 +284,7 @@ I generated this at the repl by lightly editing the output of:
 2. Running 
 
 ```
-(use 'masonclj.simparams)
+(use 'masonclj.params)
 (clojure.pprint/pprint (macroexpand-1 '<paste defparams code from above>))
 ```
 
