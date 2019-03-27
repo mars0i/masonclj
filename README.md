@@ -15,6 +15,8 @@ using Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
 
 2. See [doc/defparams.md](doc/defparams.md).
 
+[To add: documentation on `make-properties`.]
+
 ## License
 
 This software is copyright 2016, 2017, 2018, 2019 by [Marshall
