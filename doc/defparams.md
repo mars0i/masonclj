@@ -23,20 +23,23 @@ make it convenient.  As a result, for each variable that you want to
 be configurable via the GUI, you need to provide:
 
 1. Two to three bean-ish accessor functions.
-2. Two to three corresponding signatures, in another part of your code.
-3. An entry in a defrecord, defined somewhere else.
+2. Two to three corresponding signatures, in a `gen-class` specification,
+which cannot be immediately next to the bean function definitions.
+3. An entry in a data structure such as a defrecord or map, defined
+somewhere else.
 4. A value for that entry in an intializer function, defined somewhere
 else again.
 5. Optionally, a commandline option that will allow setting the
 variable from the command line.
 
 So when you add, delete, or change the definion of a configuration
-varialbe, all the above elements have to be kept coordinated.
+variable, all the above elements have to be kept coordinated.  This is
+inconvenient and bug-prone.
 
-`defparams` does that for you: You pass it a single line of configuration
-info, and it does the rest.  This means that it does a lot of things in
-way that's usually hidden, and you just have to know part of what it's
-doing (see below), but the alternative is worse.
+`defparams` does all of the above for you: You pass it a single line of 
+configuration info, and it does the rest.  This means that it does a 
+lot of things in way that's usually hidden, and you just have to know 
+part of what it's doing--see below--but the alternative is worse.
 
 ### Using `defparams`
 
