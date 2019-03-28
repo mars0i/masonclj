@@ -8,17 +8,13 @@
   (:require [clojure.tools.cli]
             [clojure.data.csv :as csv]
             [clojure.java.io]
-            [masonclj.simparams :as sp]
-            ;[utils.map2csv :as m2c]
+            [masonclj.params :as sp]
             [example.snipe :as sn]
-            [example.popenv :as pe]
-            ;[example.stats :as stats]
-            )
+            [example.popenv :as pe])
   (:import [sim.engine Steppable Schedule Stoppable]
            [sim.util Interval]
            [ec.util MersenneTwisterFast]
            [java.lang String]
-           ;[java.io BufferedWriter]
            [example.popenv PopEnv]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
