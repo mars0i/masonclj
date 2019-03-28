@@ -216,7 +216,7 @@
      ;; Note this will only happen whem Sim.clj is recompiled.
      (println "Writing GUI vars html table to file" gui-vars-html-filename ".")
      ;; Write the html file to the current directory:
-     (spit (str (.getCanonicalPath (clojure.java.io/file ".")) "/" gui-vars-html-filename) ; DOES THIS WORK IN WINDOWS?  Should it be more flexible?
+     (spit (str (u/current-directory) "/" gui-vars-html-filename) ; DOES THIS WORK IN WINDOWS?
            gui-vars-html#)
 
      ;; GENERATE CODE FOR Sim.clj:
