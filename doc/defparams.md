@@ -66,7 +66,8 @@ Example of the use of `defparams` in Sim.clj in my pasta repo:
 
 ```clojure
 ;;              field name   initial-value  type   in ui? with range?  info for clojure's cli commandline option function
-(masonclj.params/defparams [[num-k-snipes       25      long    [0 500]     ["-K" "Size of k-snipe subpopulation" :parse-fn #(Long. %)]]
+(masonclj.params/defparams 
+               [[num-k-snipes       25      long    [0 500]     ["-K" "Size of k-snipe subpopulation" :parse-fn #(Long. %)]]
                 [mush-prob           0.2    double  [0.0 1.0]   ["-M" "Average frequency of mushrooms." :parse-fn #(Double. %)]]
                 [mush-low-size       4.0    double  true        ["-s" "Size of small mushrooms (mean of light distribution)" :parse-fn #(Double. %)]]
                 [mush-mid-size       0      double  false] ; calculated from the previous values
