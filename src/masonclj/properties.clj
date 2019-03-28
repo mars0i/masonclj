@@ -6,9 +6,17 @@
     (:require [masonclj.utils :as u])
     (:import [sim.util Properties SimpleProperties Propertied]))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MAKE-PROPERTIES
+;; Function that generates a MASON Properties object that can be used
+;; to track an agent's identity over time even though it's a
+;; defrecord whose JVM identity keeps changing as it's updated.
+
 ;; Predicate that indicates that we are looking at the index of
 ;; circled$ in make-properties' internal sequences:
 (def circled-idx? zero?)
+
+;; More informative sequence accessor abbreviations:
 (def data-field-key first)
 (def data-type second)
 (def data-description u/third)
@@ -37,7 +45,8 @@
   time-slice, for example.)  fields consists of zero or more 3-element sequences,
   in which the first element is a key for a field in the agent, the second 
   element is a Java type for the field, and the third element is a string 
-  describing the field."
+  describing the field.  This function assumes that the defrecord contains a
+  field named circled$ containing an atom containing a boolean."
   [id get-curr-obj & fields]
   (let [data-field-keys (map data-field-key fields)
         data-types (map data-type fields)

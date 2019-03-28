@@ -9,6 +9,12 @@
 
 (defn atom? [x] (instance? clojure.lang.Atom x)) ; This is unlikely to become part of clojure.core: http://dev.clojure.org/jira/browse/CLJ-1298
 
+
+(defn current-directory
+  "Returns the current working directory."
+  []
+  (.getCanonicalPath (clojure.java.io/file ".")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Positional functions
 ;; clojure.core's first and second return nil if xs is too short (because

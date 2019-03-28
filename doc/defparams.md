@@ -1,9 +1,9 @@
-Use of masonclj.simparams/defparams
+Use of masonclj.params/defparams
 ====
 
 ### Rationale
 
-`masonclj.simparams/defparams` is a macro with two goals:
+`masonclj.params/defparams` is a macro with two goals:
 
     1. Generate a series of coordinated definitions.
     2. Move global configuration data into its own namespace.
@@ -23,20 +23,23 @@ make it convenient.  As a result, for each variable that you want to
 be configurable via the GUI, you need to provide:
 
 1. Two to three bean-ish accessor functions.
-2. Two to three corresponding signatures, in another part of your code.
-3. An entry in a defrecord, defined somewhere else.
+2. Two to three corresponding signatures, in a `gen-class` specification,
+which cannot be immediately next to the bean function definitions.
+3. An entry in a data structure such as a defrecord or map, defined
+somewhere else.
 4. A value for that entry in an intializer function, defined somewhere
 else again.
 5. Optionally, a commandline option that will allow setting the
 variable from the command line.
 
 So when you add, delete, or change the definion of a configuration
-varialbe, all the above elements have to be kept coordinated.
+variable, all the above elements have to be kept coordinated.  This is
+inconvenient and bug-prone.
 
-`defparams` does that for you: You pass it a single line of configuration
-info, and it does the rest.  This means that it does a lot of things in
-way that's usually hidden, and you just have to know part of what it's
-doing (see below), but the alternative is worse.
+`defparams` does all of the above for you: You pass it a single line of 
+configuration info, and it does the rest.  This means that it does a 
+lot of things in way that's usually hidden, and you just have to know 
+part of what it's doing--see below--but the alternative is worse.
 
 ### Using `defparams`
 
@@ -63,7 +66,8 @@ Example of the use of `defparams` in Sim.clj in my pasta repo:
 
 ```clojure
 ;;              field name   initial-value  type   in ui? with range?  info for clojure's cli commandline option function
-(masonclj.simparams/defparams [[num-k-snipes       25      long    [0 500]     ["-K" "Size of k-snipe subpopulation" :parse-fn #(Long. %)]]
+(masonclj.params/defparams 
+               [[num-k-snipes       25      long    [0 500]     ["-K" "Size of k-snipe subpopulation" :parse-fn #(Long. %)]]
                 [mush-prob           0.2    double  [0.0 1.0]   ["-M" "Average frequency of mushrooms." :parse-fn #(Double. %)]]
                 [mush-low-size       4.0    double  true        ["-s" "Size of small mushrooms (mean of light distribution)" :parse-fn #(Double. %)]]
                 [mush-mid-size       0      double  false] ; calculated from the previous values
@@ -194,7 +198,7 @@ To see what your `defparams` call does, you can pass the  quoted
 expression containing it to `macroexpand-1`.  You might also want to
 pass the output of `macroexand-1` to `pprint`.  Note that first you
 should switch to the namespace of your main `Sim` class, and
-`(use 'masonclj.simparams)`.
+`(use 'masonclj.params)`.
 
 For example, the `defparams` example above expands to the following code.
 I've added comments that are not generated with the code.
@@ -284,7 +288,7 @@ I generated this at the repl by lightly editing the output of:
 2. Running 
 
 ```
-(use 'masonclj.simparams)
+(use 'masonclj.params)
 (clojure.pprint/pprint (macroexpand-1 '<paste defparams code from above>))
 ```
 

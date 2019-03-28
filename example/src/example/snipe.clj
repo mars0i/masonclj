@@ -6,7 +6,7 @@
 
 (ns example.snipe
   (:require [clojure.math.numeric-tower :as math]
-            ;[example.perception :as perc]
+            [masonclj.properties :as props]
             [utils.random :as ran])
   (:import [sim.util Properties SimpleProperties Propertied]
            [sim.portrayal Oriented2D])
@@ -17,17 +17,32 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INITIAL UTILITY DEFS
 
-(declare make-properties make-k-snipe make-r-snipe is-k-snipe? is-r-snipe? rand-energy atom?)
+(declare make-properties make-k-snipe make-r-snipe is-k-snipe? is-r-snipe? rand-energy)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFRECORD CLASS DEFS
 
+(defn make-properties-for-snipes 
+  [id get-curr-obj]
+  (props/make-properties
+    id get-curr-obj
+    [:energy    java.lang.Double "Energy is what snipes get from mushrooms."]
+    [:x         java.lang.Integer "x coordinate in underlying grid"]
+    [:y         java.lang.Integer "y coordinate in underlying grid"]))
+
+(defn make-get-curr-obj
+  "Return a function that can be the value of getObject in Properties,
+  i.e. that will return the current time-slice of a particular snipe.
+  The function returned will be a closure over snipe-id and cfg-data$."
+  [id cfg-data$] ; pass cfg-data$ and not @cfg-data$ so the fn always uses the latest data.
+  (fn [] ((:snipe-map (:popenv @cfg-data$)) id)))
+
 ;; The two atom fields at the end are there solely for interactions with the UI.
 ;; Propertied/properties is used by GUI to allow inspectors to follow a fnlly updated agent.
-
 (defrecord RSnipe [id energy subenv x y circled$ cfg-data$]
   Propertied
-  (properties [original-snipe] (make-properties id cfg-data$))
+  (properties [original-snipe]
+    (make-properties-for-snipes id (make-get-curr-obj id cfg-data$)))
   Object
   (toString [this] (str "<RSnipe #" id ">")))
 
@@ -36,13 +51,7 @@
 
 (defn make-r-snipe
   [rng cfg-data$ energy subenv new-id x y]
-  (let [extreme-pref (:extreme-pref @cfg-data$)]
-      (RSnipe. new-id energy subenv x y (atom false) cfg-data$)))
-
-(defn make-newborn-r-snipe
-  [rng cfg-data$ subenv new-id x y]
-  (let [{:keys [initial-energy]} @cfg-data$]
-    (make-r-snipe rng cfg-data$ initial-energy subenv new-id x y)))
+  (RSnipe. new-id energy subenv x y (atom false) cfg-data$))
 
 (defn make-rand-r-snipe 
   "Create r-snipe with random energy (from rand-energy)."
@@ -64,52 +73,10 @@
 ;; (The code below makes use of the fact that in Clojure, vectors can be treated as 
 ;; functions ;; of indexes, returning the indexed item; that keywords such as :x can be
 ;; treated as functions of maps; and that defrecords such as snipes can be treated as maps.)
-(defn make-properties
-  "Return a Properties subclass for use by Propertied's properties method so
-  that certain fields can be displayed in the GUI on request."
-  [id cfg-data$]
-  ;; THESE DEFINITIONS NEED TO BE COORDINATED BY HAND:
-  (let [kys [:circled$ :x :y :energy :subenv] ; TODO CHANGE FOR NEW FIELDS
-        circled-idx 0 ; HARDCODED INDEX for circled$ field
-        descriptions ["Boolean indicating whether circled in GUI"       ; TODO CHANGE FOR NEW FIELDS
-                      "x coordinate in underlying grid"
-                      "y coordinate in underlying grid"
-                      "Energy is what snipes get from mushrooms"
-                      "Name of sub-environment"]
-        types [java.lang.Boolean java.lang.Integer java.lang.Integer java.lang.Double java.lang.String] ; TODO CHANGE FOR NEW FIELDS
-        read-write [true false false false false] ; allow user to turn off circled in UI ; TODO CHANGE FOR NEW FIELDS
-        names (mapv name kys)
-        num-properties (count kys)
-        hidden     (vec (repeat num-properties false)) ; no properties specified here are to be hidden from GUI
-        ;; THIS IS THE KEY MOVE: Look up the current version of this agent by id:
-        get-curr-snipe (fn [] ((:snipe-map (:popenv @cfg-data$)) id))] ; find current version of this snipe
-    (reset! (:circled$ (get-curr-snipe)) true) ; make-properties is only called by inspector, in which case highlight snipe in UI
-    ;; Aside from the last line, the code below can probably be used as-is for any agent:
-    (proxy [Properties] []
-      (getObject [] (get-curr-snipe))
-      (getName [i] (names i))
-      (getDescription [i] (descriptions i))
-      (getType [i] (types i))
-      (getValue [i]
-        (let [v ((kys i) (get-curr-snipe))]
-          (cond (atom? v) @v
-                (keyword? v) (name v)
-                :else v)))
-      (setValue [i newval]                  ; allow user to turn off circled in UI  ; POSS CHANGE FOR NEW FIELDS
-        (when (= i circled-idx)             ; returns nil/null for other fields
-          (reset! (:circled$ (get-curr-snipe))
-                  (Boolean/valueOf newval)))) ; it's always a string that's returned from UI. (Do *not* use (Boolean. newval); it's always truthy in Clojure.)
-      (isHidden [i] (hidden i))
-      (isReadWrite [i] (read-write i))
-      (isVolatile [] false)
-      (numProperties [] num-properties)
-      (toString [] (str "<SimpleProperties: snipe id=" id ">")))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MISCELLANEOUS LITTLE FUNCTIONS
-
-(defn atom? [x] (instance? clojure.lang.Atom x)) ; This is unlikely to become part of clojure.core: http://dev.clojure.org/jira/browse/CLJ-1298
 
 ;; SHOULD THIS BE GAUSSIAN?
 ;; Is birth-threshold the right limit?
