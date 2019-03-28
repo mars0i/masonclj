@@ -33,19 +33,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TOP LEVEL FUNCTIONS
 
-(defrecord SubEnv [snipe-field   ; ObjectGrid2D
-                   ;mush-field    ; ObjectGrid2D
-                   dead-snipes]) ; keep a record of dead snipes for later stats
+(defrecord SubEnv [snipe-field])  ; snipe-field is an ObjectGrid2D
 
 (defrecord PopEnv [west 
-                   ;east 
                    snipe-map curr-snipe-id$]) ; two SubEnvs, and map from ids to snipes
 
 (defn setup-popenv-config!
   [cfg-data$]
   (let [{:keys [env-width env-height carrying-proportion mush-low-size mush-high-size]} @cfg-data$]
-    ;(swap! cfg-data$ assoc :mush-size-scale (/ 1.0 (- mush-high-size mush-low-size)))
-    ;(swap! cfg-data$ assoc :mush-mid-size (/ (+ mush-low-size mush-high-size) 2.0))
     (swap! cfg-data$ assoc :max-subenv-pop-size (int (* env-width env-height carrying-proportion)))))
 
 (defn make-subenv
@@ -53,50 +48,28 @@
   [rng cfg-data$ subenv-key curr-snipe-id$]
   (let [cfg-data @cfg-data$
         {:keys [env-width env-height]} cfg-data
-        snipe-field (ObjectGrid2D. env-width env-height)
-        ;mush-field  (ObjectGrid2D. env-width env-height)
-	]
-    ;(.clear mush-field)
-    ;(add-mushs! rng cfg-data mush-field subenv-key)
+        snipe-field (ObjectGrid2D. env-width env-height)]
     (.clear snipe-field)
-    ;(add-snipes! rng cfg-data$ snipe-field subenv-key (:num-k-snipes cfg-data) sn/make-rand-k-snipe curr-snipe-id$)
     (add-snipes! rng cfg-data$ snipe-field subenv-key (:num-r-snipes cfg-data) sn/make-rand-r-snipe curr-snipe-id$)
-    ;(add-snipes! rng cfg-data$ snipe-field subenv-key (:num-s-snipes cfg-data) sn/make-rand-s-snipe curr-snipe-id$)
-    (SubEnv. snipe-field [])))
+    (SubEnv. snipe-field)))
 
 (defn make-snipe-map
   "Make a map from snipe ids to snipes."
   [^ObjectGrid2D west-snipe-field] ; ^ObjectGrid2D east-snipe-field
   (into {} (map #(vector (:id %) %)) ; transducer w/ vector: may be slightly faster than alternatives
-        (concat (.elements west-snipe-field)
-                ;(.elements east-snipe-field)
-                ))) ; btw cost compared to not constructing a snipes map is trivial
+        (concat (.elements west-snipe-field)))) ; btw cost compared to not constructing a snipes map is trivial
 
 (defn make-popenv
   [rng cfg-data$]
   (let [curr-snipe-id$ (atom 0)
-        west (make-subenv rng cfg-data$ :west curr-snipe-id$)
-        ;east (make-subenv rng cfg-data$ :east curr-snipe-id$)
-        ]
+        west (make-subenv rng cfg-data$ :west curr-snipe-id$)]
     (PopEnv. west 
-             ;east
-             (make-snipe-map (:snipe-field west)
-                             ;(:snipe-field east)
-                             )
+             (make-snipe-map (:snipe-field west))
              curr-snipe-id$)))
 
 (defn next-snipe-id
   [curr-snipe-id$]
   (swap! curr-snipe-id$ inc))
-
-;(defn eat
-;  "Wrapper for snipes-eat."
-;  [rng cfg-data subenv]
-;  (let [{:keys [snipe-field mush-field dead-snipes]} subenv
-;        [snipe-field' mush-field'] (snipes-eat rng cfg-data snipe-field mush-field)]
-;    (SubEnv. snipe-field' 
-;             mush-field' 
-;             dead-snipes)))
 
 (defn die-move-spawn
   "Remove snipes that have no energy or are too old, cull snipes or increase 
@@ -107,44 +80,17 @@
   ;; about carrying capacity until energy-less snipes have been removed.
   (let [cfg-data @cfg-data$
         {:keys [snipe-field ]} subenv ; mush-field dead-snipes
-        ;[snipe-field' newly-died] (snipes-die cfg-data snipe-field)
-        ;snipe-field' (add-snipes-to-min rng cfg-data$ snipe-field' :k-min-pop-sizes sn/k-snipe? subenv-key sn/make-rand-k-snipe curr-snipe-id$)
-        ;snipe-field' (add-snipes-to-min rng cfg-data$ snipe-field :r-min-pop-sizes sn/r-snipe? subenv-key sn/make-rand-r-snipe curr-snipe-id$)
-        ;snipe-field' (add-snipes-to-min rng cfg-data$ snipe-field' :s-min-pop-sizes sn/s-snipe? subenv-key sn/make-rand-s-snipe curr-snipe-id$)
-        ;[snipe-field' k-newly-culled] (cull-snipes-to-max rng cfg-data$ snipe-field' :k-max-pop-sizes sn/k-snipe?)
-        ;[snipe-field' r-newly-culled] (cull-snipes-to-max rng cfg-data$ snipe-field' :r-max-pop-sizes sn/r-snipe?)
-        ;[snipe-field' s-newly-culled] (cull-snipes-to-max rng cfg-data$ snipe-field' :s-max-pop-sizes sn/s-snipe?)
-        ;[snipe-field' carrying-newly-culled] (obey-carrying-capacity rng cfg-data snipe-field')
-        snipe-field' (move-snipes rng cfg-data snipe-field)     ; only the living get to move
-        ;snipe-field' (age-snipes snipe-field')
-        ]
-    (SubEnv. snipe-field' 
-             ;mush-field 
-             []
-             ;(conj dead-snipes  ; each timestep adds a separate collection of dead snipes
-             ;      (concat newly-died
-             ;              ;k-newly-culled 
-             ;              r-newly-culled 
-             ;              ;s-newly-culled
-             ;              carrying-newly-culled))
-             )))
+        snipe-field' (move-snipes rng cfg-data snipe-field)]     ; only the living get to move
+    (SubEnv. snipe-field')))
 
 (defn next-popenv
   "Given an rng, a simConfigData atom, and a SubEnv, return a new SubEnv for
   the next time step.  Snipes eat, reproduce, die, and move."
   [popenv rng cfg-data$]
-  (let [{:keys [west curr-snipe-id$]} popenv ;east 
-        ;west' (eat rng @cfg-data$ west) ; better to eat before reproduction--makes sense
-        ;east' (eat rng @cfg-data$ east) ; and avoids complexity with max energy
-        ;[west-snipe-field' east-snipe-field'] (snipes-reproduce rng cfg-data$ ; uses both fields: newborns could go anywhere
-        ;                                                        (:snipe-field west')
-        ;                                                        ;(:snipe-field east')
-	;							curr-snipe-id$)
+  (let [{:keys [west curr-snipe-id$]} popenv
         west' (die-move-spawn rng cfg-data$ (assoc west :snipe-field (:snipe-field west)) :west curr-snipe-id$)
-        ;east' (die-move-spawn rng cfg-data$ (assoc east' :snipe-field east-snipe-field') :east curr-snipe-id$)
-        snipe-map' (make-snipe-map (:snipe-field west') ;(:snipe-field east')
-                                   )]
-    (PopEnv. west' snipe-map' curr-snipe-id$))); east' 
+        snipe-map' (make-snipe-map (:snipe-field west'))]
+    (PopEnv. west' snipe-map' curr-snipe-id$)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CREATE AND PLACE ORGANISMS
@@ -209,10 +155,6 @@
 (defn move-snipe!
   [^ObjectGrid2D snipe-field x y snipe]
   (.set snipe-field x y (assoc snipe :x x :y y)))
-
-;; Formerly I made top-level reusable IntBags for choose-next-loc.
-;; I think this is the source of an ArrayIndexOutOfBoundsException
-;; when I the MASON -parallel option.  So now the IntBags are local.
 
 (defn choose-next-loc
   "Return a pair of field coordinates randomly selected from the empty 
