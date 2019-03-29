@@ -82,17 +82,16 @@
       (numProperties [] num-properties)
       (toString [] (str "<SimpleProperties for agent with id=" id ">")))))
 
-
 ;; TODO Why am I passing id?  The properties method takes original-snipe (?), so
 ;; I can get the id from there.
 ;; DO I REALLY WANT id AND circled$ AS LITERALS, i.e. THEY CAN BE CAPTURED?
 (defmacro defagent
   "FIXME"
   [agent-type fields get-curr-obj-maker reported-field-specs & addl-defrecord-args]; function-maker and not function so it can capture id inside 
-  `(defrecord ~agent-type [id ~@fields circled$]
+  `(defrecord ~agent-type [~'circled$ ~'id ~@fields]
      Propertied
-     (properties [original-snipe]
-       (make-properties id ~get-curr-obj-maker ~@reported-field-specs))
+     (properties [original-snipe#]
+       (make-properties ~'id ~get-curr-obj-maker ~@reported-field-specs))
      Object
-       (toString [_] (str "<Agent #" id ">"))
+       (toString [_#] (str "<Agent #" ~'id ">"))
      ~@addl-defrecord-args))
