@@ -39,24 +39,30 @@
 
 ;; The two atom fields at the end are there solely for interactions with the UI.
 ;; Propertied/properties is used by GUI to allow inspectors to follow a fnlly updated agent.
-(defrecord RSnipe [id energy subenv x y circled$ cfg-data$]
-  Propertied
-  (properties [original-snipe]
-    (make-properties-for-snipes id (make-get-curr-obj id cfg-data$)))
-  Object
-  (toString [this] (str "<RSnipe #" id ">")))
+;(defrecord RSnipe [id energy subenv x y circled$ cfg-data$]
+;  Propertied
+;  (properties [original-snipe]
+;    (make-properties-for-snipes id (make-get-curr-obj id cfg-data$)))
+;  Object
+;  (toString [this] (str "<RSnipe #" id ">")))
+
+(props/defagent RSnipe [energy subenv x y cfg-data$] 
+  (make-get-curr-obj id cfg-data$)
+  [[:energy    java.lang.Double "Energy is what snipes get from mushrooms."]
+   [:x         java.lang.Integer "x coordinate in underlying grid"]
+   [:y         java.lang.Integer "y coordinate in underlying grid"]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SNIPE MAKER FUNCTIONS
 
 (defn make-r-snipe
-  [rng cfg-data$ energy subenv new-id x y]
-  (RSnipe. new-id energy subenv x y (atom false) cfg-data$))
+  [cfg-data$ energy subenv new-id x y]
+  (RSnipe. (atom false) new-id energy subenv x y cfg-data$)) ; NOTE circled$ is placed first by defagent
 
 (defn make-rand-r-snipe 
   "Create r-snipe with random energy (from rand-energy)."
   [rng cfg-data$ subenv new-id x y]
-  (make-r-snipe rng cfg-data$ (rand-energy rng @cfg-data$) subenv new-id x y))
+  (make-r-snipe cfg-data$ (rand-energy rng @cfg-data$) subenv new-id x y))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAKE-PROPERTIES FUNCTION
