@@ -25,9 +25,6 @@
 ;; needed in the Properties methods.  I could use the original
 ;; 3-term sequences, or maps.
 
-;; TODO Why am I passing id?  The properties method takes original-snipe (?), so
-;; I can get the id from there.
-;;
 ;; Current version of next function does not allow any fields to be
 ;; modifiable from the GUI.  The code could be extended to allow this.
 ;; Code below makes use of the fact that in Clojure, vectors can be treated
@@ -82,17 +79,20 @@
       (numProperties [] num-properties)
       (toString [] (str "<SimpleProperties for agent with id=" id ">")))))
 
-;; TODO Why am I passing id?  The properties method takes original-snipe (?), so
-;; I can get the id from there.
-;; DO I REALLY WANT id AND circled$ AS LITERALS, i.e. THEY CAN BE CAPTURED?
-;; TODO SHOULD id be added here?
+;; TODO DO I REALLY WANT circled$ AS LITERALS, i.e. CAN BE CAPTURED?
 (defmacro defagent
   "FIXME"
   [agent-type fields get-curr-obj-maker gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
-  `(defrecord ~agent-type [~'circled$ ~'id ~@fields]
-     Propertied
-       (properties [original-snipe#]
-         (make-properties ~'id ~get-curr-obj-maker ~@gui-fields-specs))
-     Object
-       (toString [_#] (str "<" '~agent-type " #" ~'id ">"))
-     ~@addl-defrecord-args))
+  (let [clojure-constructor-sym# (symbol (str "->" '~agent-type))
+        defagent-constructor-sym# (symbol (str "-->" '~agent-type))]
+    `(do
+       (defrecord ~agent-type [~'circled$ ~'id ~@fields]
+         Propertied
+         (properties [original-snipe#]
+           (make-properties ~'id ~get-curr-obj-maker ~@gui-fields-specs))
+         Object
+         (toString [_#] (str "<" '~agent-type " #" ~'id ">"))
+         ~@addl-defrecord-args)
+       (defn ~defagent-constructor-sym#
+         [~@fields]
+         (~clojure-constructor-sym# (atom false) ~@fields)))))
