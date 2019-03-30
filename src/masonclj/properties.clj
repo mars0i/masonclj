@@ -86,12 +86,16 @@
 ;; DO I REALLY WANT circled$ AS A LITERAL, i.e. CAN BE CAPTURED?
 (defmacro defagent
   "fields must include a field named id; this is used in the toString
-  method for this agent."
-  [agent-type fields get-curr-obj-maker gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
+  method for this agent.  make-get-curr-obj will be passed the original
+  time-slice of this agent, and should return a no-argument function that
+  will always return the current time-slice of the agent.  A field named
+  circled$ will be added as the first field; it should always be initialized
+  with an atom of a boolean."
+  [agent-type fields make-get-curr-obj gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
   `(defrecord ~agent-type [~'circled$ ~@fields]
      Propertied
        (properties [original-snipe#]
-         (make-properties (~get-curr-obj-maker original-snipe#) ~@gui-fields-specs))
+         (make-properties (~make-get-curr-obj original-snipe#) ~@gui-fields-specs))
      Object
-       (toString [_#] (str "<" '~agent-type " #" ~'id ">"))
+       (toString [obj#] (str "<" '~agent-type " " (:id obj#) ">"))
      ~@addl-defrecord-args))
