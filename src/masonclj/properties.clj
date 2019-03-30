@@ -97,5 +97,5 @@
        (properties [original-snipe#]
          (make-properties (~make-get-curr-obj original-snipe#) ~@gui-fields-specs))
      Object
-       (toString [obj#] (str "<" '~agent-type " " (:id obj#) ">"))
+       (toString [obj#] (str "<" '~agent-type " " (:id obj#) ">")) ; will work even if id doesn't exist
      ~@addl-defrecord-args))
