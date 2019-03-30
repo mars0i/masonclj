@@ -40,7 +40,7 @@
 
 (defn make-r-snipe
   [cfg-data$ energy subenv new-id x y]
-  (RSnipe. (atom false) new-id energy subenv x y cfg-data$)) ; NOTE circled$ is placed first by defagent
+  (-->RSnipe new-id energy subenv x y cfg-data$)) ; NOTE circled$ is placed first by defagent
 
 (defn make-rand-r-snipe 
   "Create r-snipe with random energy (from rand-energy)."
