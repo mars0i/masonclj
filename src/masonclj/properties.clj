@@ -44,7 +44,7 @@
   element is a Java type for the field, and the third element is a string 
   describing the field.  This function assumes that the defrecord contains a
   field named circled$ containing an atom containing a boolean."
-  [id get-curr-obj & fields]
+  [get-curr-obj & fields]
   (let [data-field-keys (map data-field-key fields)
         data-types (map data-type fields)
         data-descriptions (map data-description fields)
@@ -57,7 +57,8 @@
         num-properties (count property-keys)
         names (mapv name property-keys)
         are-writeable (vec (cons true (repeat num-data-fields false)))
-        hidden        (vec (repeat num-properties false))] ; no properties specified here are to be hidden from GUI
+        hidden        (vec (repeat num-properties false)) ; no properties specified here are to be hidden from GUI
+        id (:id (get-curr-obj))] ; If the original agent doesn't have a field named "id", this will be nil.
     (reset! (:circled$ (get-curr-obj)) true) ; make-properties is only called by inspector, in which case highlight snipe in UI
     (proxy [Properties] [] ; the methods below are expected by Properties
       (getObject [] (get-curr-obj))
@@ -77,21 +78,26 @@
       (isReadWrite [i] (are-writeable i))
       (isVolatile [] false)
       (numProperties [] num-properties)
-      (toString [] (str "<SimpleProperties for agent with id=" id ">")))))
+      (toString [] (str "<SimpleProperties for agent " id ">")))))
 
-;; TODO DO I REALLY WANT circled$ AS LITERALS, i.e. CAN BE CAPTURED?
+;; DO I REALLY WANT circled$ AS A LITERAL, i.e. CAN BE CAPTURED?
 (defmacro defagent
-  "FIXME"
-  [agent-type fields get-curr-obj-maker gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
+  "INCOMPLETE: fields must include a field named id; this is used in the toString
+  method for this agent.  make-get-curr-obj will be passed the original
+  time-slice of this agent, and should return a no-argument function that
+  will always return the current time-slice of the agent.  A field named
+  circled$ will be added as the first field; it should always be initialized
+  with an atom of a boolean."
+  [agent-type fields make-get-curr-obj gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
   (let [clojure-constructor-sym# (symbol (str "->" '~agent-type))
         defagent-constructor-sym# (symbol (str "-->" '~agent-type))]
     `(do
-       (defrecord ~agent-type [~'circled$ ~'id ~@fields]
+       (defrecord ~agent-type [~'circled$ ~@fields]
          Propertied
          (properties [original-snipe#]
-           (make-properties ~'id ~get-curr-obj-maker ~@gui-fields-specs))
+           (make-properties (~make-get-curr-obj original-snipe#) ~@gui-fields-specs))
          Object
-         (toString [_#] (str "<" '~agent-type " #" ~'id ">"))
+         (toString [obj#] (str "<" '~agent-type " " (:id obj#) ">")) ; will work even if id doesn't exist
          ~@addl-defrecord-args)
        (defn ~defagent-constructor-sym#
          [~@fields]

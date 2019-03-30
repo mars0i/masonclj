@@ -22,32 +22,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFRECORD CLASS DEFS
 
-(defn make-properties-for-snipes 
-  [id get-curr-obj]
-  (props/make-properties
-    id get-curr-obj
-    [:energy    java.lang.Double "Energy is what snipes get from mushrooms."]
-    [:x         java.lang.Integer "x coordinate in underlying grid"]
-    [:y         java.lang.Integer "y coordinate in underlying grid"]))
-
 (defn make-get-curr-obj
   "Return a function that can be the value of getObject in Properties,
   i.e. that will return the current time-slice of a particular snipe.
-  The function returned will be a closure over snipe-id and cfg-data$."
-  [id cfg-data$] ; pass cfg-data$ and not @cfg-data$ so the fn always uses the latest data.
-  (fn [] ((:snipe-map (:popenv @cfg-data$)) id)))
+  The function returned will be a closure over cfg-data$."
+  [cfg-data$ original-snipe] ; pass cfg-data$ and not @cfg-data$ so the fn always uses the latest data.
+  (fn [] ((:snipe-map (:popenv @cfg-data$)) (:id original-snipe))))
 
-;; The two atom fields at the end are there solely for interactions with the UI.
-;; Propertied/properties is used by GUI to allow inspectors to follow a fnlly updated agent.
-;(defrecord RSnipe [id energy subenv x y circled$ cfg-data$]
-;  Propertied
-;  (properties [original-snipe]
-;    (make-properties-for-snipes id (make-get-curr-obj id cfg-data$)))
-;  Object
-;  (toString [this] (str "<RSnipe #" id ">")))
-
-(props/defagent RSnipe [energy subenv x y cfg-data$] 
-  (make-get-curr-obj id cfg-data$)
+(props/defagent RSnipe [id energy subenv x y cfg-data$] 
+  (partial make-get-curr-obj cfg-data$)
   [[:energy    java.lang.Double "Energy is what snipes get from mushrooms."]
    [:x         java.lang.Integer "x coordinate in underlying grid"]
    [:y         java.lang.Integer "y coordinate in underlying grid"]])
