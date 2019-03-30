@@ -25,7 +25,7 @@
 (defn make-get-curr-obj
   "Return a function that can be the value of getObject in Properties,
   i.e. that will return the current time-slice of a particular snipe.
-  The function returned will be a closure over snipe-id and cfg-data$."
+  The function returned will be a closure over cfg-data$."
   [cfg-data$ original-snipe] ; pass cfg-data$ and not @cfg-data$ so the fn always uses the latest data.
   (fn [] ((:snipe-map (:popenv @cfg-data$)) (:id original-snipe))))
 
