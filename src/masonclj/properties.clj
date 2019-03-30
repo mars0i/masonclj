@@ -91,7 +91,6 @@
   [agent-type fields make-get-curr-obj gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
   (let [clojure-constructor-sym# (symbol (str "->" agent-type))
         defagent-constructor-sym# (symbol (str "-->" agent-type))]
-    (println clojure-constructor-sym# defagent-constructor-sym#)
     `(do
        (defrecord ~agent-type [~'circled$ ~@fields]
          Propertied
