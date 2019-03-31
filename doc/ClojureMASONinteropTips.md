@@ -232,7 +232,7 @@ while recompiling a source file.)
 
 ### Leiningen
 
-The standard way to manage Clojure projects is with Leiningen, using
+One standard way to manage Clojure projects is with Leiningen, using
 commands such as `lein compile`, `lein run`, and `lein repl`.  Among
 other things, you can use Leiningen's project.clj file to specify
 libraries to be used, and the `:aot` keyword to specify that certain
