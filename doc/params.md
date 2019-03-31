@@ -1,18 +1,51 @@
 `masonclj.params/defparams`
 ====
 
-### Rationale
+`masonclj.params` provides `defparams`, a Clojure macro, to ease use 
+of the [MASON](https://cs.gmu.edu/~eclab/projects/mason) ABM library 
+with Clojure.
+
+## Rationale
 
 `masonclj.params/defparams` is a macro with two goals:
 
-    1. Generate a series of coordinated definitions.
-    2. Move global configuration data into its own namespace.
+    1. Move global configuration data into its own namespace.
+    2. Generate a series of coordinated definitions for model
+    parameters.
 
-The purpose of the second goal is to avoid problems with cyclic
-dependencies when adding many type hints to avoid reflection.  (This
-function hasn't been fully tested.)
+### The global data namespace
 
-The reason for the first goal is that Mason provides a
+The purpose of the first goal is to avoid problems with cyclic
+dependencies when adding many type hints to avoid reflection.  Clojure's
+`genclass` is its the most flexible way to subclass a Java class, and it
+seems to be subclassing MASON's `SimState` class.  The problem is that
+your `SimsState` subclass will normally register events to be run in
+`SimState`'s main loop, and these events will call your other Clojure
+namespaces.  So far, so good.  In turn these namespaces will probably
+need to reference some global configuration data, and may update some
+global data on the model.  The natural place to put all of this is in an
+instance variable of your `SimState` subclass.  (`genclass` actually
+allows defining only a single instance variable, but you can put a map
+or whatever you want in it to store different bits of data.)  Now, this
+would mean that there's a cyclic dependency, because the `SimState`
+subclass refers to the other namespaces, and they refer to its data
+element.  Clojure will refuse to compile certain cyclic dependencies,
+but *this kind is OK*.  That is, it's OK *as long as you don't start
+adding certain sorts of type hints* to your code--which you might want
+to do to improve speed.
+
+`defparams` defines a map for global parameters.  Although some of the
+methods that deal with it are in your `SimState` subclass, the map
+itself is in its own special namespace.  This is supposed to avoid
+cyclic dependencies with type hints, since then both your `SimState`
+subclass and your other namespaces refer this data in separate namespace
+that never refers to any other namespace.  Your `SimState` subclass
+will refer to your other namespaces, but they need not ever refer to
+the `SimState` subclass.
+
+### Coordinating parameter code
+
+The reason for the second goal is that Mason provides a
 convenient way to allow users to customize configuration variables in
 the GUI.  If you set up certain Java bean-style accessors for your
 configuation variables,  the configuration controls magically appear.
@@ -41,9 +74,9 @@ configuration info, and it does the rest.  This means that it does a
 lot of things in way that's usually hidden, and you just have to know 
 part of what it's doing--see below--but the alternative is worse.
 
-### Using `defparams`
+## Using `defparams`
 
-#### Things you must provide:
+### Things you must provide:
 
 `defparams` requires that the subclass of Mason's `SimState` be
 named `Sim`.  (It wouldn't be hard to modify defparams.clj to allow it to
@@ -60,7 +93,7 @@ You also must typically precede the call to `defparams` with this:
 I couldn't figure out how to move this into the `defparams` definition.
 (I name variables that contain atoms with "$" as a suffix.)
 
-#### The `defparams` call
+### The `defparams` call
 
 Example of the use of `defparams` in Sim.clj in my pasta repo:
 
@@ -143,7 +176,7 @@ See the expansion of the above code, below, for details about what
 `defparams` does.
 
 
-#### Accessing configuration data
+### Accessing configuration data
 
 You can access the global configuration data in the `SimData` defrecord
 stored in the `simData` instance variable of your class `Sim` by getting
@@ -192,7 +225,7 @@ like this:
     ...))
 ```
 
-### What `defparams` expands to
+## What `defparams` expands to
 
 To see what your `defparams` call does, you can pass the  quoted
 expression containing it to `macroexpand-1`.  You might also want to
