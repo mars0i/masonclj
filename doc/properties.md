@@ -1,21 +1,26 @@
 `masonclj.properties`: `defagent`, `make-properties`
 ===
 
-`masonclj.properties` provides two potentially useful functions,
-`defagent` and `make-properties`.
+`masonclj.properties` provides two Clojure operators, `defagent` and
+`make-properties`, to ease use of the [MASON](https://cs.gmu.edu/~eclab/projects/mason)
+ABM library with Clojure.
 
 ## Rationale
 
-See also doc/ClojureMasonInteropTips.md and doc/functionalMASON.md.
+(See also
+[doc/ClojureMasonInteropTips.md](ClojureMasonInteropTips.md) and
+[doc/functionalMASON.md](functionalMASON.md).)
 
-### Inspection
+### Inspectors
 
 MASON provides a convenient "inspector" facility to (a) track locations
 of agents on the screen, (b) watch values of fields within the agent,
 (c) plot values of fields over time, and (d) edit values of fields from
 the GUI (but I don't use that).  Usually if you double-click on an
 agent, the main window will display information about it, and it will be
-circled in the graphical representation of your simulation.
+circled in the graphical representation of your simulation.  (For detailed
+information see chapter 10 of the v.19 [MASON
+manual](https://cs.gmu.edu/~eclab/projects/mason/manual.pdf).
 
 ### Defrecords with functional updating
 
@@ -103,6 +108,8 @@ You can then use this with `partial` to create a closure over the data
 structure, and then pass this closure to `defagent` or
 `make-properties`.
 
-## Use of `defagent`
-
 ## Use of `make-properties`
+
+
+
+## Use of `defagent`
