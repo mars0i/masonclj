@@ -14,7 +14,7 @@ version number in project.clj or pom.xml here).  For example, if you are
 using Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
 `:dependencies` vector in project.clj.
 
-2. See [doc/defparams.md](doc/defparams.md).
+2. See [doc/defparams.md](https://github.com/mars0i/masonclj/blob/master/doc/params.md).
 
 ## License
 

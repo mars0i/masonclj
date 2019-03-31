@@ -8,8 +8,8 @@ ABM library with Clojure.
 ## Rationale
 
 (See also
-[doc/ClojureMasonInteropTips.md](ClojureMasonInteropTips.md) and
-[doc/functionalMASON.md](functionalMASON.md).)
+[doc/ClojureMasonInteropTips.md](https://github.com/mars0i/masonclj/blob/master/doc/ClojureMASONinteropTips.md) and
+[doc/functionalMASON.md](https://github.com/mars0i/masonclj/blob/master/doc/functionalMASON.md).)
 
 ### Inspectors
 
