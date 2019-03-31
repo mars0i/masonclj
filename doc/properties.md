@@ -1,12 +1,12 @@
 `masonclj.properties`: `defagent`, `make-properties`
 ===
 
+`masonclj.properties` provides two potentially useful functions,
+`defagent` and `make-properties`.
+
 ## Rationale
 
 See also doc/ClojureMasonInteropTips.md and doc/functionalMASON.md.
-
-`masonclj.properties` provides potentially useful two functions,
-`defagent` and `make-properties`.
 
 ### Inspection
 
