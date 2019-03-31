@@ -1,4 +1,4 @@
-`masonclj.properties`: `defagent` and `make-properties`
+`masonclj.properties`: `defagent`, `make-properties`
 ===
 
 ## Rationale
