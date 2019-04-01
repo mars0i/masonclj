@@ -1,11 +1,9 @@
-# masonclj
+masonclj
+===
 
-[TO ADD: documentation on `make-properties`.]
-
-A very small library to ease use of MASON with Clojure.  It provides the
-`masonclj.params/defparams` macro, for use in a Clojure source file
-that's intended to subclass MASON's `sim.engine.SimState` (which will be
-done, along with other things, by `defparams`).
+A very small library that provides functions and macros that smooth a
+few rough edges to using MASON in Clojure.  (The rough edges are due to
+reasonable design choices by the architects of both Clojure and MASON.)
 
 ## Usage
 
@@ -14,7 +12,8 @@ version number in project.clj or pom.xml here).  For example, if you are
 using Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
 `:dependencies` vector in project.clj.
 
-2. See [doc/defparams.md](https://github.com/mars0i/masonclj/blob/master/doc/params.md).
+2. See the [README](https://github.com/mars0i/masonclj/blob/master/doc/README.md)
+in the **doc** directory for more information.
 
 ## License
 

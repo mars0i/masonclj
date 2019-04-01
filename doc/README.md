@@ -1,12 +1,59 @@
-README.md
+masonclj documentation
 ====
-# Code documentation
 
-## What's in files here?
+## masonclj:
 
-* defparams.md: Documentation on the `defsim` macro in `utils.defsim`.
-This is used in Sim.clj and generates code whose effects are used
-throughout pasta.
+### Model parameters coordination:
+
+See [params.md](https://github.com/mars0i/masonclj/blob/master/doc/params.md)
+for documentation on the `defparams` macro in the `masonclj.params`
+package.  It does two things:
+
+1. Generates a series of coordinated definitions for model
+parameters.  It's useful to include a series of related definitions
+for model parameters.  In Clojure, many of would naturally be put in
+diffent locations in your code, and in some cases they must be put
+in different places.  `defparams` generates these definitions
+all at once, making it easier to keep them coordinated.
+
+2. Moves global configuration data into its own namespace.  There
+are some situations in which it's useful to put global
+configuration data in a separate namespace to avoid cyclic
+dependencies (which Clojure doesn't always allow).  The global
+configuration data is used by the model parameter definitions.
+
+### Tracking agents in the GUI:
+
+See
+[properties.md](https://github.com/mars0i/masonclj/blob/master/doc/properties.md)
+for documentation on the `defagent` macro and the `make-properties`
+function in the `masonclj.properties`.  These allow you to use
+functionally updated defrecord objects as MASON agents while still
+making it possible to track an agent in the MASON GUI using MASON's
+inspector functionality.
+
+
+
+## Miscellaneous notes:
+
+### Variable naming
+
+General naming convention: I sometimes use CamelCase to name things
+that have a Java-ey role with MASON, but mostly use Clojure-standard
+kebab-case.
+
+Variables containing Clojure atoms: I name variables that contain atoms with "$" at the end of their
+names. This is nonstandard; the norm in Clojure is to give atom
+variables normal names. Sometimes it's convenient to have both a
+variable containing and atom and one containing a dereferenced version
+of the same data.  A naming convention makes it clear which is which.
+Using a suffix that is not "@" (an obvious choice) seems easiest to
+read.  
+
+## Other files in this directory:
+
+* ABMsInClojure.md: General notes on options for writing ABMs in
+Clojure.
 
 * functionalMASON.md: Notes on strategies for writing in a more
 functional-programming style using MASON.
@@ -26,13 +73,5 @@ eke out as much speed from MASON as possible, but the interopTips
 document provides the background for my approach in pasta, including
 the `defsim` macro.
 
-## Miscellaneous notes:
-
-* Notes on variable naming: Variables that contain atoms have "$" at
-the end of their names. This is nonstandard; the norm in Clojure is to
-give atom variables normal names. Sometimes it's convenient to have
-both a variable containing and atom and one containing a dereferenced
-version of the same data.  A naming convention makes it clear which is
-which. Using a suffix that is not "@" (an obvious choice) seems
-easiest to read.  I sometimes use CamelCase to name things that have a
-Java-ey role with MASON, but mostly use Clojure-standard kebab-case.
+* getName.txt: Some notes about an (unimportant and somewhat obscure)
+bug that occurs when using MASON in Clojure.
