@@ -15,7 +15,7 @@ masonclj provides two kinds functions and macros for two purposes:
 
 See [params.md](https://github.com/mars0i/masonclj/blob/master/doc/params.md)
 for documentation on the `defparams` macro in the `masonclj.params`
-package.  It does two things:
+package.  `defparams` does two things:
 
 1. Generates a series of coordinated definitions for model
 parameters.  It's useful to include a series of related definitions
