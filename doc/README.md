@@ -1,5 +1,6 @@
 masonclj documentation
 ====
+Marshall Abrams
 
 ## Overview
 

@@ -1,5 +1,6 @@
 Notes toward functional-style MASON
 ====
+Marshall Abrams
 
 ## defrecord vs. deftype
 

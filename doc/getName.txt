@@ -1,4 +1,5 @@
-A note on why MASON's getName method doesn't work with Clojure:
+A note on why MASON's getName method doesn't work with Clojure
+Marshall Abrams
 
 This is due to an obscure corner of the already obscure gen-class
 corner: When a method has multiple arities in the super, you have to
