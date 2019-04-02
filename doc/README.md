@@ -1,9 +1,16 @@
 masonclj documentation
 ====
 
-## masonclj:
+## Overview
 
-### Model parameters coordination:
+masonclj provides two kinds functions and macros for two purposes:
+
+* Making easier to define parameters for control of a model via the
+  GUI and the command line.
+* Making it easier to track agents using the MASON inspector
+  facilities if you use defrecords to implement agents.
+
+### Model parameters coordination
 
 See [params.md](https://github.com/mars0i/masonclj/blob/master/doc/params.md)
 for documentation on the `defparams` macro in the `masonclj.params`
@@ -22,7 +29,7 @@ configuration data in a separate namespace to avoid cyclic
 dependencies (which Clojure doesn't always allow).  The global
 configuration data is used by the model parameter definitions.
 
-### Tracking agents in the GUI:
+### Tracking agents in the GUI
 
 See
 [properties.md](https://github.com/mars0i/masonclj/blob/master/doc/properties.md)
@@ -32,6 +39,19 @@ functionally updated defrecord objects as MASON agents while still
 making it possible to track an agent in the MASON GUI using MASON's
 inspector functionality.
 
+## Other documentation files
+
+* ABMsInClojure.md: General notes on options for writing ABMs in
+Clojure.
+
+* functionalMASON.md: Notes on strategies for writing in a more
+functional-programming style using MASON.
+
+* ClojureMASONinteropTips.md: General notes on Clojure-Java interop
+relevant to use of Clojure with MASON.  
+
+* getName.txt: Some notes about an (unimportant and somewhat obscure)
+bug that occurs when using MASON in Clojure.
 
 
 ## Miscellaneous notes:
@@ -49,29 +69,3 @@ variable containing and atom and one containing a dereferenced version
 of the same data.  A naming convention makes it clear which is which.
 Using a suffix that is not "@" (an obvious choice) seems easiest to
 read.  
-
-## Other files in this directory:
-
-* ABMsInClojure.md: General notes on options for writing ABMs in
-Clojure.
-
-* functionalMASON.md: Notes on strategies for writing in a more
-functional-programming style using MASON.
-
-* ClojureMASONinteropTips.md: General notes on Clojure-Java interop
-relevant to use of Clojure with MASON.  This document came from my
-experiments implementing MASON's Students example in Clojure (see the
-<a href="https://github.com/mars0i/majure">majure</a> repo).  This
-document reflected my focus at the time on producing code that was as
-fast as possible.  After the majure experiments, I applied what I'd
-learned in the <a
-href="https://github.com/mars0i/intermittran">intermittran</a> repo. 
-The resulting code in intermittran is not very idiomatic to Clojure,
-and unpleasant, imo.  My current approach is to worry more about
-trying to write (relatively) idiomatic Clojure rather than trying to
-eke out as much speed from MASON as possible, but the interopTips
-document provides the background for my approach in pasta, including
-the `defsim` macro.
-
-* getName.txt: Some notes about an (unimportant and somewhat obscure)
-bug that occurs when using MASON in Clojure.
