@@ -64,10 +64,16 @@ General naming convention: I sometimes use CamelCase to name things
 that have a Java-ey role with MASON, but mostly use Clojure-standard
 kebab-case.
 
-Variables containing Clojure atoms: I name variables that contain atoms with "$" at the end of their
-names. This is nonstandard; the norm in Clojure is to give atom
-variables normal names. Sometimes it's convenient to have both a
-variable containing and atom and one containing a dereferenced version
-of the same data.  A naming convention makes it clear which is which.
-Using a suffix that is not "@" (an obvious choice) seems easiest to
-read.  
+Variables containing Clojure atoms: I name variables that contain atoms
+with "$" at the end of their names. (This is nonstandard; the norm in
+Clojure is to give atom variables normal names.)  The reason for this
+convention is that sometimes it's convenient to have both variables
+containing an atom and variables containing a dereferenced version of
+the same data.  These might be in the same function, or they might be
+used in different functions; either way it's important to know which is
+which.  A naming convention makes this distinction clear.  (Using a
+prefix means that when you add the `@` sign, you get a little jumble of
+non-alphabetic characters at the beginnings of variables, which can be a
+little bit hard on the eye.  Using a suffix that is not "@"--an obvious
+choice--seems easiest to read, because then the visual meaning of `@` is
+always the same.)
