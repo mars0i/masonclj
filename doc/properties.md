@@ -2,8 +2,15 @@
 ===
 
 `masonclj.properties` provides two Clojure operators, `defagent` and
-`make-properties`, to ease use of the [MASON](https://cs.gmu.edu/~eclab/projects/mason)
-ABM library with Clojure.
+`make-properties`; both are designed to ease use of 
+the [MASON](https://cs.gmu.edu/~eclab/projects/mason) ABM library with 
+Clojure.  
+
+`make-properties` makes it easier to use MASON inspectors to
+track agents in the GUI even if you implement agents as defrecords--which 
+don't have modifiable fields, so the same agent might be
+represented by different "time slice" defrecords at different times.
+And `defagent` makes it simpler to use `make-properties`.
 
 ## Rationale
 
