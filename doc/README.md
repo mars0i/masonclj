@@ -41,22 +41,23 @@ inspector functionality.
 
 ## Other documentation files
 
-* ABMsInClojure.md: General notes on options for writing ABMs in
-Clojure.
+* [ABMsInClojure.md](https://github.com/mars0i/masonclj/blob/master/doc/ABMsInClojure.md):
+General notes on options for writing ABMs in Clojure.
 
-* functionalMASON.md: Notes on strategies for writing in a more
+* [functionalMASON.md](https://github.com/mars0i/masonclj/blob/master/doc/functionalMASON.md):
+ Notes on strategies for writing in a more
 functional-programming style using MASON.
 
-* ClojureMASONinteropTips.md: General notes on Clojure-Java interop
-relevant to use of Clojure with MASON.  
+* [ClojureMASONinteropTips.md](https://github.com/mars0i/masonclj/blob/master/doc/ClojureMASONinteropTips.md):
+General notes on Clojure-Java interop relevant to use of Clojure with
+MASON. 
 
-* getName.txt: Some notes about an (unimportant and somewhat obscure)
-bug that occurs when using MASON in Clojure.
+* [getName.txt](https://github.com/mars0i/masonclj/blob/master/doc/getName.txt):
+A note about an (unimportant and somewhat obscure) bug that occurs
+when using MASON in Clojure.
 
 
-## Miscellaneous notes:
-
-### Variable naming
+## Notes on variable naming
 
 General naming convention: I sometimes use CamelCase to name things
 that have a Java-ey role with MASON, but mostly use Clojure-standard
