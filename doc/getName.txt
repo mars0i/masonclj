@@ -1,12 +1,15 @@
-Notes on why MASON's getName method doesn't work with Clojure:
-
-;; getName():
-(defn -getName-void [this] "free-agent") ; override method in super. should cause this to be displayed as title of config window of gui, but it doesn't.
+A note on why MASON's getName method doesn't work with Clojure:
 
 This is due to an obscure corner of the already obscure gen-class
 corner: When a method has multiple arities in the super, you have to
 distinguish them by tacking type specifiers on to the name of the
 method!
+
+Example:
+
+(defn -getName-void [this] "free-agent") ; override method in super. should cause this to be displayed as title of config window of gui, but it doesn't.
+
+See:
 
 https://groups.google.com/forum/#!topic/clojure/TVRsy4Gnf70
 https://puredanger.github.io/tech.puredanger.com/2011/08/12/subclassing-in-clojure (in which Alex Miller of all people learns from random others)
