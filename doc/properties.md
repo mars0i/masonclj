@@ -1,5 +1,6 @@
 `masonclj.properties`: `defagent`, `make-properties`
 ===
+Marshall Abrams
 
 `masonclj.properties` provides two Clojure operators, `defagent` and
 `make-properties`; both are designed to ease use of 
