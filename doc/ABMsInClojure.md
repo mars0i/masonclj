@@ -209,7 +209,9 @@ I like.
 
 Fortunately, MASON provides a workaround for this situation; you can
 define a method that MASON can call to get the current state of an
-agent, but it's a bit of work to write.
+agent, but it's a bit of work to write.  I defined a function
+`make-properties` and a macro `defparams` to do most of the work for
+you.
 
 (The other problem with defrecords occurs if you want your agents to
 move with continuous coordinates rather than on a grid.  MASON
