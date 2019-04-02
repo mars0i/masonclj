@@ -6,11 +6,27 @@ Marshall Abrams
 experimenting with different ways to implement the Students example in
 Clojure, and other tips.**
 
-My goal was to see what's involved in writing a MASON simulation using
-only Clojure by using Clojure to rewrite the Students simulation in
-chapter 2 of the v18 MASON manual.  In the *majure* git repo there are
-several versions of Students--each exploring different ways of writing
-the Students simulation.
+This document came from my experiments implementing MASON's Students
+example in Clojure (see the <a
+href="https://github.com/mars0i/majure">majure</a> repo).  Specific
+versions of the Students model mentioned below can be found in that
+repo.
+
+This document reflects my focus at the time on producing Clojure/MASON
+code  that was as fast as possible.  After the majure experiments, I
+applied what I'd learned in the <a
+href="https://github.com/mars0i/intermittran">intermittran</a> repo.
+The resulting code in intermittran is not very idiomatic to Clojure, and
+unpleasant, imo.  My current approach is to worry more about trying to
+write (relatively) idiomatic Clojure than trying to eke out as much
+speed from MASON as possible, but this  document provides the background
+for my current approach.
+
+Specifically, my goal was to see what's involved in writing a MASON
+simulation using only Clojure by using Clojure to rewrite the Students
+simulation in chapter 2 of the v18 MASON manual.  In the *majure* git
+repo there are several versions of Students--each exploring different
+ways of writing the Students simulation.
 
 These notes aren't intended to be self-explanatory to someone who's
 unfamiliar with Clojure or unfamiliar with MASON, and it may be that there
@@ -114,12 +130,17 @@ structure objects used in the Students simulation, such as
 `deftype` is so much faster than `defrecord` in Students.  (Note that
 although you can override some `Object` methods on records, you can't
 override `hashCode()` and `equals()`.)  Since such hashtable lookups are
-common in MASON, the lesson is that if you need a named class that
-doesn't extend a class, you have to decide whether you'd rather have the
+common in MASON, the lesson is that *if* you need a named class that
+doesn't extend a class, *and* you are using something like
+`Continuous2D` that uses hashtables to store agents, then you have to decide whether you'd rather have the
 speed of `deftype` or the additional functionality of `defrecord` (e.g.
-the ability to initialize new instances from Clojure maps).  Steven Yi
+the ability to initialize new instances from Clojure maps).  [Steven Yi
 and others on the Clojure Google group helped me to understand all  of
-this.
+this.]  If your agents are stored on a grid with a finite number of
+cells, however, this difference between `defrecord` and `deftype`
+probably won't matter.  MASON implements this kind of grid with Java
+arrays, so finding an object in arrays just involves indexing into
+them.
 
 
 ### Mutable state
@@ -191,11 +212,12 @@ probably better style to use `definterface` if you don't need
 
 ### Type hints
 
-Type hints make a *huge* difference in speed, when used to avoid
-reflection.  `(set! *warn-on-reflection* true)` will turn on reflection
-compilation warnings.  I try to restrict type hints to use in and near
-parameter lists, but sometimes I've needed to stick them in the middle
-of a function's code.  Sometimes you can avoid type hints using
+Type hints *can* sometimes make a *huge* difference in speed, when used
+to avoid reflection in code that executes often.  `(set!
+*warn-on-reflection* true)` will turn on reflection compilation
+warnings.  I try to restrict type hints to use in and near parameter
+lists, but sometimes I've needed to stick them in the middle of a
+function's code.  Sometimes you can avoid type hints using
 `definterface` or `gen-interface` (and maybe `defprotocol`--I'm not
 sure).
 
