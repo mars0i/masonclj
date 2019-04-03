@@ -41,21 +41,16 @@
   3-element sequences, in which the first element is a key for a field 
   in the agent, the second element is a Java type for the field, and the
   third element is a string describing the field.  This function assumes
-  that the defrecord contains a field named circled$ containing an atom
-  containing a boolean."
+  that the defrecord contains an initial field named circled$ containing
+  an atom containing a boolean."
   [get-curr-obj & fields]
-  (let [data-field-keys (map data-field-key fields)
-        data-types (map data-type fields)
-        data-descriptions (map data-description fields)
+  (let [property-keys (vec (map data-field-key fields))
+        types (vec (map data-type fields))
+        descriptions (vec (map data-description fields))
         ;; Shadow the first four parameters by adding circled$:
-        property-keys (vec (cons :circled$ data-field-keys)) ; circled$ assumed first below
-        descriptions (vec (cons "Boolean indicating whether circled in GUI"
-                                data-descriptions))
-        types (vec (cons java.lang.Boolean data-types))
-        num-data-fields (count data-field-keys)
         num-properties (count property-keys)
         names (mapv name property-keys)
-        are-writeable (vec (cons true (repeat num-data-fields false)))
+        are-writeable (vec (cons true (repeat num-properties false)))
         hidden        (vec (repeat num-properties false)) ; no properties specified here are to be hidden from GUI
         id (:id (get-curr-obj))] ; If the original agent doesn't have a field named "id", this will be nil.
     (reset! (:circled$ (get-curr-obj)) true) ; make-properties is only called by inspector, in which case highlight snipe in UI
@@ -91,10 +86,13 @@
   (let [clojure-constructor-sym# (symbol (str "->" agent-type))
         defagent-constructor-sym# (symbol (str "-->" agent-type))]
     `(do
+       ;(prn [[:circled$ java.lang.Boolean "Field that indicates whether agent is circled in GUI."] ~@gui-fields-specs])
        (defrecord ~agent-type [~'circled$ ~@fields]
          Propertied
          (properties [original-snipe#]
-           (make-properties (~make-get-curr-obj original-snipe#) ~@gui-fields-specs))
+           (make-properties (~make-get-curr-obj original-snipe#)
+                            [:circled$ java.lang.Boolean "Field that indicates whether agent is circled in GUI."]
+                            ~@gui-fields-specs))
          Object
          (toString [obj#] (str "<" '~agent-type " " (:id obj#) ">")) ; will work even if id doesn't exist
          ~@addl-defrecord-args)
