@@ -45,21 +45,23 @@
   each of which the first element is a key for a field in the agent, the
   second is a Java type for that field, and the third is a string
   describing the field.
-  make-properties assumes that the defrecord returned by curr-agent-slice 
-  contains a field named circled$ containing an atom around a boolean, which
-  will track whether the agent is circled in the GUI."
+  If the defrecord that implements Propertied contains contains a field 
+  named circled$ (containing an atom around a boolean), this will be used
+  to track whether the agent is circled in the GUI."
   [curr-agent-slice & fields]
   (let [property-keys (vec (map data-field-key fields))
         circled$-idx (.indexOf property-keys :circled$) ; returns -1 if not found
         types (vec (map data-type fields))
         descriptions (vec (map data-description fields))
-        ;; Shadow the first four parameters by adding circled$:
         num-properties (count property-keys)
         names (mapv name property-keys)
         are-writeable (vec (cons true (repeat num-properties false)))
         hidden        (vec (repeat num-properties false)) ; no properties specified here are to be hidden from GUI
         id (:id (curr-agent-slice))] ; If the original agent doesn't have a field named "id", this will be nil.
-    (reset! (:circled$ (curr-agent-slice)) true) ; this will fail if no circled$ field
+    ;; I don't want to require that there be a circled$ field--maybe you just don't care about this in the GUI.
+    ;; And I don't want a cryptic exception to be thrown, nor to print a warning every time this is called.
+    (when (>= circled$-idx 0) ; So we'll silently ignore absence of a circled$ field.
+      (reset! (:circled$ (curr-agent-slice)) true)) ; this would fail if no circled$ field
     (proxy [Properties] [] ; the methods below are expected by Properties
       (getObject [] (curr-agent-slice))
       (getName [i] (names i))
