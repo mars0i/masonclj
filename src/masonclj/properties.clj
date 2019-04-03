@@ -85,7 +85,6 @@
   (let [clojure-constructor-sym# (symbol (str "->" agent-type))
         defagent-constructor-sym# (symbol (str "-->" agent-type))]
     `(do
-       ;(prn [[:circled$ java.lang.Boolean "Field that indicates whether agent is circled in GUI."] ~@gui-fields-specs])
        (defrecord ~agent-type [~'circled$ ~@fields]
          Propertied
          (properties [original-snipe#]
