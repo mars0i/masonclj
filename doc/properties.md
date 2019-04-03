@@ -148,7 +148,7 @@ sequences in each of which the first element is a key for a field in the agent,
 the second is a Java type for that field, and the third is a string
 describing the field.
 
-If the defrecord that implements Propertied contains contains a field
+If the defrecord that implements `Propertied` contains contains a field
 named `circled$`, which should contain an atom around a boolean, this
 will be used to track whether the agent is circled in the GUI.
 
