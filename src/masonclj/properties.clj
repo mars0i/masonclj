@@ -50,7 +50,7 @@
         are-writeable (vec (cons true (repeat num-properties false)))
         hidden        (vec (repeat num-properties false)) ; no properties specified here are to be hidden from GUI
         id (:id (get-curr-obj))] ; If the original agent doesn't have a field named "id", this will be nil.
-    (reset! (:circled$ (get-curr-obj)) true) ; make-properties is only called by inspector, in which case highlight snipe in UI
+    (reset! (:circled$ (get-curr-obj)) true) ; this will fail if no circled$ field
     (proxy [Properties] [] ; the methods below are expected by Properties
       (getObject [] (get-curr-obj))
       (getName [i] (names i))
