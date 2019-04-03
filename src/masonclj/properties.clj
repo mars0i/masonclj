@@ -40,7 +40,7 @@
   will always return the current time-slice of the agent.  (It may be a
   closure over information in the original agent slice that will be
   passed to Propertied's properties method; this information might be
-  used to look up the current slice.)
+  used to look up the current slice.  See defagent source for illustration.)
   The fields argument consists of zero or more 3-element sequences in
   each of which the first element is a key for a field in the agent, the
   second is a Java type for that field, and the third is a string
