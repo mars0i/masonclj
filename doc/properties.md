@@ -105,16 +105,20 @@ the process of implementing `Propertied`.
 ## The time-slice look up function
 
 Note that to use either `defagent` or `make-properties`, you will have
-to define a function that accepts an agent time-slice as an argument,
-and knows how to use it to look up the current time slice of the same
-agent.  This is the first argument to `make-properties`, or the third
-argument to `defagent`.  In my code, I create a higher-order function
-called `make-get-curr-obj` which takes a first argument which contains
-(something containing) a map from id's to current agent-time-slices, and
-a second argument that will be the first time-slice of a given agent.
-You can then use this with `partial` to create a closure over the data
-structure, and then pass this closure to `defagent` or
-`make-properties`.
+to generate a function that always returns the current time-slice of an
+agent.  This is the first argument to `make-properties`.  A good way to
+do this is to use the argument to the `properties` method of
+`Propertied` to get an id or some other information that can be closed
+over to produce the needed function.  The third argument to `defagent`
+is designed for this purpose.
+
+(In my code, I create a higher-order function called that takes a first
+argument containing something containing a map from id's to current
+agent-time-slices, and a second argument that will be the first
+time-slice of a given agent.  You can then use this with `partial` to
+create a closure over the data structure, and then pass this closure to
+`defagent` or `make-properties`.)
+
 
 ## Use of `make-properties`
 
