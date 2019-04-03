@@ -12,10 +12,6 @@
 ;; to track an agent's identity over time even though it's a
 ;; defrecord whose JVM identity keeps changing as it's updated.
 
-;; Predicate that indicates that we are looking at the index of
-;; circled$ in make-properties' internal sequences:
-(def circled-idx? zero?)
-
 ;; More informative sequence accessor abbreviations:
 (def data-field-key first)
 (def data-type second)
@@ -45,6 +41,7 @@
   an atom containing a boolean."
   [get-curr-obj & fields]
   (let [property-keys (vec (map data-field-key fields))
+        circled$-idx (.indexOf property-keys :circled$) ; returns -1 if not found
         types (vec (map data-type fields))
         descriptions (vec (map data-description fields))
         ;; Shadow the first four parameters by adding circled$:
@@ -65,7 +62,7 @@
                 (keyword? v) (name v)
                 :else v)))
       (setValue [i newval]      ; allows user to turn off circled in UI
-        (when (circled-idx? i)  ; no other properties are settable from GUI (but make-properties could be modified to allow this)
+        (when (= circled$-idx i)  ; If no circled$ field, this will simply never fire
           (reset! (:circled$ (get-curr-obj))
                   (Boolean/valueOf newval)))) ; it's always a string that's returned from UI. (Do *not* use (Boolean. newval); it's always truthy in Clojure.)
       (isHidden [i] (hidden i))
