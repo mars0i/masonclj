@@ -17,16 +17,17 @@
 (def data-type second)
 (def data-description u/third)
 
-;; TODO? There's no reason to use vectors to extract the elements 
-;; needed in the Properties methods.  I could use the original
-;; 3-term sequences, or maps.
-
 ;; Current version of next function does not allow any fields to be
 ;; modifiable from the GUI.  The code could be extended to allow this.
 ;; Code below makes use of the fact that in Clojure, vectors can be treated
 ;; as functions of indexes, returning the indexed item; that keywords such
 ;; as :x can be treated as functions of maps; and that defrecords such as
 ;; snipes can be treated as maps.
+;; Q: Why is data accessed by indexes into vectors?
+;; A: Because MASON passes indexes to Properties methods.
+;; Q: Should the fields argument consiste of maps rather than vectors?
+;; A: Maybe, but not in a verbose way.  Maybe if the field key were
+;;    used as the key, and the other stuff was in a value.
 (defn make-properties
   "Returns a Properties subclass for use by Propertied's properties
   method so that certain fields can be displayed in the GUI on request.
