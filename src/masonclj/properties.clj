@@ -29,19 +29,26 @@
 ;; A: Maybe, but not in a verbose way.  Maybe if the field key were
 ;;    used as the key, and the other stuff was in a value.
 (defn make-properties
-  "Returns a Properties subclass for use by Propertied's properties
-  method so that certain fields can be displayed in the GUI on request.
-  Used by the MASON GUI to allow inspectors to follow a functionally updated
-  agent, i.e. one whose JVM identity may change over time.  
-  get-curr-object should be a no-arg function that knows how to look up
-  the current time-slice of the agent.  fields consists of zero or more 
-  3-element sequences, in which the first element is a key for a field 
-  in the agent, the second element is a Java type for the field, and the
-  third element is a string describing the field.  This function assumes
-  that the defrecord contains a field named circled$ containing
-  an atom containing a boolean.  This determines whether the agent will be
-  circled in the GUI."
-  [get-curr-obj & fields]
+  "Returns a Properties subclass for use by an agent defrecord's Propertied's
+  properties method, so that certain fields can be displayed in the GUI on 
+  request.  Used by the MASON GUI to allow inspectors to follow a functionally 
+  updated agent, i.e. one whose JVM identity may change over time.  (If an
+  agent type is a defrecord but is never modified, or agents are objects that
+  that retain [pointer] identity when modified, then there's no need to
+  implement the Propertied interface.)  
+  The curr-agent-slice argument should be a parameterless function that
+  will always return the current time-slice of the agent.  (It may be a
+  closure over information in the original agent slice that will be
+  passed to Propertied's properties method; this information might be
+  used to look up the current slice.)
+  The fields argument consists of zero or more 3-element sequences in
+  each of which the first element is a key for a field in the agent, the
+  second is a Java type for that field, and the third is a string
+  describing the field.
+  make-properties assumes that the defrecord returned by curr-agent-slice 
+  contains a field named circled$ containing an atom around a boolean, which
+  will track whether the agent is circled in the GUI."
+  [curr-agent-slice & fields]
   (let [property-keys (vec (map data-field-key fields))
         circled$-idx (.indexOf property-keys :circled$) ; returns -1 if not found
         types (vec (map data-type fields))
@@ -51,21 +58,21 @@
         names (mapv name property-keys)
         are-writeable (vec (cons true (repeat num-properties false)))
         hidden        (vec (repeat num-properties false)) ; no properties specified here are to be hidden from GUI
-        id (:id (get-curr-obj))] ; If the original agent doesn't have a field named "id", this will be nil.
-    (reset! (:circled$ (get-curr-obj)) true) ; this will fail if no circled$ field
+        id (:id (curr-agent-slice))] ; If the original agent doesn't have a field named "id", this will be nil.
+    (reset! (:circled$ (curr-agent-slice)) true) ; this will fail if no circled$ field
     (proxy [Properties] [] ; the methods below are expected by Properties
-      (getObject [] (get-curr-obj))
+      (getObject [] (curr-agent-slice))
       (getName [i] (names i))
       (getDescription [i] (descriptions i))
       (getType [i] (types i))
       (getValue [i]
-        (let [v ((property-keys i) (get-curr-obj))]
+        (let [v ((property-keys i) (curr-agent-slice))]
           (cond (u/atom? v) @v
                 (keyword? v) (name v)
                 :else v)))
       (setValue [i newval]      ; allows user to turn off circled in UI
         (when (= circled$-idx i)  ; If no circled$ field, this will simply never fire
-          (reset! (:circled$ (get-curr-obj))
+          (reset! (:circled$ (curr-agent-slice))
                   (Boolean/valueOf newval)))) ; it's always a string that's returned from UI. (Do *not* use (Boolean. newval); it's always truthy in Clojure.)
       (isHidden [i] (hidden i))
       (isReadWrite [i] (are-writeable i))
@@ -73,22 +80,21 @@
       (numProperties [] num-properties)
       (toString [] (str "<SimpleProperties for agent " id ">")))))
 
-;; DO I REALLY WANT circled$ AS A LITERAL, i.e. CAN BE CAPTURED?
 (defmacro defagent
   "INCOMPLETE: fields must include a field named id; this is used in the toString
-  method for this agent.  make-get-curr-obj will be passed the original
+  method for this agent.  make-curr-agent-slice will be passed the original
   time-slice of this agent, and should return a no-argument function that
   will always return the current time-slice of the agent.  A field named
   circled$ will be added as the first field; it should always be initialized
   with an atom of a boolean."
-  [agent-type fields make-get-curr-obj gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
+  [agent-type fields make-curr-agent-slice gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
   (let [clojure-constructor-sym# (symbol (str "->" agent-type))
         defagent-constructor-sym# (symbol (str "-->" agent-type))]
     `(do
        (defrecord ~agent-type [~'circled$ ~@fields]
          Propertied
          (properties [original-snipe#]
-           (make-properties (~make-get-curr-obj original-snipe#)
+           (make-properties (~make-curr-agent-slice original-snipe#)
                             [:circled$ java.lang.Boolean "Field that indicates whether agent is circled in GUI."]
                             ~@gui-fields-specs))
          Object
@@ -96,4 +102,4 @@
          ~@addl-defrecord-args)
        (defn ~defagent-constructor-sym#
          [~@fields]
-         (~clojure-constructor-sym# (atom false) ~@fields)))))
+         (~clojure-constructor-sym# (atom false) ~@fields))))) ; (atom false) for circled$
