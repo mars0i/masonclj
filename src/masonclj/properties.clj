@@ -35,16 +35,14 @@
   "Returns a Properties subclass for use by Propertied's properties
   method so that certain fields can be displayed in the GUI on request.
   Used by the MASON GUI to allow inspectors to follow a functionally updated
-  agent, i.e. one whose JVM identity may change over time.  id is used
-  only in the toString string used to describe the agent in the GUI.
+  agent, i.e. one whose JVM identity may change over time.  
   get-curr-object should be a no-arg function that knows how to look up
-  the current time-slice of the agent.  (It might be a closure over an
-  id generated for the initial time-slice, for example.)  fields
-  consists of zero or more 3-element sequences, in which the first
-  element is a key for a field in the agent, the second element is a
-  Java type for the field, and the third element is a string describing
-  the field.  This function assumes that the defrecord contains a field
-  named circled$ containing an atom containing a boolean."
+  the current time-slice of the agent.  fields consists of zero or more 
+  3-element sequences, in which the first element is a key for a field 
+  in the agent, the second element is a Java type for the field, and the
+  third element is a string describing the field.  This function assumes
+  that the defrecord contains a field named circled$ containing an atom
+  containing a boolean."
   [get-curr-obj & fields]
   (let [data-field-keys (map data-field-key fields)
         data-types (map data-type fields)
