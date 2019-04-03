@@ -38,8 +38,9 @@
   3-element sequences, in which the first element is a key for a field 
   in the agent, the second element is a Java type for the field, and the
   third element is a string describing the field.  This function assumes
-  that the defrecord contains an initial field named circled$ containing
-  an atom containing a boolean."
+  that the defrecord contains a field named circled$ containing
+  an atom containing a boolean.  This determines whether the agent will be
+  circled in the GUI."
   [get-curr-obj & fields]
   (let [property-keys (vec (map data-field-key fields))
         circled$-idx (.indexOf property-keys :circled$) ; returns -1 if not found
