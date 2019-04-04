@@ -128,13 +128,13 @@ masonclj.properties/make-properties
 ```
 
 `make-properties` returns a `Properties` subclass that can be returned
-for use by an agent defrecord's `Propertied`'s `propertie`s method.
-This can allow fields to be displayed in the GUI on request:  It will be
-used by the MASON GUI to allow inspectors to follow a functionally
-updated agent, i.e. one whose JVM identity may change over time.  (If an
-agent type is a defrecord but is never modified, or agents are objects
-that that retain pointer identity when modified, there's no need
-to implement the `Propertied` interface.)
+by the `properties` method implemented by agent defrecord for its
+`Propertied` interface.  This can allow fields to be displayed in the
+GUI on request:  It will be used by the MASON GUI to allow inspectors to
+follow a functionally updated agent, i.e. one whose JVM identity may
+change over time.  (If an agent type is a defrecord but is never
+modified, or agents are objects that that retain pointer identity when
+modified, there's no need to implement the `Propertied` interface.)
 
 The `curr-agent-slice` argument should be a parameterless function that
 always returns the current time-slice of an agent.  (The function might 
