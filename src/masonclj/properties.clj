@@ -29,26 +29,26 @@
 ;; A: Maybe, but not in a verbose way.  Maybe if the field key were
 ;;    used as the key, and the other stuff was in a value.
 (defn make-properties
-  "make-properties returns a Properties subclass that can be returned by
-  the properties method implemented by agent defrecord for its
-  Propertied interface.  This can allow fields to be displayed in the
-  GUI on request:  It will be used by the MASON GUI to allow inspectors
-  to follow a functionally updated agent, i.e. one whose JVM identity
-  may change over time.  (If an agent type is a defrecord but is never
-  modified, or agents are objects that that retain pointer identity when
-  modified, there's no need to implement the Propertied interface.) The
-  curr-agent-slice argument should be a parameterless function that
-  always returns the current time-slice of an agent.  (The function
-  might be a closure over information in the original agent slice that
-  will be passed to Propertied's properties method, and this information
-  might be used to look up the current slice.  See the defagent source
-  for illustration.) The fields argument consists of zero or more
-  3-element sequences in each of which the first element is a key for a
-  field in the agent, the second is a Java type for that field, and the
-  third is a string describing the field.  If the defrecord that
-  implements Propertied contains contains a field named circled$, which
-  should contain an atom around a boolean, this will be used to track
-  whether the agent is circled in the GUI."
+  "make-properties returns a sim.util.Properties subclass that can be
+  returned by the properties method implemented by agent defrecord for
+  its sim.util.Propertied interface.  This can allow fields to be
+  displayed in the GUI on request:  It will be used by the MASON GUI to
+  allow inspectors to follow a functionally updated agent, i.e. one
+  whose JVM identity may change over time.  (If an agent type is a
+  defrecord but is never modified, or agents are objects that that
+  retain pointer identity when modified, there's no need to implement
+  the Propertied interface.) The curr-agent-slice argument should be a
+  parameterless function that always returns the current time-slice of
+  an agent.  (The function might be a closure over information in the
+  original agent slice that will be passed to Propertied's properties
+  method, and this information might be used to look up the current
+  slice.  See the defagent source for illustration.) The fields argument
+  consists of zero or more 3-element sequences in each of which the
+  first element is a key for a field in the agent, the second is a Java
+  type for that field, and the third is a string describing the field.
+  If the defrecord that implements Propertied contains contains a field
+  named circled$, which should contain an atom around a boolean, this
+  will be used to track whether the agent is circled in the GUI."
   [curr-agent-slice & fields]
   (let [property-keys (vec (map data-field-key fields))
         circled$-idx (.indexOf property-keys :circled$) ; returns -1 if not found
@@ -83,22 +83,49 @@
            (numProperties [] num-properties)
            (toString [] (str "<SimpleProperties for agent " id ">")))))
 
+;; Note make-curr-agent-slice is a function make and not a simple
+;; function so that the result can be a closure over the first
+;; time slice.
 (defmacro defagent
-  "INCOMPLETE: fields must include a field named id; this is used in the toString
-  method for this agent.  make-curr-agent-slice will be passed the original
-  time-slice of this agent, and should return a no-argument function that
-  will always return the current time-slice of the agent.  A field named
-  circled$ will be added as the first field; it should always be initialized
-  with an atom of a boolean."
-  [agent-type fields make-curr-agent-slice gui-fields-specs & addl-defrecord-args] ; function-maker and not function so it can capture id inside 
+  "defagent defines a defrecord type and a corresponding factory
+  function: 1. defagent will defind the defrecord type with the name
+  given by the agent-type argument, and with field names specified in
+  the fields argument (a sequence), plus an additional initial field
+  named circled$.  This can be used to track whether an agent is circled
+  in the GUI. 2. defagent defines a special factory function, named with
+  the defrecord type name prefixed by '-->', that accepts  arguments for
+  the fields specified in defagent's fields argument, passing them to
+  the usual '->' factory function.  The '-->' factory function but will
+  also initialize the circled$ field to (atom false), so by default the
+  agent will not be circled in the gui. 3. In addition to any
+  user-supplied defrecord options and specs specified in the
+  addl-defrecord-args argument, the new defrecord will override
+  java.lang.Object's toString method to incorporate an agent id if id is
+  included as field in the fields argument, and the defrecord will
+  implement the MASON sim.util.Propertied interface. Propertied has one
+  method, properties, which is passed the first time-slice of an agent
+  and returns an instance of sim.util.Properties. The generated code
+  does this by calling masonclj.properties/make-properties. defagent
+  passes to make-properties the result of applying the
+  make-curr-agent-slice argument to the first time-slice; the result
+  should be a a 'current agent slice' function that can look up and
+  return an agent's current time-slice using information in its first
+  time-slice.  defagent also passes its gui-field-specs argument to
+  make-properties.  See documentation on make-properties for more
+  information on its parameters.  (Note that make-properties prefers
+  that the defrecord have a circled$ field, which is why defagent adds
+  circled$ to the new defrecord type.)"
+  [agent-type fields make-curr-agent-slice gui-fields-specs
+   & addl-defrecord-args]
   (let [clojure-constructor-sym# (symbol (str "->" agent-type))
         defagent-constructor-sym# (symbol (str "-->" agent-type))]
     `(do
        (defrecord ~agent-type [~'circled$ ~@fields]
          Propertied
-         (properties [original-snipe#]
-           (make-properties (~make-curr-agent-slice original-snipe#)
-                            [:circled$ java.lang.Boolean "Field that indicates whether agent is circled in GUI."]
+         (properties [first-slice#]
+           (make-properties (~make-curr-agent-slice first-slice#)
+                            [:circled$ java.lang.Boolean
+                             "Field that indicates whether agent is circled in GUI."]
                             ~@gui-fields-specs))
          Object
          (toString [obj#] (str "<" '~agent-type " " (:id obj#) ">")) ; will work even if id doesn't exist
