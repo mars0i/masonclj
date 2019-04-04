@@ -122,7 +122,7 @@ create a closure over the data structure, and then pass this closure to
 
 ## Use of `make-properties`
 
-```
+```clojure
 masonclj.properties/make-properties
 ([curr-agent-slice & fields])
 ```
@@ -155,3 +155,10 @@ will be used to track whether the agent is circled in the GUI.
 
 
 ## Use of `defagent`
+
+```clojure
+masonclj.properties/defagent
+([agent-type fields make-curr-agent-slice gui-fields-specs & addl-defrecord-args])
+Macro
+```
+
