@@ -112,7 +112,7 @@ do this is to use the argument to the `properties` method of
 over to produce the needed function.  The third argument to `defagent`
 is designed for this purpose.
 
-(In my code, I create a higher-order function called that takes a first
+(In my code, I create a higher-order function that takes a first
 argument containing something containing a map from id's to current
 agent-time-slices, and a second argument that will be the first
 time-slice of a given agent.  You can then use this with `partial` to
