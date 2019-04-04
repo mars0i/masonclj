@@ -88,7 +88,7 @@
 ;; time slice.
 (defmacro defagent
   "defagent defines a defrecord type and a corresponding factory
-  function: 1. defagent will defind the defrecord type with the name
+  function: 1. defagent will define the defrecord type with the name
   given by the agent-type argument, and with field names specified in
   the fields argument (a sequence), plus an additional initial field
   named circled$.  This can be used to track whether an agent is circled

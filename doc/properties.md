@@ -166,14 +166,14 @@ Macro
 `defagent` defines a defrecord type and a corresponding factory
 function:
 
-1. `defagent` will defind the defrecord type with the name given by the
+1. `defagent` will define the defrecord type with the name given by the
 `agent-type` argument, and with field names specified in the `fields`
 argument (a sequence), plus an additional initial field named
 `circled$`.  This can be used to track whether an agent is circled in
 the GUI.
 
 2. `defagent` defines a special factory function, named with the
-defrecord type name prefixed by "- ->", that accepts  arguments for the
+defrecord type name prefixed by "-->", that accepts  arguments for the
 fields specified in `defagent`'s `fields` argument, passing them to the
 usual "->" factory function.  The "-->" factory function but will also
 initialize the `circled$` field to `(atom false)`, so by default
