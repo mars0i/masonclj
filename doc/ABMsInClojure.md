@@ -4,8 +4,9 @@ ABMsInClojure.md
 
 Marshall Abrams
 
-These remarks are the result of my sometimes biased intuitions and
-unsystematic, un-thorough research---which may be outdated.
+These remarks may be incomplete, and are the result of my sometimes
+biased intuitions and unsystematic, un-thorough research---which may be
+outdated.
 
 ### What are ABMs?
 

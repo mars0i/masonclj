@@ -204,7 +204,7 @@ conveniences for use with Clojure.
 `gen-interface` allows you to extend another interface, but
 this probably isn't needed.  For example, it was easy to define
 `Student` implement both `Steppable` and an interface I defined.
-(`definterface` is a simple wrapper around `gen-interface, and it's
+(`definterface` is a simple wrapper around `gen-interface`, and it's
 probably better style to use `definterface` if you don't need
 `gen-interface`'s extra functionality.  However, unlike `gen-class`,
 `gen-interface` is simple to use.)
