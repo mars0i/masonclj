@@ -182,18 +182,17 @@ the agent will not be circled in the gui.
 3. In addition to any user-supplied `defrecord` options and specs
 specified in the `addl-defrecord-args` argument, the new defrecord will
 override `java.lang.Object`'s `toString` method to incorporate an agent
-id if `id` is included as field in the `fields` argument, and the
-defrecord will implement the MASON `sim.util.Propertied` interface.
-`Propertied` has one method, `properties`, which is passed the first
-time-slice of an agent and returns an instance of `sim.util.Properties`.
-The generated code does this by calling
-`masonclj.properties/make-properties`. `defagent` passes to
-`make-properties` the result of applying the `make-curr-agent-slice`
-argument to the first time-slice; the result should be a a "current
-agent slice" function that can look up and return an agent's current
-time-slice using information in its first time-slice.  `defagent` also
-passes its `gui-field-specs` argument to `make-properties`.  See
-documentation on `make-properties` for more information on its
-parameters.  (Note that `make-properties` prefers that the defrecord
-have a `circled$` field, which is why `defagent` adds `circled$` to the
-new defrecord type.)
+id if `id` is included in the `fields` argument, and will implement the
+MASON `sim.util.Propertied` interface.  `Propertied` has one method,
+`properties`, which is passed the first time-slice of an agent and
+returns an instance of `sim.util.Properties`.  The generated code does
+this by calling `masonclj.properties/make-properties`. `defagent` passes
+to `make-properties` the result of applying its `make-curr-agent-slice`
+argument to the first time-slice.  The `make-curr-agent-slice` function
+should return a "current agent slice" function that can look up and
+return an agent's current time-slice using information in its first
+time-slice.  `defagent` also passes its `gui-field-specs` argument to
+`make-properties`.  See documentation on `make-properties` for more
+information on its parameters.  (Note that `make-properties` prefers
+that the defrecord have a `circled$` field, which is why `defagent` adds
+`circled$` to the new defrecord type.)
