@@ -3,8 +3,9 @@
 ;; as specified in the the file LICENSE.
 
 (ns masonclj.properties
-    (:require [masonclj.utils :as u])
-    (:import [sim.util Properties SimpleProperties Propertied]))
+  (:require [masonclj.utils :as u])
+  (:import [sim.util Properties SimpleProperties Propertied]
+           [sim.portrayal.simple CircledPortrayal2D]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAKE-PROPERTIES
@@ -83,6 +84,12 @@
            (numProperties [] num-properties)
            (toString [] (str "<SimpleProperties for agent " id ">")))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DEFAGENT
+;; Macro that that defines a defrecord and constructor/factory 
+;; method that implements Propertied using make-properties, 
+;; and adds a circled$ field.
+
 ;; Note make-curr-agent-slice is a function make and not a simple
 ;; function so that the result can be a closure over the first
 ;; time slice.
@@ -133,3 +140,18 @@
        (defn ~defagent-constructor-sym#
          [~@fields]
          (~clojure-constructor-sym# (atom false) ~@fields))))) ; (atom false) for circled$
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MAKE-FNL-CIRCLED-PORTRAYAL
+;; Function that returns a portrayal class that displays
+;; a circle around an agent--or not--dependening on the value
+;; of its circled$ field.
+
+(defn make-fnl-circled-portrayal
+  "Create a subclass of CircledPortrayal2D for agents with a
+  circled$ field and that are composed of distinct time-slices" 
+  [color child-portrayal]
+  (proxy [CircledPortrayal2D] [child-portrayal color false]
+    (draw [snipe graphics info]
+      (.setCircleShowing this @(:circled$ snipe))
+      (proxy-super draw snipe graphics info))))

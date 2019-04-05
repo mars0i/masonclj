@@ -6,6 +6,7 @@
 
 (ns example.Example
   (:require [example.Sim :as sim]
+            [masonclj.properties :as props]
             [clojure.math.numeric-tower :as math])
   (:import [example snipe Sim]
            [sim.engine Steppable Schedule Stoppable]
@@ -72,14 +73,14 @@
   (.superStart this-ui) ; this will call start() on the sim, i.e. in our SimState object
   (setup-portrayals this-ui))
 
-(defn make-fnl-circled-portrayal
-  "Create a subclass of CircledPortrayal2D that tracks snipes by id
-  rather than by pointer identity."
-  [color child-portrayal]
-  (proxy [CircledPortrayal2D] [child-portrayal color false]
-    (draw [snipe graphics info]
-      (.setCircleShowing this @(:circled$ snipe))
-      (proxy-super draw snipe graphics info))))
+;(defn make-fnl-circled-portrayal
+;  "Create a subclass of CircledPortrayal2D that tracks snipes by id
+;  rather than by pointer identity."
+;  [color child-portrayal]
+;  (proxy [CircledPortrayal2D] [child-portrayal color false]
+;    (draw [snipe graphics info]
+;      (.setCircleShowing this @(:circled$ snipe))
+;      (proxy-super draw snipe graphics info))))
 
 (defn setup-portrayals
   "Set up MASON 'portrayals' of agents and background fields.  That is, associate 
@@ -100,13 +101,13 @@
         west-display @(:west-display ui-config)
         ;; Set up the appearance of RSnipes with a main portrayal inside one 
         ;; that can display a circle around it:
-        r-snipe-portrayal (make-fnl-circled-portrayal Color/blue
-                                                             (proxy [ShapePortrayal2D][ShapePortrayal2D/X_POINTS_TRIANGLE_UP
-                                                                                        ShapePortrayal2D/Y_POINTS_TRIANGLE_UP
-                                                                                        (* 1.1 snipe-size)]
-                                                                (draw [snipe graphics info]
-                                                                  (set! (.-paint this) (r-snipe-color-fn effective-max-energy snipe)) ; paint var is in superclass
-                                                                  (proxy-super draw snipe graphics (DrawInfo2D. info (* 0.75 org-offset) (* 0.55 org-offset))))))
+        r-snipe-portrayal (props/make-fnl-circled-portrayal Color/blue
+                            (proxy [ShapePortrayal2D][ShapePortrayal2D/X_POINTS_TRIANGLE_UP ; there's a simpler way but
+                                                      ShapePortrayal2D/Y_POINTS_TRIANGLE_UP ; this one is more flexible
+                                                      (* 1.1 snipe-size)]
+                                   (draw [snipe graphics info]
+                                     (set! (.-paint this) (r-snipe-color-fn effective-max-energy snipe)) ; paint var is in superclass
+                                     (proxy-super draw snipe graphics (DrawInfo2D. info (* 0.75 org-offset) (* 0.55 org-offset))))))
         west-snipe-field-portrayal (:west-snipe-field-portrayal ui-config)] ; appearance of the field on which snipes run around
     (.setField west-snipe-field-portrayal (:snipe-field west))
     (.setPortrayalForClass west-snipe-field-portrayal example.snipe.RSnipe r-snipe-portrayal)
@@ -118,7 +119,7 @@
     ;; set up display:
     (doto west-display         (.reset) (.repaint))))
 
-;; For h ex grid, need to rescale display (based on HexaBugsWithUI.java around line 200 in Mason 19).
+;; For hex grid, need to rescale display (based on HexaBugsWithUI.java around line 200 in Mason 19).
 ;; If you use a rectangular grid, you don't need this.
 (defn hex-scale-height
   "Calculate visually pleasing height for a hex grid relative to normal
