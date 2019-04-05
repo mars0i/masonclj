@@ -154,4 +154,4 @@
   (proxy [CircledPortrayal2D] [child-portrayal color false]
     (draw [agt graphics info]
       (.setCircleShowing this @(:circled$ agt))
-      (proxy-super draw snipe graphics info))))
+      (proxy-super draw agt graphics info))))
