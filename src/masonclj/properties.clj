@@ -43,14 +43,14 @@
   an agent.  (The function might be a closure over information in the
   original agent slice that will be passed to Propertied's properties
   method, and this information might be used to look up the current
-  slice.  See the defagent source for illustration.) The fields argument
+  slice.  See the defagt source for illustration.) The fields argument
   consists of zero or more 3-element sequences in each of which the
   first element is a key for a field in the agent, the second is a Java
   type for that field, and the third is a string describing the field.
   If the defrecord that implements Propertied contains contains a field
   named circled$, which should contain an atom around a boolean, this
   will be used to track whether the agent is circled in the GUI."
-  [curr-agent-slice & fields]
+  [curr-agt-slice & fields]
   (let [property-keys (vec (map data-field-key fields))
         circled$-idx (.indexOf property-keys :circled$) ; returns -1 if not found
         types (vec (map data-type fields))
@@ -59,24 +59,24 @@
         names (mapv name property-keys)
         are-writeable (vec (cons true (repeat num-properties false)))
         hidden        (vec (repeat num-properties false)) ; no properties specified here are to be hidden from GUI
-        id (:id (curr-agent-slice))] ; If the original agent doesn't have a field named "id", this will be nil.
+        id (:id (curr-agt-slice))] ; If the original agent doesn't have a field named "id", this will be nil.
     ;; I don't want to require that there be a circled$ field--maybe you just don't care about this in the GUI.
     ;; And I don't want a cryptic exception to be thrown, nor to print a warning every time this is called.
     (when (>= circled$-idx 0) ; So we'll silently ignore absence of a circled$ field.
-      (reset! (:circled$ (curr-agent-slice)) true)) ; this would fail if no circled$ field
+      (reset! (:circled$ (curr-agt-slice)) true)) ; this would fail if no circled$ field
     (proxy [Properties] [] ; the methods below are expected by Properties
-           (getObject [] (curr-agent-slice))
+           (getObject [] (curr-agt-slice))
            (getName [i] (names i))
            (getDescription [i] (descriptions i))
            (getType [i] (types i))
            (getValue [i]
-             (let [v ((property-keys i) (curr-agent-slice))]
+             (let [v ((property-keys i) (curr-agt-slice))]
                (cond (u/atom? v) @v
                      (keyword? v) (name v)
                      :else v)))
            (setValue [i newval]      ; allows user to turn off circled in UI
              (when (= circled$-idx i)  ; If no circled$ field, this will simply never fire
-               (reset! (:circled$ (curr-agent-slice))
+               (reset! (:circled$ (curr-agt-slice))
                        (Boolean/valueOf newval)))) ; it's always a string that's returned from UI. (Do *not* use (Boolean. newval); it's always truthy in Clojure.)
            (isHidden [i] (hidden i))
            (isReadWrite [i] (are-writeable i))
@@ -93,15 +93,15 @@
 ;; Note make-curr-agent-slice is a function make and not a simple
 ;; function so that the result can be a closure over the first
 ;; time slice.
-(defmacro defagent
-  "defagent defines a defrecord type and a corresponding factory
-  function: 1. defagent will define the defrecord type with the name
+(defmacro defagt
+  "defagt defines a defrecord type and a corresponding factory
+  function: 1. defagt will define the defrecord type with the name
   given by the agent-type argument, and with field names specified in
   the fields argument (a sequence), plus an additional initial field
   named circled$.  This can be used to track whether an agent is circled
-  in the GUI. 2. defagent defines a special factory function, named with
+  in the GUI. 2. defagt defines a special factory function, named with
   the defrecord type name prefixed by '-->', that accepts  arguments for
-  the fields specified in defagent's fields argument, passing them to
+  the fields specified in defagt's fields argument, passing them to
   the usual '->' factory function.  The '-->' factory function but will
   also initialize the circled$ field to (atom false), so by default the
   agent will not be circled in the gui. 3. In addition to any
@@ -112,20 +112,20 @@
   sim.util.Propertied interface. Propertied has one method, properties,
   which is passed the first time-slice of an agent and returns an
   instance of sim.util.Properties. The generated code does this by
-  calling masonclj.properties/make-properties. defagent passes to
+  calling masonclj.properties/make-properties. defagt passes to
   make-properties the result of applying its make-curr-agent-slice
   argument to the first time-slice.  The make-curr-agent-slice function
   should return a 'current agent slice' function that can look up and
   return an agent's current time-slice using information in its first
-  time-slice.  defagent also passes its gui-field-specs argument to
+  time-slice.  defagt also passes its gui-field-specs argument to
   make-properties.  See documentation on make-properties for more
   information on its parameters.  (Note that make-properties prefers
-  that the defrecord have a circled$ field, which is why defagent adds
+  that the defrecord have a circled$ field, which is why defagt adds
   circled$ to the new defrecord type.)"
   [agent-type fields make-curr-agent-slice gui-fields-specs
    & addl-defrecord-args]
   (let [clojure-constructor-sym# (symbol (str "->" agent-type))
-        defagent-constructor-sym# (symbol (str "-->" agent-type))]
+        defagt-constructor-sym# (symbol (str "-->" agent-type))]
     `(do
        (defrecord ~agent-type [~'circled$ ~@fields]
          Propertied
@@ -137,7 +137,7 @@
          Object
          (toString [obj#] (str "<" '~agent-type " " (:id obj#) ">")) ; will work even if id doesn't exist
          ~@addl-defrecord-args)
-       (defn ~defagent-constructor-sym#
+       (defn ~defagt-constructor-sym#
          [~@fields]
          (~clojure-constructor-sym# (atom false) ~@fields))))) ; (atom false) for circled$
 
@@ -152,6 +152,6 @@
   circled$ field and that are composed of distinct time-slices" 
   [color child-portrayal]
   (proxy [CircledPortrayal2D] [child-portrayal color false]
-    (draw [snipe graphics info]
-      (.setCircleShowing this @(:circled$ snipe))
+    (draw [agt graphics info]
+      (.setCircleShowing this @(:circled$ agt))
       (proxy-super draw snipe graphics info))))

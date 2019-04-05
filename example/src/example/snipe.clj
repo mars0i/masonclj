@@ -29,7 +29,7 @@
   [cfg-data$ original-snipe] ; pass cfg-data$ and not @cfg-data$ so the fn always uses the latest data.
   (fn [] ((:snipe-map (:popenv @cfg-data$)) (:id original-snipe))))
 
-(props/defagent RSnipe [id energy subenv x y cfg-data$] 
+(props/defagt RSnipe [id energy subenv x y cfg-data$] 
   (partial make-get-curr-obj cfg-data$)
   [[:energy    java.lang.Double "Energy is what snipes get from mushrooms."]
    [:x         java.lang.Integer "x coordinate in underlying grid"]
@@ -40,7 +40,7 @@
 
 (defn make-r-snipe
   [cfg-data$ energy subenv new-id x y]
-  (-->RSnipe new-id energy subenv x y cfg-data$)) ; NOTE circled$ is placed first by defagent
+  (-->RSnipe new-id energy subenv x y cfg-data$)) ; NOTE circled$ is placed first by defagt
 
 (defn make-rand-r-snipe 
   "Create r-snipe with random energy (from rand-energy)."
