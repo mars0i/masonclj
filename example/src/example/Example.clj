@@ -73,15 +73,6 @@
   (.superStart this-ui) ; this will call start() on the sim, i.e. in our SimState object
   (setup-portrayals this-ui))
 
-;(defn make-fnl-circled-portrayal
-;  "Create a subclass of CircledPortrayal2D that tracks snipes by id
-;  rather than by pointer identity."
-;  [color child-portrayal]
-;  (proxy [CircledPortrayal2D] [child-portrayal color false]
-;    (draw [snipe graphics info]
-;      (.setCircleShowing this @(:circled$ snipe))
-;      (proxy-super draw snipe graphics info))))
-
 (defn setup-portrayals
   "Set up MASON 'portrayals' of agents and background fields.  That is, associate 
   with a given entity one or moreJava classes that will determine appearances in 
