@@ -22,9 +22,9 @@ what masonclj provides and how to use it.
 
 The documentation here does not provide introductions to Clojure or
 MASON.  MASON has a detailed PDF manual that begins with a tutorial and
-a (Java) example, but to read the MASON manual, you'll need to know a
+a example, but to read the MASON manual, you'll need to know a
 little bit of Java or have enough experience to figure it out as you read.
-And you will end up learning a bit more about Clojure-Java interop
+You will also have to learn a bit more about Clojure-Java interop
 than is usually necessary.  (My "majure" repo includes some Clojure
 implementations of the Students example from the MASON tutorial.)
 
