@@ -19,7 +19,7 @@ in the **doc** directory is a starting point for detailed information on
 what masonclj provides and how to use it.
 
 3. The *example* directory contains a simple MASON model in
-Clojure that uses masonclj.
+Clojure, using masonclj.
 
 ## What else do you need to know?
 
