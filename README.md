@@ -18,15 +18,20 @@ using Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
 in the **doc** directory is a starting point for detailed information on
 what masonclj provides and how to use it.
 
+3. The {\em example\/} directory contains a simple MASON model in
+Clojure that uses masonclj.
+
 ## What else do you need to know?
 
 The documentation here does not provide introductions to Clojure or
 MASON.  MASON has a detailed PDF manual that begins with a tutorial and
-a example, but to read the MASON manual, you'll need to know a
-little bit of Java or have enough experience to figure it out as you read.
-You will also have to learn a bit more about Clojure-Java interop
-than is usually necessary.  (My "majure" repo includes some Clojure
-implementations of the Students example from the MASON tutorial.)
+a example, but to read the MASON manual, you'll need to know a little
+bit of Java or have enough experience to figure it out as you read.  (My
+"majure" repo includes some Clojure implementations of the Students
+example from the MASON tutorial.) You will also have to learn a bit more
+about Clojure-Java interop than is usually necessary, but studying
+example with good resources on interop at hand is probably a good
+strategy.
 
 Not all of the corners of Clojure-Java interop are well documented.  The
 book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly is
