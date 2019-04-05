@@ -2,8 +2,9 @@ masonclj
 ===
 
 A very small library that provides functions and macros that smooth a
-few rough edges to using MASON in Clojure.  (The rough edges are due to
-reasonable design choices by the architects of both Clojure and MASON.)
+few rough edges to using MASON in Clojure.  (Most of the rough edges are
+due to reasonable design choices by the architects of both Clojure and
+MASON that sometimes don't fit together well.)
 
 ## Usage
 
@@ -12,10 +13,26 @@ version number in project.clj or pom.xml here).  For example, if you are
 using Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
 `:dependencies` vector in project.clj.
 
-2. See the
+2. The
 [README](https://github.com/mars0i/masonclj/blob/master/doc/README.md)
-in the **doc** directory for detailed information on what masonclj
-provides and how to use it.
+in the **doc** directory is a starting point for detailed information on
+what masonclj provides and how to use it.
+
+## What else do you need to know?
+
+The documentation here does not provide introductions to Clojure or
+MASON.  MASON has a detailed PDF manual that begins with a tutorial and
+a (Java) example, but to read the MASON manual, you'll need to know a
+little bit of Java or have enough experience to figure it out as you read.
+And you will end up learning a bit more about Clojure-Java interop
+than is usually necessary.  (My "majure" repo includes some Clojure
+implementations of the Students example from the MASON tutorial.)
+
+Not all of the corners of Clojure-Java interop are well documented.  The
+book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly is
+the best single source of information about Clojure-Java interop that I
+have encountered.  Some of the documents here may help, but they
+don't go into detail.
 
 ## License
 
