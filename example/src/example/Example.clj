@@ -38,13 +38,6 @@
                :west-display-frame (atom nil) ; will be replaced in init because we need to pass the display to it
                :west-snipe-field-portrayal (HexaObjectGridPortrayal2D.)}])
 
-(defn -getName-void
-  "Suppsoed to override method in super. Should cause the returned 
-  string to be displayed as title of config window of gui, but it 
-  doesn't.  See doc/getName.txt for explanation."
-  [this]
-  "It works??")
-
 (defn -getSimulationInspectedObject
   "Override methods in sim.display.GUIState so that UI can make graphs, etc."
   [this]
@@ -79,8 +72,6 @@
   (.superStart this-ui) ; this will call start() on the sim, i.e. in our SimState object
   (setup-portrayals this-ui))
 
-;; Possibly also define a load() method. See manual.
-
 (defn make-fnl-circled-portrayal
   "Create a subclass of CircledPortrayal2D that tracks snipes by id
   rather than by pointer identity."
@@ -91,18 +82,23 @@
       (proxy-super draw snipe graphics info))))
 
 (defn setup-portrayals
+  "Set up MASON 'portrayals' of agents.  That is, associate with a given
+  agent type one or or Java classes that will determine agents' appearances
+  in the GUI."
   [this-ui]  ; instead of 'this': avoid confusion with e.g. proxy below
+       ; first get global configuration objects and such:
   (let [sim (.getState this-ui)
-        ui-config (.getUIState this-ui)
-        sim-data$ (.simData sim)
-        rng (.random sim)
+        ui-config (.getUIState this-ui) ; provided by MASON
+        sim-data$ (.simData sim)  ; configuration data defined by masonclj.params/defparams
         sim-data @sim-data$
-        popenv (:popenv sim-data)
+        rng (.random sim)         ; a MersenneTwisterFast PRNG provided by MASON
+        popenv (:popenv sim-data) ; In the pasta model this is more complicated
         west (:west popenv)
         max-energy (:max-energy sim-data)
         birth-threshold (:birth-threshold sim-data)
-        effective-max-energy birth-threshold
+        effective-max-energy birth-threshold ; In the pasta model this is more complicated
         west-display @(:west-display ui-config)
+        ;; set up the appearance of RSnipes:
         r-snipe-portrayal (make-fnl-circled-portrayal Color/blue
                                                              (proxy [ShapePortrayal2D][ShapePortrayal2D/X_POINTS_TRIANGLE_UP
                                                                                         ShapePortrayal2D/Y_POINTS_TRIANGLE_UP
@@ -110,22 +106,23 @@
                                                                 (draw [snipe graphics info]
                                                                   (set! (.-paint this) (r-snipe-color-fn effective-max-energy snipe)) ; paint var is in superclass
                                                                   (proxy-super draw snipe graphics (DrawInfo2D. info (* 0.75 org-offset) (* 0.55 org-offset))))))
-        west-snipe-field-portrayal (:west-snipe-field-portrayal ui-config)]
+        west-snipe-field-portrayal (:west-snipe-field-portrayal ui-config)] ; appearance of the field on which snipes run around
     (.setField west-snipe-field-portrayal (:snipe-field west))
     (.setPortrayalForClass west-snipe-field-portrayal example.snipe.RSnipe r-snipe-portrayal)
-    (.scheduleRepeatingImmediatelyAfter this-ui
+    (.scheduleRepeatingImmediatelyAfter this-ui ; this stuff is going to happen on every timestep as a result:
                                         (reify Steppable 
                                           (step [this sim-state]
-                                            (let [{:keys [west ;east
-                                                          ]} (:popenv @sim-data$)]
+                                            (let [{:keys [west]} (:popenv @sim-data$)]
                                               (.setField west-snipe-field-portrayal (:snipe-field west))))))
     ;; set up display:
     (doto west-display         (.reset) (.repaint))))
 
-;; For hex grid, need to rescale display (based on HexaBugsWithUI.java around line 200 in Mason 19):
+;; For hex grid, need to rescale display (based on HexaBugsWithUI.java around line 200 in Mason 19).
+;; If you use a rectangular grid, you don't need this.
 (defn hex-scale-height
   [height]
   (+ 0.5 height))
+
 (defn hex-scale-width
   [width] 
   (* (/ 2.0 (math/sqrt 3)) 
