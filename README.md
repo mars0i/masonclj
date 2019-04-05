@@ -4,7 +4,7 @@ masonclj
 A very small library that provides functions and macros that smooth a
 few rough edges to using MASON in Clojure.  (Most of the rough edges are
 due to design choices by the architects of both Clojure and MASON that
-are very reasonable choices on their own, in the separate contexts of
+are very reasonable choices on their own within the separate contexts of
 Clojure and Java, but that turn out to be somewhat awkward when
 combined.)
 
