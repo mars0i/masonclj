@@ -6,14 +6,13 @@
 
 (ns example.core
   (:require [example.Sim :as sim]
-            [example.Example :as ui]
-            [clojure.pprint]) ; for *print-right-margin*
+            [example.Example :as ui])
   (:gen-class))
 
 (defn -main
   "This function, core/main, examines the use-gui command line option, if
   it exists, to decide whether to run the main in Sim.clj or the main in
-  UI.clj (which will eventually run code in Sim)."
+  Example.clj (which will eventually run code in Sim)."
   [& args]
   ;; The Sim isn't available yet, so store commandline args for later access by start():
   (sim/record-commandline-args! args) ; defined by defsim: records args in commandline$, defined above

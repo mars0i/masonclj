@@ -17,7 +17,7 @@
            [java.awt.geom Rectangle2D$Double] ; note wierd Clojure syntax for Java static nested class
            [java.awt Color])
   (:gen-class
-    :name example.UI
+    :name example.Example
     :extends sim.display.GUIState
     :main true
     :exposes {state {:get getState}}  ; accessor for field in superclass that will contain my Sim after main creates instances of this class with it.
@@ -43,7 +43,7 @@
   string to be displayed as title of config window of gui, but it 
   doesn't.  See doc/getName.txt for explanation."
   [this]
-  "pasta")
+  "It works??")
 
 (defn -getSimulationInspectedObject
   "Override methods in sim.display.GUIState so that UI can make graphs, etc."
@@ -66,7 +66,7 @@
   (let [sim (Sim. (System/currentTimeMillis))]  ; CREATE AN INSTANCE OF my Sim
     (when @sim/commandline$ (sim/set-sim-data-from-commandline! sim sim/commandline$)) ; we can do this in -main because we have a Sim
     (swap! (.simData sim) assoc :in-gui true) ; allow functions in Sim to check whether GUI is running
-    (.setVisible (Console. (example.UI. sim)) true)))  ; THIS IS WHAT CONNECTS THE GUI TO my SimState subclass Sim
+    (.setVisible (Console. (example.Example. sim)) true)))  ; THIS IS WHAT CONNECTS THE GUI TO my SimState subclass Sim
 
 (defn mein
   "Externally available wrapper for -main."
@@ -193,18 +193,18 @@
 (defn repl-gui
   "Convenience function to init and start GUI from the REPL.
   Returns the new Sim object.  Usage e.g.:
-  (use 'example.UI) 
+  (use 'example.Example) 
   (let [[sim ui] (repl-gui)] (def sim sim) (def ui ui)) ; considered bad practice--but convenient in this case
   (def data$ (.simData sim))"
   []
   (let [sim (Sim. (System/currentTimeMillis))
-        ui (example.UI. sim)]
+        ui (example.Example. sim)]
     (.setVisible (Console. ui) true)
     [sim ui]))
 
 (defmacro repl-gui-with-defs
   "Calls repl-gui to start the gui, then creates top-level definitions:
-  sim as a example.Sim (i.e. a SimState), ui as a example.UI
+  sim as a example.Sim (i.e. a SimState), ui as a example.Example
   (i.e. a GUIState) that references sim, and data$ as an atom containing 
   sim's SimData stru."
   []
@@ -213,5 +213,5 @@
     (def ui ui))
   (def data$ (.simData sim))
   (println "cfg is defined as a Sim (i.e. a SimState)")
-  (println "ui is defined as a UI (i.e. a GUIState)")
+  (println "ui is defined as a Example (i.e. a GUIState)")
   (println "data$ is defined as an atom containing cfg's SimData stru."))
