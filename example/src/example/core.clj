@@ -6,7 +6,7 @@
 
 (ns example.core
   (:require [example.Sim :as sim]
-            [example.UI :as ui]
+            [example.Example :as ui]
             [clojure.pprint]) ; for *print-right-margin*
   (:gen-class))
 

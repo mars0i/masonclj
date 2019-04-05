@@ -4,7 +4,7 @@
 
 ;(set! *warn-on-reflection* true)
 
-(ns example.UI
+(ns example.Example
   (:require [example.Sim :as sim]
             [clojure.math.numeric-tower :as math])
   (:import [example snipe Sim] ; mush 
