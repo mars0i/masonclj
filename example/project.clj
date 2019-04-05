@@ -3,8 +3,9 @@
   :url "http://example.com/FIXME"
   :license {:name "LGPL 3.0"
             :url "https://www.gnu.org/licenses/lgpl.html"}
-  :dependencies [[org.clojure/clojure "1.10.0"]
-                 [org.clojure/tools.cli "0.4.1"]
+  :dependencies [[org.clojure/clojure "1.10.0"]  ; Clojure version
+                 [org.clojure/tools.cli "0.4.1"] ; command line processing
+                 [org.clojure/math.numeric-tower "0.0.4"] ; for a few functions
                  [mars0i/masonclj "0.1.0"]
                  [mason "19"]
                  ;; libs used by Mason:
@@ -12,22 +13,13 @@
                  [com.lowagie/itext "1.2.3"] ; version that comes with MASON. Not in maven.org: [com.lowagie/itext "1.2"] 
                  [org.jfree/jcommon "1.0.21"]
                  [org.jfree/jfreechart "1.0.17"]
-                 [org.beanshell/bsh "2.0b4"]
-                 
-                 ;; FIXME TEMPORARY just to get it to compile while stripping down pasta code:
-                 [org.clojure/math.numeric-tower "0.0.4"]
-                 [org.clojure/tools.cli "0.4.1"]
-                 [org.clojure/data.csv "0.1.3"]
-                 [org.clojure/algo.generic "0.1.2"]
-                 [com.rpl/specter "1.0.0"]
-                 
-                ]
+                 [org.beanshell/bsh "2.0b4"]]
   :main ^:skip-aot example.core
   :aot [example.snipe example.popenv example.Sim example.Example example.core]
   :jvm-opts ["-Xms2g"]
   :source-paths ["src"]
-  :profiles {:nogui {:main example.Sim} ; execute this with 'lein with-profile nogui run'
-             :gui   {:main example.Example}      ; execute this with 'lein with-profile gui run'
+  :profiles {:nogui {:main example.Sim}      ; execute this with 'lein with-profile nogui run'
+             :gui   {:main example.Example}  ; execute this with 'lein with-profile gui run'
              :core  {:main example.core}
              :uberjar {:prep-tasks [["compile" "example.Example"]
                                     ["compile" "example.snipe"
