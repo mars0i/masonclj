@@ -1,17 +1,21 @@
-`masonclj.properties`: `defagent`, `make-properties`
+`masonclj.properties`: `defagt`, `make-properties`
 ===
 Marshall Abrams
 
-`masonclj.properties` provides two Clojure operators, `defagent` and
+`masonclj.properties` provides two Clojure operators, `defagt` and
 `make-properties`; both are designed to ease use of 
 the [MASON](https://cs.gmu.edu/~eclab/projects/mason) ABM library with 
 Clojure.  
 
-`make-properties` makes it easier to use MASON inspectors to
-track agents in the GUI even if you implement agents as defrecords--which 
-don't have modifiable fields, so the same agent might be
-represented by different "time slice" defrecords at different times.
-And `defagent` makes it simpler to use `make-properties`.
+`make-properties` makes it easier to use MASON inspectors to track
+agents in the GUI even if you implement agents as defrecords--which
+don't have modifiable fields, so the same agent might be represented by
+different "time slice" defrecords at different times.  And `defagt`
+(pronounced "deff agent") makes it simpler to use `make-properties`.
+
+NOTE: "Agent" below refers to agents in the agent-based modeling sense.
+This sense of the term pretty much has nothing to do with the Clojure
+language agent concept.
 
 ## Rationale
 
@@ -81,7 +85,7 @@ will look up the current agent-time-slice of an agent using an id that
 can be gotten from the agent's first time-slice--which the one argument
 passed to the `properties()` method.
 
-### `make-properties` and `defagent`
+### `make-properties` and `defagt`
 
 Setting up the `Properties` instance returned by `properties()` method
 is a little bit of trouble, so I wrote a function to make it easier: ```
@@ -93,23 +97,23 @@ unique agent id, and a special field named `circled$` that should be
 initialized with an atom containing a boolean.  (I always name variables
 containing atoms with a final "$".)
 
-Alternatively, you can use the `defagent` macro to define your agent
+Alternatively, you can use the `defagt` macro to define your agent
 defrecord.  This automatically adds the `circled$` field, and defines 
 a constructor function whose name is "-->" followed by the defrecord
 name.  This constructor is just like the normal "->Name" constructor for
 defrecords, except that it automatically initializes `circled$` with
-`(atom false)`.  More importantly, `defagent` calls `make-properties`
+`(atom false)`.  More importantly, `defagt` calls `make-properties`
 for you, with additional arguments that are passed to it, simplifying
 the process of implementing `Propertied`.
 
 ## The time-slice look up function
 
-Note that to use either `defagent` or `make-properties`, you will have
+Note that to use either `defagt` or `make-properties`, you will have
 to generate a function that always returns the current time-slice of an
 agent.  This is the first argument to `make-properties`.  A good way to
 do this is to use the argument to the `properties` method of
 `Propertied` to get an id or some other information that can be closed
-over to produce the needed function.  The third argument to `defagent`
+over to produce the needed function.  The third argument to `defagt`
 is designed for this purpose.
 
 (In my code, I create a higher-order function that takes a first
@@ -117,7 +121,7 @@ argument containing something containing a map from id's to current
 agent-time-slices, and a second argument that will be the first
 time-slice of a given agent.  You can then use this with `partial` to
 create a closure over the data structure, and then pass this closure to
-`defagent` or `make-properties`.)
+`defagt` or `make-properties`.)
 
 
 ## Use of `make-properties`
@@ -141,7 +145,7 @@ The `curr-agent-slice` argument should be a parameterless function that
 always returns the current time-slice of an agent.  (The function might 
 be a closure over information in the original agent slice that will be
 passed to `Propertied`'s `propertie`s method, and this information might be
-used to look up the current slice.  See the `defagent` source for 
+used to look up the current slice.  See the `defagt` source for 
 illustration.) 
 
 The `fields` argument consists of zero or more 3-element sequences in
@@ -155,26 +159,26 @@ will be used to track whether the agent is circled in the GUI.
 
 
 
-## Use of `defagent`
+## Use of `defagt`
 
 ```clojure
-masonclj.properties/defagent
+masonclj.properties/defagt
 ([agent-type fields make-curr-agent-slice gui-fields-specs 
   & addl-defrecord-args])
 Macro
 ```
-`defagent` defines a defrecord type and a corresponding factory
+`defagt` defines a defrecord type and a corresponding factory
 function:
 
-1. `defagent` will define the defrecord type with the name given by the
+1. `defagt` will define the defrecord type with the name given by the
 `agent-type` argument, and with field names specified in the `fields`
 argument (a sequence), plus an additional initial field named
 `circled$`.  This can be used to track whether an agent is circled in
 the GUI.
 
-2. `defagent` defines a special factory function, named with the
+2. `defagt` defines a special factory function, named with the
 defrecord type name prefixed by "-->", that accepts  arguments for the
-fields specified in `defagent`'s `fields` argument, passing them to the
+fields specified in `defagt`'s `fields` argument, passing them to the
 usual "->" factory function.  The "-->" factory function but will also
 initialize the `circled$` field to `(atom false)`, so by default
 the agent will not be circled in the gui.
@@ -186,13 +190,13 @@ id if `id` is included in the `fields` argument, and will implement the
 MASON `sim.util.Propertied` interface.  `Propertied` has one method,
 `properties`, which is passed the first time-slice of an agent and
 returns an instance of `sim.util.Properties`.  The generated code does
-this by calling `masonclj.properties/make-properties`. `defagent` passes
+this by calling `masonclj.properties/make-properties`. `defagt` passes
 to `make-properties` the result of applying its `make-curr-agent-slice`
 argument to the first time-slice.  The `make-curr-agent-slice` function
 should return a "current agent slice" function that can look up and
 return an agent's current time-slice using information in its first
-time-slice.  `defagent` also passes its `gui-field-specs` argument to
+time-slice.  `defagt` also passes its `gui-field-specs` argument to
 `make-properties`.  See documentation on `make-properties` for more
 information on its parameters.  (Note that `make-properties` prefers
-that the defrecord have a `circled$` field, which is why `defagent` adds
+that the defrecord have a `circled$` field, which is why `defagt` adds
 `circled$` to the new defrecord type.)
