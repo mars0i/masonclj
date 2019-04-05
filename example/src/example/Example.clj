@@ -7,12 +7,12 @@
 (ns example.Example
   (:require [example.Sim :as sim]
             [clojure.math.numeric-tower :as math])
-  (:import [example snipe Sim] ; mush 
+  (:import [example snipe Sim]
            [sim.engine Steppable Schedule Stoppable]
            [sim.field.grid ObjectGrid2D] ; normally doesn't belong in UI: a hack to use a field portrayal to display a background pattern
-           [sim.portrayal DrawInfo2D SimpleInspector SimplePortrayal2D]
+           [sim.portrayal DrawInfo2D]
            [sim.portrayal.grid HexaObjectGridPortrayal2D]; FastHexaObjectGridPortrayal2D ObjectGridPortrayal2D
-           [sim.portrayal.simple OvalPortrayal2D RectanglePortrayal2D CircledPortrayal2D ShapePortrayal2D]
+           [sim.portrayal.simple CircledPortrayal2D ShapePortrayal2D]
            [sim.display Console Display2D]
            [java.awt.geom Rectangle2D$Double] ; note wierd Clojure syntax for Java static nested class
            [java.awt Color])
@@ -82,9 +82,9 @@
       (proxy-super draw snipe graphics info))))
 
 (defn setup-portrayals
-  "Set up MASON 'portrayals' of agents.  That is, associate with a given
-  agent type one or or Java classes that will determine agents' appearances
-  in the GUI."
+  "Set up MASON 'portrayals' of agents and background fields.  That is, associate 
+  with a given entity one or moreJava classes that will determine appearances in 
+  the GUI."
   [this-ui]  ; instead of 'this': avoid confusion with e.g. proxy below
        ; first get global configuration objects and such:
   (let [sim (.getState this-ui)
@@ -117,27 +117,31 @@
     ;; set up display:
     (doto west-display         (.reset) (.repaint))))
 
-;; For hex grid, need to rescale display (based on HexaBugsWithUI.java around line 200 in Mason 19).
+;; For h ex grid, need to rescale display (based on HexaBugsWithUI.java around line 200 in Mason 19).
 ;; If you use a rectangular grid, you don't need this.
 (defn hex-scale-height
+  "Calculate visually pleasing height for a hex grid relative to normal
+  rectangular height."
   [height]
   (+ 0.5 height))
 
 (defn hex-scale-width
+  "Calculate visually pleasing width for a hex grid relative to normal
+  rectangular width."
   [width] 
   (* (/ 2.0 (math/sqrt 3)) 
      (+ 1 (* (- width 1)
              (/ 3.0 4.0)))))
 
 (defn setup-display
-  "Creates and configures a display and returns it."
+  "Creates and configures a MASON display object and returns it."
   [ui width height]
   (let [display (Display2D. width height ui)]
     (.setClipping display false)
     display))
 
 (defn setup-display-frame
-  "Creates and configures a display-frame and returns it."
+  "Creates and configures a MASON display-frame and returns it."
   [display controller title visible?]
   (let [display-frame (.createFrame display)]
     (.registerFrame controller display-frame)
@@ -145,11 +149,10 @@
     (.setVisible display-frame visible?)
     display-frame))
 
-;; Remember: Order of attaching sets layering: Later attachments appear on top of earlier ones.
 (defn attach-portrayals!
   "Attach field-portrayals in portrayals-with-labels to display with upper left corner 
   at x y in display and with width and height.  Order of portrayals determines
-  how their layered, with earlier portrayals under later ones."
+  how they are layered, with earlier portrayals under later ones."
   [display portrayals-with-labels x y field-width field-height]
   (doseq [[portrayal label] portrayals-with-labels]
     (.attach display portrayal label
