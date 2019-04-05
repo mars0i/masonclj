@@ -29,9 +29,9 @@ a example, but to read the MASON manual, you'll need to know a little
 bit of Java or have enough experience to figure it out as you read.  (My
 "majure" repo includes some Clojure implementations of the Students
 example from the MASON tutorial.) You will also have to learn a bit more
-about Clojure-Java interop than is usually necessary, but studying
-example with good resources on interop at hand is probably a good
-strategy.
+about Clojure-Java interop than is usually necessary, but studying the
+source under the *example* directory with good interop resources at hand
+is probably a good strategy.
 
 Not all of the corners of Clojure-Java interop are well documented.  The
 book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly is
