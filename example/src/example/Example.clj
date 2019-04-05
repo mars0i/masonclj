@@ -98,7 +98,8 @@
         birth-threshold (:birth-threshold sim-data)
         effective-max-energy birth-threshold ; In the pasta model this is more complicated
         west-display @(:west-display ui-config)
-        ;; set up the appearance of RSnipes:
+        ;; Set up the appearance of RSnipes with a main portrayal inside one 
+        ;; that can display a circle around it:
         r-snipe-portrayal (make-fnl-circled-portrayal Color/blue
                                                              (proxy [ShapePortrayal2D][ShapePortrayal2D/X_POINTS_TRIANGLE_UP
                                                                                         ShapePortrayal2D/Y_POINTS_TRIANGLE_UP
