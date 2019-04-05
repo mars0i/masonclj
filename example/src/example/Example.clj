@@ -101,7 +101,7 @@
         west (:west popenv)
         max-energy (:max-energy sim-data)
         birth-threshold (:birth-threshold sim-data)
-        effective-max-energy (min birth-threshold max-energy)
+        effective-max-energy birth-threshold
         west-display @(:west-display ui-config)
         r-snipe-portrayal (make-fnl-circled-portrayal Color/blue
                                                              (proxy [ShapePortrayal2D][ShapePortrayal2D/X_POINTS_TRIANGLE_UP
