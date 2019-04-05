@@ -7,204 +7,61 @@
 <tr><td valign=top>
 <img src="icon.png">
 <td valign=top>
-<h2>Pasta<br/>
+<h2>Example<br/>
 Marshall Abrams<br/>
 </h2>
 http://members.logical.net/~marshall<br/>
-https://github.com/mars0i/pasta<br/>
+https://github.com/mars0i/masonclj<br/>
 mabrams@uab.edu, marshall@logical.net
 </table>
 
 Sections:<br/>
 <a href="#overview">Overview</a>,
-<a href="#howitworks">How it works</a>,
 <a href="#parameters">Parameters</a>,
-<a href="#thingstotry">Things to try</a>,
 <a href="#license">License</a>
 
 <a name="overview"></a><h2>Overview:</h2>
 
-This is a model of evolutionary competition between different strategies
-for dealing with variable environments.  There are three kinds of agents
-(models of organisms) that can be deployed:
+<p><em>Example</em> is a simple MASON model written in Clojure using the
+masonclj library.  (It's a very stripped down version of a real model named
+"pasta", and I have kept some of the names from pasta.  That way, if you
+want to look at pasta as an example of a more full-fledged Clojure MASON
+model, it might be a little bit easier after understanding this model.)</p>
 
-<p><b>k-snipes:</b> Agents that incorporate a very simple model of
-individual learning by prediction error minimization (PEM) in some
-agents.  These agents implement one kind of "K-strategy" which, roughly,
-prioritizes survival over reproduction.  (I do mean it's a
-<em>model</em> of PEM; what these agents do, internally, is much, much
-simpler than what's usually meant by PEM.)</p>
+<p>The agents here are called "snipes", or more specifically `RSnipes`.
+They're defined in snipes.clj.</p>
 
-<p><b>r-snipes:</b> Agents that don't learn, but produce different types of offspring
-that are well suited or poorly suited for survival in different
-environments.  These agents implement
-one kind of "r-strategy", which roughly prioritize reproduction over
-survival.</p>
+<p>Snipes run around in an environment and don't do anything else.  The
+snipe behavior is implemented in popenv.clj.  ("Popenv" means
+population-environment; it is the combination of the population and its
+environment. In pasta, the environment contains mushrooms, and snipes
+and mushrooms interact; snipes eat mushrooms.)</p>
 
-<p><b>s-snipes:</b> Agents that engage in a simple form of social
-learning by copying from nearby agents ("s-snipes").</p>
+<p>The main MASON control file is Sim.clj, which subclasses MASON's
+`SimState` class.  Another important file is `Example.clj`, which
+controles the GUI; this subclasses MASON's `GUIState`.  (This module's
+name is what determines the name on the upper bar of the main GUI
+window.)</p>
 
-<p>The point is to compare evolutionary strategies and see which is
-selected for under different parameter combinations.</p>
-
-<a name="howitworks"></a><h2>How it works:</h2>
-
-(I won't document features of the GUI that I think are
-easy to figure out with a bit of guessing plus trial and error.
-Let me know if I'm wrong!)
-
-<p><b>The two environments:</b> Snipes eat mushrooms in one of two
-environments.  In the <em>east</em> (usually left) environment, small
-mushrooms are nutritious (gray-brown-green) and large mushrooms are
-poisonous (greenish yellow).  In the <em>west</em> (usually right)
-environment, large mushrooms are nutritious (dark gray) and small
-mushrooms are poisonous (light gray).</p>
-
-<p><b>Basic snipe behavior:</b> Snipes move randomly within an
-environment, gain energy from eating nutritious mushrooms, and lose
-energy from eating poisonous mushrooms.  Snipes that accumulate
-sufficient energy give birth to a single offspring, losing energy as a
-result of the birth. (one snipe can have multiple offspring if it
-repeatedly acquires enough energy to do so.) At birth, each newborn
-snipe is placed at a random location in a randomly chosen environment
-(as if parents had temporarily migrated to a new location to give
-birth).</p>
-
-<p><b>k-snipes</b> (red circles with pointers) initially eat mushrooms
-randomly,  but learn to eat mushrooms whose size signal (which is
-normally distributed) indicates that they are probably nutritious. The
-direction of a k-snipe's pointer&mdash;how far up or down it is
-pointing&mdash;indicates the degree of the snipe's preference for large or
-small mushrooms.  For details, see doc/kSnipePerception.pdf at
-https://github.com/mars0i/pasta.</p>
-
-<p><b>r-snipes</b> (blue triangles) never learn.  They produce
-offspring that exhibit developmental differences: Roughly half of any
-snipe's offspring (upward-pointing triangles) always prefer large
-mushrooms; the others (downward-pointing triangles) always prefer
-small mushrooms.  Those suited to the environment in which they live
-tend to survive and reproduce, and those unsuited to their environment
-generally die before reproduction. </p>
-
-<p><b>s-snipes</b> (purple wing shapes) use a social learning or
-cultural transmission strategy known as success bias.  A newborn s-snipe
-examines nearby snipes and copies the current mushroom size preference
-of whatever nearby snipe has the most energy.  If there are no snipes
-that are sufficiently near (see the parameter list below), the s-snipe tries
-again on the next timestep.  Once an s-snipe adopts a preference, the
-preference never changes.  The direction in which an s-snipe points&mdash;how
-far up or down it is tilted&mdash;indicates the degree of the snipe's
-preference for large or small mushrooms.</p>
-
-<p><b>Colors:</b> Snipes' energy levels are reflected in their
-brightness, with greater brightness indicating more energy.  (This
-effect can be subtle.)  The two mushroom colors in each environment
-indicate nutritiousness/poisonousness: Darker colors indicate
-nutritiousness&mdash;i.e. these mushrooms are energetically favorable to
-snipes&mdash;while lighter colors indicate poisonousness&mdash;energetically
-unfavorability.  (The fact that the East and West mushrooms have
-different hues no functional meaning; this could be considered a
-difference between mushroom species, for example.) </p>
-
-<p><b>Monitoring individual snipes:</b> If you pause a run, you can
-double-click on a snipe to monitor its internal state and watch it move.
-It will be circled so that you can keep track of it.  You can use the
-Detach button to monitor multiple snipes at the same time.  If you
-double-click on the little magnifying glass next to energy, for example,
-and choose chart, you'll open a plot of that snipe's energy level over
-time.</p>
-
-<p><b>Overlapping environment display:</b> It's possible to display both
-environments overlapping in the same window, using the "overlapping
-subenvs" item on the Displays tab.  Then you can think of snipes that
-only eat mushrooms of a given color as having a random developmental
-restriction to eating those mushrooms.</p>
-
-<p><b>Command line:</b> You can also run pasta from a command line (see
-online documents or README.md in the full distribution).  In that case,
-running it with "--help" will show options for running pasta.</p>
+<p>The usual entry point is neither Sim.clj nor Example.clj,
+although both contain `main` methods.  The entry point is a traditional
+one for Clojure: core.clj.  This file determines whether the main in Sim.clj
+or the one for the GUI in Example.clj is called.  (You don't have to set
+up things this way, but that's how I did it.)</p>
 
 <a name="parameters"></a><h2>Parameters:</h2>
 
-The following parameters for model runs can be set in the Model tab:
+The following parameters for model runs can be set in the Model tab.
+(This HTML table is from the file gui_vars_table.html that is
+automatically generated by `masonclj.params/defparams`.)
 
-<table style="width:100%"><tr><td valign=top>NumKSnipes:</td> <td>Size of k-snipe subpopulation</td></tr>
-<tr><td valign=top>NumRSnipes:</td> <td>Size of r-snipe subpopulation</td></tr>
-<tr><td valign=top>NumSSnipes:</td> <td>Size of s-snipe subpopulation</td></tr>
-<tr><td valign=top>MushProb:</td> <td>Average frequency of mushrooms.</td></tr>
-<tr><td valign=top>MushHighSize:</td> <td>Size of large mushrooms (mean of light distribution)</td></tr>
-<tr><td valign=top>MushLowSize:</td> <td>Size of small mushrooms (mean of light distribution)</td></tr>
-<tr><td valign=top>MushSd:</td> <td>Standard deviation of mushroom light distribution</td></tr>
-<tr><td valign=top>MushPosNutrition:</td> <td>Energy from eating a nutritious mushroom</td></tr>
-<tr><td valign=top>MushNegNutrition:</td> <td>Energy from eating a poisonous mushroom</td></tr>
-<tr><td valign=top>InitialEnergy:</td> <td>Initial energy for each snipe</td></tr>
+<table style="width:100%"><tr><td valign=top>NumRSnipes:</td> <td>Size of r-snipe subpopulation</td></tr>
 <tr><td valign=top>BirthThreshold:</td> <td>Energy level at which birth takes place</td></tr>
-<tr><td valign=top>KPrefNoiseSd:</td> <td>Standard deviation of internal noise in k-snipe preference determination.</td></tr>
-<tr><td valign=top>BirthCost:</td> <td>Energetic cost of giving birth to one offspring</td></tr>
-<tr><td valign=top>MaxEnergy:</td> <td>Max energy that a snipe can have.</td></tr>
-<tr><td valign=top>Lifespan:</td> <td>Each snipe dies after this many timesteps.</td></tr>
 <tr><td valign=top>CarryingProportion:</td> <td>Snipes are randomly culled when number exceed this times # of cells in a subenv (east or west).</td></tr>
-<tr><td valign=top>NeighborRadius:</td> <td>s-snipe neighbors (for copying) are no more than this distance away.</td></tr>
 <tr><td valign=top>EnvWidth:</td> <td>Width of env.  Must be an even number.</td></tr>
 <tr><td valign=top>EnvHeight:</td> <td>Height of env. Must be an even number.</td></tr>
 <tr><td valign=top>ExtremePref:</td> <td>Absolute value of r-snipe preferences.</td></tr>
-<tr><td valign=top>ReportEvery:</td> <td>Report basic stats every i ticks after the first one (0 = never); format depends on -w.</td></tr>
-<tr><td valign=top>KMaxPopSizes:</td> <td>Comma-separated times and target subpop sizes to cull k-snipes to, e.g. "time,size,time,size"</td></tr>
-<tr><td valign=top>RMaxPopSizes:</td> <td>Comma-separated times and target subpop sizes to cull r-snipes to, e.g. "time,size,time,size"</td></tr>
-<tr><td valign=top>SMaxPopSizes:</td> <td>Comma-separated times and target subpop sizes to cull s-snipes to, e.g. "time,size,time,size"</td></tr>
-<tr><td valign=top>KMinPopSizes:</td> <td>Comma-separated times and target subpop sizes to increase k-snipes to, e.g. "time,size,time,size"</td></tr>
-<tr><td valign=top>RMinPopSizes:</td> <td>Comma-separated times and target subpop sizes to increase r-snipes to, e.g. "time,size,time,size"</td></tr>
-<tr><td valign=top>SMinPopSizes:</td> <td>Comma-separated times and target subpop sizes to increase s-snipes to, e.g. "time,size,time,size"</td></tr>
 </table>
-
-<p>Some data is reported in other variables displayed in the Model tab:
-<table style="width:100%">
-<tr><td valign=top>PopsSize</td> <td>Number of snipes in the population (in both environments).</td></tr>
-<tr><td valign=top>KSnipeFreq</td> <td>Relative frequency of k-snipes.</td></tr>
-<tr><td valign=top>RSnipeFreq</td> <td>Relative frequency of r-snipes.</td></tr>
-<tr><td valign=top>SSnipeFreq</td> <td>Relative frequency of s-snipes.</td></tr>
-</table>
-
-<p>If you click on the little magnifying glass next to these
-elements, there are additional options that MASON provides for
-observing their values.</p>
-
-<p>If you run pasta from the command line, (see online documents or "--help"
-will show options for setting the parameters listed above, as well as a
-few other options concerning whether to display the GUI concerning
-writing summary data to a file.</p>
-
-<p>There is additional information at
-https://github.com/mars0i/pasta/README.md.</p>
-
-<a name="thingstotry"></a><h2>Things to try:</h2>
-
-Set the number of s-snipes (NumSSnipes) or the number of r-snipes
-(NumRSnipes) to zero, so that there is only competition between k-snipes
-and one of the other varieties.  Notice that with the default
-parameters, k-snipes sometimes increase in frequency early on, but in
-the end the r-snipes or s-snipes always increase in frequency at the
-expense of k-snipes.  Why?  (Consider monitoring the energy levels of
-a few snipes over time.)
-
-<p>Experiment with parameters to see if you can cause k-snipes win the
-evolutionary race.  For example, before the start of a k-snipe vs.
-r-snipe run, reduce MushNegNutrition.  Does this affects k-snipes'
-relative success?  Why?</p>
-
-<p>k-snipes begin with no preference for large or small snipes.
-This means that at the beginning of a run, they are all in the
-same ignorant state.  At later times, there will be a mixture
-of well trained, still poorly trained, and new, completely ignorant
-k-snipes.  This is not a random distribution.  k-snipes that are
-well-trained for their environment may be more prevalent than those
-that are poorly trained for their environment.  You can use the
-commandline cull options to specify a time at which, for example,
-the k-snipe and r-snipe subpopulations are randomly sampled and 
-set back to their initial frequencies.  The k-snipe preference
-distribution will be more "realistic" for an ongoing population.
-Does this make a difference to the ultimate outcomes of competition
-between snipe types?</p>
 
 <a name="license"></a><h2>License:</h2>
 
