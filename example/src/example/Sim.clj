@@ -6,8 +6,6 @@
 
 (ns example.Sim
   (:require [clojure.tools.cli]
-            [clojure.data.csv :as csv]
-            [clojure.java.io]
             [masonclj.params :as sp]
             [example.snipe :as sn]
             [example.popenv :as pe])
@@ -34,19 +32,13 @@
 ;; number, in which case the app gets confused if I use e.g. -2 as an option below.
 (sp/defparams  [;field name   initial-value type             in ui? with range?
                 [num-r-snipes       25      long                    [0,500]     ["-R" "Size of r-snipe subpopulation" :parse-fn #(Long. %)]]
-                [initial-energy     10.0    double                  [0.0,50.0]  ["-e" "Initial energy for each snipe" :parse-fn #(Double. %)]]
                 [birth-threshold    20.0    double                  [1.0,50.0]  ["-b" "Energy level at which birth takes place" :parse-fn #(Double. %)]]
-                [birth-cost          5.0    double                  [0.0,10.0]  ["-o" "Energetic cost of giving birth to one offspring" :parse-fn #(Double. %)]]
-                [max-energy         30.0    double                  [1.0,100.0] ["-E" "Max energy that a snipe can have." :parse-fn #(Double. %)]]
-                [lifespan-mean       0      long                    [0,500]     ["-L" "Each snipe dies after a normally distributed number of timesteps with this mean." :parse-fn #(Long. %)]]
-                [lifespan-sd         0      long                    [0,10]      ["-l" "Each snipe dies after a normally distributed number of timesteps with this standard deviation." :parse-fn #(Long. %)]]
                 [carrying-proportion 0.25   double                  [0.1,0.9]   ["-C" "Snipes are randomly culled when number exceed this times # of cells in a subenv (east or west)." :parse-fn #(Double. %)]]
-                [neighbor-radius     5      long                    [1,10]      ["-D" "s-snipe neighbors (for copying) are no more than this distance away." :parse-fn #(Long. %)]]
                 [env-width          40      long                    [10,250]    ["-W" "Width of env.  Must be an even number." :parse-fn #(Long. %)]] ; Haven't figured out how to change 
                 [env-height         40      long                    [10,250]    ["-H" "Height of env. Must be an even number." :parse-fn #(Long. %)]] ;  within app without distortion
+                [extreme-pref        1.0    double                  true        ["-x" "Absolute value of r-snipe preferences." :parse-fn #(Double. %)]]
                 [env-display-size   12.0    double                  false       ["-G" "How large to display the env in gui by default." :parse-fn #(Double. %)]]
                 [use-gui           false    boolean                 false       ["-g" "If -g, use GUI; otherwise use GUI if and only if +g or there are no commandline options." :parse-fn #(Boolean. %)]]
-                [extreme-pref        1.0    double                  true        ["-x" "Absolute value of r-snipe preferences." :parse-fn #(Double. %)]]
                 [max-subenv-pop-size 0      long    false] ; maximum per-subenvironment population size
                 [seed               nil     long    false] ; convenience field to store Sim's seed
                 [in-gui           false     boolean false] ; convenience field to store Boolean re whether in GUI
