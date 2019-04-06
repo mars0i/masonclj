@@ -15,16 +15,16 @@
                  [org.jfree/jfreechart "1.0.17"]
                  [org.beanshell/bsh "2.0b4"]]
   :main ^:skip-aot example.core
-  :aot [example.snipe example.popenv example.Sim example.Example example.core]
+  :aot [example.snipe example.popenv example.Sim example.UI example.core]
   :jvm-opts ["-Xms2g"]
   :source-paths ["src"]
   :profiles {:nogui {:main example.Sim}      ; execute this with 'lein with-profile nogui run'
-             :gui   {:main example.Example}  ; execute this with 'lein with-profile gui run'
+             :gui   {:main example.UI}  ; execute this with 'lein with-profile gui run'
              :core  {:main example.core}
-             :uberjar {:prep-tasks [["compile" "example.Example"]
+             :uberjar {:prep-tasks [["compile" "example.UI"]
                                     ["compile" "example.snipe"
                                      "example.Sim"
                                      "example.core"]]
-                       :main example.core}} ; core decides whether to run Sim or Example (which runs Sim)
+                       :main example.core}} ; core decides whether to run Sim or UI (which runs Sim)
   :target-path "target/%s"
 )
