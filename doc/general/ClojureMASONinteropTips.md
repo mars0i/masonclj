@@ -28,6 +28,11 @@ realized immediately.
 
 ### How to do it
 
+MASON sets the title of the main window by calling `getName()` in the
+subclass of `GUIState`, if that function exists.  `getName` should
+return a string.  If `getName()` is missing, MASON sets the window title
+to the (unqualified) class name of the subclass.
+
 `getName()` is static in `GUIState`.  You can't actually override a
 static method, normally, in the sense that the method to run would be
 chosen at runtime by the actual class used.  Rather, with a static
