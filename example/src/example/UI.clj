@@ -4,7 +4,7 @@
 
 ;(set! *warn-on-reflection* true)
 
-(ns example.Example
+(ns example.UI
   (:require [example.Sim :as sim]
             [masonclj.properties :as props]
             [clojure.math.numeric-tower :as math])
@@ -18,9 +18,10 @@
            [java.awt.geom Rectangle2D$Double] ; note wierd Clojure syntax for Java static nested class
            [java.awt Color])
   (:gen-class
-    :name example.Example
+    :name example.UI
     :extends sim.display.GUIState
     :main true
+    :methods [^:static [getName [] java.lang.String]] ; see comment on the implementation below
     :exposes {state {:get getState}}  ; accessor for field in superclass that will contain my Sim after main creates instances of this class with it.
     :exposes-methods {start superStart,
                       quit superQuit,
@@ -30,10 +31,25 @@
     :state getUIState
     :init init-instance-state))
 
-(defn -getName
-  "This doesn't work."
-  ([this] (println "void version") "Yow!")
-  ([this cls] (println "sending up to super") (.superGetName this cls)))
+;; getName() is static in GUIState.  You can't actually override a static
+;; method, normally, in the sense that the method to run would be chosen
+;; at runtime by the actual class used.  Rather, with a static method,
+;; the declared class of a variable determines at compile time which 
+;; method to call.  *But* MASON uses reflection to figure out which
+;; method to call at runtime.  Nevertheless, this means that we need 
+;; a declaration in :methods, which you would not do for overriding
+;; non-static methods from a superclass.  Also, the declaration should 
+;; be declared static using metadata *on the entire declaration vector.
+(defn -getName 
+  "`\"Overrides\" the no-arg static getName() method in GUIState, and
+  returns the name to be displayed on the title bar of the main window."
+  []
+  "masonclj example")
+
+;(defn -getName
+;  "This doesn't work."
+;  ([this] (println "void version") "Yow!")
+;  ([this cls] (println "sending up to super") (.superGetName this cls)))
 
 ;; display parameters:
 (def display-backdrop-color (Color. 64 64 64)) ; border around subenvs
@@ -69,7 +85,7 @@
   (let [sim (Sim. (System/currentTimeMillis))]  ; CREATE AN INSTANCE OF my Sim
     (when @sim/commandline$ (sim/set-sim-data-from-commandline! sim sim/commandline$)) ; we can do this in -main because we have a Sim
     (swap! (.simData sim) assoc :in-gui true) ; allow functions in Sim to check whether GUI is running
-    (.setVisible (Console. (example.Example. sim)) true)))  ; THIS IS WHAT CONNECTS THE GUI TO my SimState subclass Sim
+    (.setVisible (Console. (example.UI. sim)) true)))  ; THIS IS WHAT CONNECTS THE GUI TO my SimState subclass Sim
 
 (defn mein
   "Externally available wrapper for -main."
@@ -195,18 +211,18 @@
 (defn repl-gui
   "Convenience function to init and start GUI from the REPL.
   Returns the new Sim object.  Usage e.g.:
-  (use 'example.Example) 
+  (use 'example.UI) 
   (let [[sim ui] (repl-gui)] (def sim sim) (def ui ui)) ; considered bad practice--but convenient in this case
   (def data$ (.simData sim))"
   []
   (let [sim (Sim. (System/currentTimeMillis))
-        ui (example.Example. sim)]
+        ui (example.UI. sim)]
     (.setVisible (Console. ui) true)
     [sim ui]))
 
 (defmacro repl-gui-with-defs
   "Calls repl-gui to start the gui, then creates top-level definitions:
-  sim as a example.Sim (i.e. a SimState), ui as a example.Example
+  sim as a example.Sim (i.e. a SimState), ui as a example.UI
   (i.e. a GUIState) that references sim, and data$ as an atom containing 
   sim's SimData stru."
   []
@@ -215,5 +231,5 @@
     (def ui ui))
   (def data$ (.simData sim))
   (println "cfg is defined as a Sim (i.e. a SimState)")
-  (println "ui is defined as a Example (i.e. a GUIState)")
+  (println "ui is defined as a UI (i.e. a GUIState)")
   (println "data$ is defined as an atom containing cfg's SimData stru."))

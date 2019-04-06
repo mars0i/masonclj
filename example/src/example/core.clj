@@ -6,7 +6,7 @@
 
 (ns example.core
   (:require [example.Sim :as sim]
-            [example.Example :as ui])
+            [example.UI :as ui])
   (:gen-class))
 
 (defn -main
