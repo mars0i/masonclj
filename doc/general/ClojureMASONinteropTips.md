@@ -1,8 +1,7 @@
-ClojureMASONinteropTips.md
+Tips relevant to using MASON with Clojure
 ====
 Marshall Abrams
 
-Miscellaneous tips relevant to using MASON with Clojure.
 
 
 ## Sequences, etc.

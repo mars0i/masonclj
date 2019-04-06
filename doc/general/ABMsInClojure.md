@@ -1,6 +1,5 @@
-ABMsInClojure.md
+Notes on writing agent-based models in Clojure
 ===
-## Notes on writing agent-based models in Clojure
 
 Marshall Abrams
 
