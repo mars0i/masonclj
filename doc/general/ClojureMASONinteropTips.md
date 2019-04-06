@@ -24,7 +24,7 @@ Clojure interop resources at hand might be a reasonable learning strategy.
 Any Java class that implements `java.util.Collection` can be used
 with Clojure sequence/list-oriented functions: `map`, `reduce`,
 `filter`, `vec`, etc.  This is very convenient--for example for working
-with the contents of a `sim.util.Bag`.
+with the contents of a MASON `sim.util.Bag`.
 
 Clojure allows you to create Java arrays of primitives using
 functions such as `double-array`.  You can set values in arrays of
