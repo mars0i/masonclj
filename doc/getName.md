@@ -24,11 +24,7 @@ declared static using metadata *on the entire declaration vector.
 
 ...
 
-(defn -getName 
-  "`\"Overrides\" the no-arg static getName() method in GUIState, and
-  returns the name to be displayed on the title bar of the main window."
-  []
-  "masonclj example")
+(defn -getName [] "example app")
 ```
 
 See https://stackoverflow.com/questions/26425098/how-to-generate-generate-static-methods-with-clojures-gen-class
