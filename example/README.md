@@ -7,7 +7,7 @@ Sections:<br/>
 
 <a name="overview"></a><h2>Overview:</h2>
 
-<em>Example</em> is a simple MASON model written in Clojure using the
+<em>example</em> is a simple MASON model written in Clojure using the
 masonclj library.  It's a stripped down version of a full-fledged model named
 "pasta", and I have kept some of the names from pasta.  (That way, if you
 want to look at pasta as an example of a more full-fledged Clojure MASON
@@ -23,15 +23,13 @@ environment. In pasta, the environment contains mushrooms, and snipes
 and mushrooms interact; snipes eat mushrooms.)</p>
 
 <p>The main MASON control file is Sim.clj, which subclasses MASON's
-`SimState` class.  Another important file is `Example.clj`, which
-controles the GUI; this subclasses MASON's `GUIState`.  (This module's
-name is what determines the name on the upper bar of the main GUI
-window.)</p>
+`SimState` class.  Another important file is `UI.clj`, which
+controles the GUI; this subclasses MASON's `GUIState`.</p>
 
-<p>The usual entry point is neither Sim.clj nor Example.clj,
+<p>The usual entry point is neither Sim.clj nor UI.clj,
 although both contain `main` methods.  The entry point is a traditional
 one for Clojure: core.clj.  This file determines whether the main in Sim.clj
-or the one for the GUI in Example.clj is called.  (You don't have to set
+or the one for the GUI in UI.clj is called.  (You don't have to set
 up things this way, but that's how I did it.)</p>
 
 <a name="parameters"></a><h2>Parameters:</h2>
