@@ -237,7 +237,7 @@ maps).  [Steven Yi and others on the Clojure Google group helped me to
 understand all  of this.]  If your agents are stored on a grid with a
 finite number of cells, however, this difference between `defrecord`
 and `deftype` probably won't matter.  MASON implements this kind of
-grid with Java arrays, so finding an object in arrays just involves
+grid with Java arrays, and finding an object in arrays just involves
 indexing into them.
 
 
