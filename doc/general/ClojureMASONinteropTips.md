@@ -16,8 +16,7 @@ MASON tutorial.)
 You will also have to learn a bit more about Clojure-Java interop than
 is usually necessary, but studying the source under masonclj's *example*
 directory with the MASON manual, the MASON classdocs tree, and good
-Clojure interop resources at hand might be a good learning strategy.
-Also: clojuredocs is a great web-based clojure functions reference.
+Clojure interop resources at hand might be a reasonable learning strategy.
 
 
 ## Sequences, etc.
