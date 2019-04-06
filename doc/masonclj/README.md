@@ -11,6 +11,9 @@ masonclj provides two kinds functions and macros for two purposes:
 * Making it easier to track agents using the MASON inspector
   facilities if you use defrecords to implement agents.
 
+(See the doc/general directory for notes that provide rationales for
+some of the design choices assumed by masonclj.)
+
 ### Model parameters coordination
 
 See [params.md](https://github.com/mars0i/masonclj/blob/master/doc/params.md)

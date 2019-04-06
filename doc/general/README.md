@@ -6,6 +6,9 @@ These documents don't concern the masonclj library per se.  They might
 be useful for anyone interested in using MASON with Clojure, or
 interested in writing ABMs in Clojure.
 
+However, these notes do provide rationales for some of the design
+choices assumed by masonclj.
+
 ## Files in this directory:
 
 * [ABMsInClojure.md](https://github.com/mars0i/masonclj/blob/master/doc/general/ABMsInClojure.md):
