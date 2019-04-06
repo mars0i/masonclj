@@ -22,9 +22,18 @@
     :extends sim.display.GUIState
     :main true
     :exposes {state {:get getState}}  ; accessor for field in superclass that will contain my Sim after main creates instances of this class with it.
-    :exposes-methods {start superStart, quit superQuit, init superInit, getInspector superGetInspector}
+    :exposes-methods {start superStart,
+                      quit superQuit,
+                      init superInit,
+                      getInspector superGetInspector,
+                      getName superGetName}
     :state getUIState
     :init init-instance-state))
+
+(defn -getName
+  "This doesn't work."
+  ([this] (println "void version") "Yow!")
+  ([this cls] (println "sending up to super") (.superGetName this cls)))
 
 ;; display parameters:
 (def display-backdrop-color (Color. 64 64 64)) ; border around subenvs
