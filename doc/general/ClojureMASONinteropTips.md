@@ -278,7 +278,7 @@ arrays, which you can create in Clojure using functions such as
 
 Note that there's no problem with using fields inherited from a
 superclass defined in Java from within the same Clojure class definition
-(probably: the same namespace).  They can be accessed as if they were
+(usually: the same namespace).  They can be accessed as if they were
 Java methods called from Clojure, i.e. with expressions such as
 `(.random students)` to get the random number generator defined in the
 SimState superclass of the `Students`.  You can modify these instance
