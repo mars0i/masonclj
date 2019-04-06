@@ -2,11 +2,88 @@ ClojureMASONinteropTips.md
 ====
 Marshall Abrams
 
-**Things I've learned that are relevant to using MASON with Clojure from
-experimenting with different ways to implement the Students example in
-Clojure, and other tips.**
+Miscellaneous tips relevant to using MASON with Clojure.
 
-This document came from my experiments implementing MASON's Students
+
+## Sequences, etc.
+
+Any Java class that implements `java.util.Collection` can be used
+with Clojure sequence/list-oriented functions: `map`, `reduce`,
+`filter`, `vec`, etc.  This is very convenient--for example for working
+with the contents of a `sim.util.Bag`.
+
+Clojure allows you to create Java arrays of primitives using
+functions such as `double-array`.  You can set values in arrays of
+primitives efficiently using functions such as `aset-double`.
+You can access the values efficiently using `aset` with type hints.
+
+Many Clojure functions generate lazy sequences.  One has to be very
+careful with these when dealing with mutable state.  Sometimes it's a
+good idea to wrap a result in `doall` to cause a lazy sequence to be
+realized immediately.
+
+
+
+## Setting the name in the title bar
+
+### How to do it
+
+`getName()` is static in `GUIState`.  You can't actually override a
+static method, normally, in the sense that the method to run would be
+chosen at runtime by the actual class used.  Rather, with a static
+method, the declared class of a variable determines at compile time
+which method to call.  *But* MASON uses reflection to figure out which
+method to call at runtime.  Nevertheless, this means that we need a
+declaration in :methods, which you would not do for overriding
+non-static methods from a superclass.  Also, the declaration should be
+declared static using metadata *on the entire declaration vector.
+
+```
+(ns 
+  ...
+  (:gen-class 
+    ...
+    :methods [^:static [getName [] java.lang.String]] ; see comment on the implementation below
+ ))
+
+...
+
+(defn -getName [] "example app")
+```
+
+See https://stackoverflow.com/questions/26425098/how-to-generate-generate-static-methods-with-clojures-gen-class
+for the syntax of the `:gen-class` declaration.
+
+
+### How not to do it
+
+So you don't have to--and should not do the following.
+
+When a method has multiple arities in the super, you you can use a
+Clojure multiple-arity method.  But if there are different *types* to
+the arguments, then you have to distinguish them by tacking type
+specifiers on to the name of the method!
+
+Example:
+
+```
+(defn -getName-void [this] "free-agent") 
+```
+
+See:
+
+https://groups.google.com/forum/#!topic/clojure/TVRsy4Gnf70
+
+https://puredanger.github.io/tech.puredanger.com/2011/08/12/subclassing-in-clojure (in which Alex Miller of all people learns from random others)
+
+http://stackoverflow.com/questions/32773861/clojure-gen-class-for-overloaded-and-overridden-methods
+
+http://dishevelled.net/Tricky-uses-of-Clojure-gen-class-and-AOT-compilation.html
+
+
+## Lessons from the Students model
+
+The following remarks came from experiments implementing MASON's Students
 example in Clojure (see the <a
 href="https://github.com/mars0i/majure">majure</a> repo).  Specific
 versions of the Students model mentioned below can be found in that
@@ -250,45 +327,3 @@ allow you to compile all of the source files.  (It's even possible to
 get this effect with multiple classes in a single source file.
 Apparently, the compiler can reference a previously compiled version 
 while recompiling a source file.)
-
-
-### Leiningen
-
-One standard way to manage Clojure projects is with Leiningen, using
-commands such as `lein compile`, `lein run`, and `lein repl`.  Among
-other things, you can use Leiningen's project.clj file to specify
-libraries to be used, and the `:aot` keyword to specify that certain
-source files will be compiled, and will be compile in a certain order
-when needed.  (Some people use Maven, though.)
-
-
-### Sequences, etc.
-
-Any Java class that implements `java.util.Collection` can be used
-with Clojure sequence/list-oriented functions: `map`, `reduce`,
-`filter`, `vec`, etc.  This is very convenient--for example for working
-with the contents of a `sim.util.Bag`.
-
-Clojure allows you to create Java arrays of primitives using
-functions such as `double-array`.  You can set values in arrays of
-primitives efficiently using functions such as `aset-double`.
-You can access the values efficiently using `aset` with type hints.
-
-Many Clojure functions generate lazy sequences.  One has to be very
-careful with these when dealing with mutable state.  Sometimes it's a
-good idea to wrap a result in `doall` to cause a lazy sequence to be
-realized immediately.
-
-
-### Versions
-
-Clojure is under active development.  I got a roughly 2X speedup by
-using a pre-release version of Clojure, 1.7.0-RC1, rather than Clojure
-1.6.0.
-
-
-### Miscellaneous
-
-In the examples in this git repo, I went overboard with providing accessors
-that would be available to Java.  For example, all of the methods named 
-"git"Something didn't need to be part of the Java class definition as such.
