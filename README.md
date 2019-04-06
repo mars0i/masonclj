@@ -18,7 +18,8 @@ using Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
 2. The
 [README](https://github.com/mars0i/masonclj/blob/master/doc/README.md)
 in the **doc** directory is a starting point for detailed information on
-what masonclj provides and how to use it.
+what masonclj provides and how to use it, as well as general-purpose
+notes about using MASON with Clojure and on writing ABMs in Clojure.
 
 3. The *example* directory contains a simple MASON model in
 Clojure, using masonclj.
