@@ -55,7 +55,8 @@ which method to call.  *But* MASON uses reflection to figure out which
 method to call at runtime.  Nevertheless, this means that we need a
 declaration in :methods, which you would not do for overriding
 non-static methods from a superclass.  Also, the declaration should be
-declared static using metadata *on the entire declaration vector.
+declared static using metadata placed *before the entire declaration
+vector*.
 
 ```
 (ns 
