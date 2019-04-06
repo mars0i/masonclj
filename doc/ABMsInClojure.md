@@ -43,7 +43,6 @@ Models Library dropdown.  There are docs and source code for each on the
 Info and Code tabs, respectively.
 
 
-
 ### FP and ABMs: general challenges
 
 A central idea of agent-based models is that agents persist over time,
@@ -137,16 +136,21 @@ designed to allow you to write models in Java itself.)
 
 ### MASON
 
-MASON is a well thought out, well-designed, very flexible ABM
-library, imo.  Clojure is a well thought out, well-designed, very
-flexible language.  However, MASON's design uses a lot of inheritance,
-and has some other features that make it a bit awkward to use with
-Clojure.  Some of the difficulties are due to the the FP-orientation of
-Clojure, and the fact that there's no reason that a Java ABM library
-should worry about FP concerns.  Some of the difficulties come from the
-fact that some of the ways in which "Clojure is an opinionated language"
-is that it is not intented to make it easy to deal with certain kinds of
-common Java design.
+MASON is a well thought out, well-designed, very flexible ABM library.
+It has many advanced capabilities.
+
+Clojure is a well thought out, well-designed, very flexible language.
+(It is a lot of fun, too, which is intimately tied how easy it is to
+get a lot done with Clojure.)
+
+However, MASON's design uses a lot of inheritance, and has some other
+features that make it a bit awkward to use with Clojure.  Some of the
+difficulties are due to the the FP-orientation of Clojure, and the fact
+that there's no reason that a Java ABM library should worry about FP
+concerns.  Some of the difficulties come from the fact that some of the
+ways in which "Clojure is an opinionated language" is that it is not
+intented to make it easy to deal with certain kinds of common Java
+design.
 
 Item 1: If you add some Bean-style accessors for model parameters,
 MASON will automatically tie them to GUI elements, so that you can
