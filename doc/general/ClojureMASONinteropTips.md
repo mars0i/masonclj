@@ -72,12 +72,13 @@ vector*.
 ```
 
 See https://stackoverflow.com/questions/26425098/how-to-generate-generate-static-methods-with-clojures-gen-class
-for the syntax of the `:gen-class` declaration.
+for the syntax for declaring a method static in `gen-class`.
 
 
 ### How not to do it
 
-So you don't have to--and should not do the following.
+The preceding means that you don't have to and should not do the
+followint (which would be natural in other contexts).
 
 When a method has multiple arities in the super, you you can use a
 Clojure multiple-arity method.  But if there are different *types* to
