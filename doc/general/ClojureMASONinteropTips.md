@@ -1,7 +1,23 @@
-Tips relevant to using MASON with Clojure
+Tips for using MASON with Clojure
 ====
 Marshall Abrams
 
+## Where to start?
+
+These notes don't provide introductions or tutorials for Clojure or
+MASON.  MASON has a detailed PDF manual that begins with a tutorial and
+a example.
+
+To read the MASON manual, you'll need to know a little bit of Java or
+have enough experience to figure it out as you read.  (My "majure" repo
+includes some Clojure implementations of the Students example from the
+MASON tutorial.)
+
+You will also have to learn a bit more about Clojure-Java interop than
+is usually necessary, but studying the source under masonclj's *example*
+directory with the MASON manual, the MASON classdocs tree, and good
+Clojure interop resources at hand might be a good learning strategy.
+Also: clojuredocs is a great web-based clojure functions reference.
 
 
 ## Sequences, etc.
