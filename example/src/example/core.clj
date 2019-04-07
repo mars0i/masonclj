@@ -6,7 +6,7 @@
 
 (ns example.core
   (:require [example.Sim :as sim]
-            [example.UI :as ui])
+            [example.GUI :as gui])
   (:gen-class))
 
 (defn -main
@@ -18,4 +18,4 @@
   (sim/record-commandline-args! args) ; defined by defsim: records args in commandline$, defined above
   (if (and args (not (:use-gui (:options @sim/commandline$)))) ; if commandline options, default to no-gui unless use-gui is true
     (sim/mein args)
-    (ui/mein args))) ; otherwise default to gui
+    (gui/mein args))) ; otherwise default to gui

@@ -23,7 +23,7 @@ to put that one Oriented2D interface into Sim.clj).
 
 Yes, it appears so.  Even if the model itself isn't controlled by the
 scheduler--if say, you're just `take` from a lazy sequence of model
-states--it's the scheduler that makes the UI window repaint.  cf. page
+states--it's the scheduler that makes the GUI window repaint.  cf. page
 24 of the v.19 manual.  (You make this happen by calling
 Display2D.reset().)  
 
@@ -31,7 +31,7 @@ Display2D.reset().)
 ## But could I step the scheduler myself?
 
 i.e. rather than the MASON scheduler driving Clojure code, let Clojure
-drive the MASON UI.
+drive the MASON GUI.
 
 Well there's a step() function in Schedule.  Note though it will only do
 anything if there are things registered on the schedule.  So I would
@@ -64,7 +64,7 @@ Why?
 1. To get at a spun-up MersenneTwister RNG.
 2. To support user parameter configurations from the GUI.
 3. If you use MASON's scheduling facility, that comes from SimState, too.
-4. You do need a GUIState if you want to have a UI, and the only
+4. You do need a GUIState if you want to have a GUI, and the only
    constructor for GUIState listed in the docs requires that you pass 
    in a SimState.
 
@@ -158,8 +158,8 @@ field.  snipes also are updated functionally using `assoc` or
 
 Then in the schedule loop in `SimConfig/start`, I `swap!` in the new
 popenv on every tick, and (this is the crucial step) in
-`UI/setup-portrayals`, I use `scheduleRepeatingImmediatelyAfter` to add
-a task to the UI part of the scheduling system that calls `setField` on
+`GUI/setup-portrayals`, I use `scheduleRepeatingImmediatelyAfter` to add
+a task to the GUI part of the scheduling system that calls `setField` on
 the snipe field portrayal and mushroom field portrayal on every tick.
 
 

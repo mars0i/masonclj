@@ -105,7 +105,7 @@ I couldn't figure out how to move this into the `defparams` definition.
 Example of the use of `defparams` in Sim.clj in my pasta repo:
 
 ```clojure
-;;              field name   initial-value  type   in ui? with range?  info for clojure's cli commandline option function
+;;              field name   initial-value  type   in gui? with range?  info for clojure's cli commandline option function
 (masonclj.params/defparams 
                [[num-k-snipes       25      long    [0 500]     ["-K" "Size of k-snipe subpopulation" :parse-fn #(Long. %)]]
                 [mush-prob           0.2    double  [0.0 1.0]   ["-M" "Average frequency of mushrooms." :parse-fn #(Double. %)]]
@@ -161,9 +161,9 @@ options.  `fields` is a sequence of 4- or 5-element sequences starting
 with names of fields in which configuration data will be stored and
 accessed, followed by initial values and a Java type identifiers for the
 field.  The fourth element is either false to indicate that the field
-should not be configurable from the UI, or truthy if it is.  In the
+should not be configurable from the GUI, or truthy if it is.  In the
 latter case, it may be a two-element sequence containing default min and
-max values to be used for sliders in the UI.  (This range doesn't
+max values to be used for sliders in the GUI.  (This range doesn't
 constraint fields' values in any other respect.) The fifth element, if
 present, specifies short commandline option lists for use by
 `cli-options`, except that the second, long option specifier should be
@@ -217,16 +217,16 @@ that run the simulation, you can pass in your `Sim` instance,
 the atom wrapping your `SimData`, or the `SimData` itself, so that
 your code can access the configuration data stored in it.
 
-In your GUI class--let's say it's named "UI"--which inherits from
+In your GUI class--let's say it's named "GUI"--which inherits from
 Mason's `sim.display.GUIState`, the `Sim` instance will usually be
-accessible using the `getState()` accessor that `UI` inherits from
+accessible using the `getState()` accessor that `GUI` inherits from
 `GUIState`.  For example, your `setup-portrayals` function might start
 like this:
 
 ```clojure
 (defn setup-portrayals
-  [this-ui]
-  (let [sim (.getState this-ui)
+  [this-gui]
+  (let [sim (.getState this-gui)
         sim-data$ (.simData sim)
            ...                  ]
     ...))

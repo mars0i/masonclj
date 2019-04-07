@@ -52,7 +52,7 @@
 
 ;; Used by GUI to allow inspectors to follow a functionally updated agent.
 ;; i.e. normally you can double-click on an agent, and its internal state will
-;; be displayed (while a circle follows it around, if you implement that in UI code).
+;; be displayed (while a circle follows it around, if you implement that in GUI code).
 ;; The normal implementation of this in MASON assumes that the JVM identity of an 
 ;; agent never changes; you can simply track it using a pointer.  Since we are defining 
 ;; agents using defrecord, we get all of the conveniences that Clojure provides for 

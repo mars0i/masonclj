@@ -30,7 +30,7 @@
 ;; uses them for single-dash options: c d f h p q r s t u.  Also avoid numbers, because
 ;; MASON allows setting '-seed <old seed number>', and old seed number may be a negative
 ;; number, in which case the app gets confused if I use e.g. -2 as an option below.
-(sp/defparams  [;field name   initial-value type             in ui? with range?
+(sp/defparams  [;field name   initial-value type             in gui? with range?
                 [num-r-snipes       25      long                    [0,500]     ["-R" "Size of r-snipe subpopulation" :parse-fn #(Long. %)]]
                 [birth-threshold    20.0    double                  [1.0,50.0]  ["-b" "Energy level at which birth takes place" :parse-fn #(Double. %)]]
                 [carrying-proportion 0.25   double                  [0.1,0.9]   ["-C" "Snipes are randomly culled when number exceed this times # of cells in a subenv (east or west)." :parse-fn #(Double. %)]]
