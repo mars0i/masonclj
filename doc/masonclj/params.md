@@ -1,4 +1,4 @@
-`masonclj.params/defparams`
+`masonclj.params
 ====
 Marshall Abrams
 

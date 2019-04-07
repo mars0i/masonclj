@@ -1,4 +1,4 @@
-`masonclj.properties`: `defagent`, `make-properties`
+`masonclj.properties`
 ===
 Marshall Abrams
 
