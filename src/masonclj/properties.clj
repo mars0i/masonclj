@@ -148,10 +148,11 @@
 ;; of its circled$ field.
 
 (defn make-fnl-circled-portrayal
-  "Create a subclass of CircledPortrayal2D for agents with a
-  circled$ field and that are composed of distinct time-slices" 
+  "Creates a subclass of CircledPortrayal2D for agents with a
+  circled$ field.  The agent will be portrayed with a circle
+  around it in the GUI if and only if @(:circled$ agt) is truthy."
   [color child-portrayal]
   (proxy [CircledPortrayal2D] [child-portrayal color false]
-    (draw [agent graphics info]
-      (.setCircleShowing this @(:circled$ agent))
-      (proxy-super draw agent graphics info))))
+    (draw [agt graphics info]
+      (.setCircleShowing this @(:circled$ agt))
+      (proxy-super draw agt graphics info))))
