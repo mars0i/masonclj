@@ -16,7 +16,7 @@ some of the design choices assumed by masonclj.)
 
 ### Model parameters coordination
 
-See [params.md](https://github.com/mars0i/masonclj/blob/master/doc/params.md)
+See [params.md](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/params.md)
 for documentation on the `defparams` macro in the `masonclj.params`
 package.  `defparams` does two things:
 
@@ -36,7 +36,7 @@ configuration data is used by the model parameter definitions.
 ### Tracking agents in the GUI
 
 See
-[properties.md](https://github.com/mars0i/masonclj/blob/master/doc/properties.md)
+[properties.md](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/properties.md)
 for documentation on the `defagent` macro and the `make-properties`
 function in the `masonclj.properties`.  These allow you to use
 functionally updated defrecord objects as MASON agents while still
