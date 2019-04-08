@@ -14,6 +14,9 @@ See the [masonclj
 documentation](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/README.md)
 in the doc/masonclj directory.
 
+Also see the *example* directory, which contains a simple MASON model in
+Clojure using masonclj.  The masonclj source is under *src*.
+
 ## Useful background material
 
 [General-purpose notes on Clojure with MASON or other approaches to
@@ -22,9 +25,6 @@ are in the doc/general directory.  This provides rationales for some of
 the design choices assumed by masonclj, but might also be of interest
 to people who want to write ABMs in Clojure without MASON.  Some of
 the Clojure-Java interop notes might of broader interest.
-
-The *example* directory contains a simple MASON model in Clojure using
-masonclj.  The masonclj source is under *src*.
 
 ## What else do you need to know?
 
