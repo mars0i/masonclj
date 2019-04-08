@@ -36,12 +36,17 @@ the Clojure-Java interop notes might of broader interest.
 The documentation here doesn't provide introductions to Clojure or
 MASON.  MASON has a detailed PDF manual that begins with a tutorial and
 a example. To read the MASON manual, you'll need to know a little bit of
-Java or have enough experience to figure it out as you read.  (My
-"majure" repo includes some Clojure implementations of the Students
-example from the MASON tutorial.) You will also have to learn a bit more
+Java or have enough experience to figure it out as you read.
+ You will also have to learn a bit more
 about Clojure-Java interop than is usually necessary, but studying the
 source under the *example* directory with good interop resources and the
-MASON manual and classdocs at hand is probably a good strategy.
+MASON manual and classdocs at hand is probably a good strategy.  (My
+*majure* repo includes some Clojure implementations of the Students
+example from the MASON tutorial.  It's possible that it might be useful
+to look at that while reading the tutorial in the MASON manual.
+However, the examples in that repo are poor illustrations of good
+Clojure style.  My *pasta* repo illustrates my current approach to MASON
+programming.)
 
 The book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly
 is the best single source of information about Clojure-Java interop I've
