@@ -6,7 +6,7 @@ Marshall Abrams
 
 masonclj provides two kinds functions and macros for two purposes:
 
-* Making easier to define parameters for control of a model via the
+* Making it easier to define parameters for control of a model via the
   GUI and the command line.
 * Making it easier to track agents using the MASON inspector
   facilities if you use defrecords to implement agents.
