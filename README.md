@@ -1,32 +1,33 @@
 masonclj
 ===
 
-A very small library that provides functions and macros that smooth a
-few rough edges to using MASON in Clojure.  (Most of the rough edges are
-due to design choices by the architects of both Clojure and MASON that
-are very reasonable choices on their own within the separate contexts of
-Clojure and Java, but that turn out to be somewhat awkward when
-combined.)
+*masonclj* is a very small library that provides functions and macros
+that smooth a few rough edges to using MASON in Clojure.  (Most of the
+rough edges are due to design choices by the architects of both
+Clojure and MASON that are very reasonable choices on their own within
+the separate contexts of Clojure and Java, but that turn out to be
+somewhat awkward when combined.)
 
-## Usage
+## What's here?
 
-1. Add a dependency to `mars0i/masonclj "0.1.0"` (or whatever is the latest
-version number in project.clj or pom.xml here).  For example, if you are
-using Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
-`:dependencies` vector in project.clj.
+[masonclj
+documentation](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/README.md)
+is in the doc/masonclj directory.
 
-2. The
-[README](https://github.com/mars0i/masonclj/blob/master/doc/README.md)
-in the **doc** directory is a starting point for detailed information on
-what masonclj provides and how to use it, as well as general-purpose
-notes about using MASON with Clojure and on writing ABMs in Clojure.
+[General-purpose notes on Clojure with MASON or other approaches to
+ABMs](https://github.com/mars0i/masonclj/blob/master/doc/general/README.md)
+are in the doc/general directory.  This provides rationales for some of
+the design choices assumed by masonclj, but it might also be of interest
+to people who want to write ABMs in Clojure without MASON.  (Some of
+the notes are about Clojure-Java interop, and might be useful to a
+wider audience.)
 
-3. The *example* directory contains a simple MASON model in
-Clojure, using masonclj.
+The *example* directory contains a simple MASON model in Clojure using
+masonclj.  The masonclj source is under *src*.
 
 ## What else do you need to know?
 
-The documentation here does not provide introductions to Clojure or
+The documentation here doesn't provide introductions to Clojure or
 MASON.  MASON has a detailed PDF manual that begins with a tutorial and
 a example. To read the MASON manual, you'll need to know a little
 bit of Java or have enough experience to figure it out as you read.  (My
@@ -36,11 +37,11 @@ about Clojure-Java interop than is usually necessary, but studying the
 source under the *example* directory with good interop resources at hand
 is probably a good strategy.
 
-Not all of the corners of Clojure-Java interop are well documented.  The
-book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly is
-the best single source of information about Clojure-Java interop that I
-have encountered.  Some of the documents here may help, but they
-don't go into detail.
+The book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly
+is the best single source of information about Clojure-Java interop that
+I have encountered.  Some of the documents here may help, but they don't
+go into detail.  (Not all of the corners of Clojure-Java interop are
+well documented.)
 
 ## License
 
