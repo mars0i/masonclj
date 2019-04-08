@@ -45,8 +45,7 @@ MASON manual and classdocs at hand is probably a good strategy.  (My
 example from the MASON tutorial.  It's possible that it might be useful
 to look at that while reading the tutorial in the MASON manual.
 However, the examples in that repo are poor illustrations of good
-Clojure style.  My *pasta* repo illustrates my current approach to MASON
-programming.)
+Clojure style.)
 
 The book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly
 is the best single source of information about Clojure-Java interop I've
