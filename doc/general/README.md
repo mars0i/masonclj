@@ -9,6 +9,10 @@ Clojure-Java interop, and might be useful to a wider audience.)
 However, these notes do provide rationales for some of the design
 choices assumed by masonclj.
 
+NOTE: "Agent" in these documents refers to agents in the agent-based
+modeling sense.  This sense of the term pretty much has nothing to do
+with the Clojure language agent concept.
+
 ## Files in this directory:
 
 * [ABMsInClojure.md](https://github.com/mars0i/masonclj/blob/master/doc/general/ABMsInClojure.md):

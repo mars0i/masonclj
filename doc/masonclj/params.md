@@ -2,9 +2,7 @@
 ====
 Marshall Abrams
 
-`masonclj.params` provides `defparams`, a Clojure macro, to ease use 
-of the [MASON](https://cs.gmu.edu/~eclab/projects/mason) ABM library 
-with Clojure.
+`masonclj.params` provides `defparams`, a Clojure macro.
 
 ## Rationale
 

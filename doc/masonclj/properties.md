@@ -3,9 +3,9 @@
 Marshall Abrams
 
 `masonclj.properties` provides Clojure macros and functions, `defagent`,
-`make-properties`, and `make-fnl-circled-portrayal`; both are designed
-to ease use of  the [MASON](https://cs.gmu.edu/~eclab/projects/mason)
-ABM library with Clojure.
+`make-properties`, and `make-fnl-circled-portrayal`.
+
+## Overview
 
 `make-properties` makes it easier to use MASON inspectors to track
 agents in the GUI even if you implement agents as defrecords--which
@@ -13,12 +13,6 @@ don't have modifiable fields, so the same agent might be represented by
 different "time slice" defrecords at different times.  `defagent` makes
 it simpler to use `make-properties`, and `make-fnl-circled-portrayal`
 helps make use of its results in the GUI.
-
-NOTE: "Agent" below refers to agents in the agent-based modeling sense.
-This sense of the term pretty much has nothing to do with the Clojure
-language agent concept.
-
-## Rationale
 
 (See also
 [doc/ClojureMasonInteropTips.md](https://github.com/mars0i/masonclj/blob/master/doc/ClojureMASONinteropTips.md) and

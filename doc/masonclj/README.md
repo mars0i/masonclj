@@ -2,6 +2,10 @@ masonclj documentation
 ====
 Marshall Abrams
 
+NOTE: "Agent" below refers to agents in the agent-based modeling sense.
+This sense of the term pretty much has nothing to do with the Clojure
+language agent concept.
+
 ## Overview
 
 masonclj provides two kinds functions and macros for two purposes:
