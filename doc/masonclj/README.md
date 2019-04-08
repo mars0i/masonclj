@@ -14,6 +14,45 @@ masonclj provides two kinds functions and macros for two purposes:
 (See the doc/general directory for notes that provide rationales for
 some of the design choices assumed by masonclj.)
 
+## To get started with masonclj
+
+You'll need Clojure, Leiningen, MASON, and Java.
+
+Add a dependency to `mars0i/masonclj "0.1.0"` in your Leiningen
+project.clj, or the equivalent for whatever build management system
+you're using.  For Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
+`:dependencies` vector in project.clj.  Replace "0.1.0" with whatever
+is the latest release version in the project.clj in the masonclj repo.
+
+Eventually, I'll upload masonclj to Clojars, and at that point, running
+`lein deps` should automatically install masonclj.  Before that, you
+first need to install the masonclj git repo, and then run `lein install`
+from the repo's root directory.
+
+When you download MASON from the [MASON
+website](https://cs.gmu.edu/~eclab/projects/mason), there are some
+supplementary libraries available there that you should also download.
+I have the following in my usual project.clj for a MASON project:
+
+```clojure
+  :dependencies [[org.clojure/clojure "1.10.0"]  ; Clojure version
+                 [org.clojure/tools.cli "0.4.1"] ; a command line processing library
+                 [org.clojure/math.numeric-tower "0.0.4"] ; for a few functions
+                 [mars0i/masonclj "0.1.0"]
+                 [mason "19"]
+                 ;; libs used by Mason:
+                 [javax.media/jmf "2.1.1e"]
+                 [com.lowagie/itext "1.2.3"] ; comes with MASON--not 1.2
+                 [org.jfree/jcommon "1.0.21"]
+                 [org.jfree/jfreechart "1.0.17"]
+                 [org.beanshell/bsh "2.0b4"]]
+```
+
+(TODO: How to install these in my maven repository .m2?)
+
+
+
+
 ### Model parameters coordination
 
 See [params.md](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/params.md)
