@@ -8,9 +8,6 @@ that smooth a few rough edges to using
 reasonable design choices by the Clojure and MASON architects; masonclj
 makes available workarounds easier to use.
 
-reasonable choices on their own within the separate contexts of Clojure
-and Java, but that turn out to be somewhat awkward when combined.)
-
 ## What is in masonclj and how does one use it?
 
 See the [masonclj
