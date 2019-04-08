@@ -4,8 +4,10 @@ masonclj
 **masonclj** is a very small library that provides functions and macros
 that smooth a few rough edges to using
 [MASON](https://cs.gmu.edu/~eclab/projects/mason) in
-[Clojure](https://clojure.org).  (Most of the rough edges are due to
-design choices by the architects of both Clojure and MASON that are very
+[Clojure](https://clojure.org).  (The rough edges are simply due to
+reasonable design choices by the Clojure and MASON architects; masonclj
+makes helpful workarounds easier to use.)
+
 reasonable choices on their own within the separate contexts of Clojure
 and Java, but that turn out to be somewhat awkward when combined.)
 

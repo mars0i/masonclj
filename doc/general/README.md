@@ -4,7 +4,8 @@ Marshall Abrams
 
 These documents don't concern the masonclj library per se.  They might
 be useful for anyone interested in using MASON with Clojure, or
-interested in writing ABMs in Clojure.
+interested in writing ABMs in Clojure.  (Some of the notes are about
+Clojure-Java interop, and might be useful to a wider audience.)
 
 However, these notes do provide rationales for some of the design
 choices assumed by masonclj.
