@@ -32,7 +32,7 @@ from the repo's root directory.
 When you download MASON from the [MASON
 website](https://cs.gmu.edu/~eclab/projects/mason), there are some
 supplementary libraries available there that you should also download.
-I have the following in my usual project.clj for a MASON project:
+I usually have the following in a project.clj for a MASON project:
 
 ```clojure
   :dependencies [[org.clojure/clojure "1.10.0"]  ; Clojure version
