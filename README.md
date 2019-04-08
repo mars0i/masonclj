@@ -8,12 +8,13 @@ Clojure and MASON that are very reasonable choices on their own within
 the separate contexts of Clojure and Java, but that turn out to be
 somewhat awkward when combined.)
 
-## What's here?
+## What is masonclj and how to use it?
 
-What is masonclj, why would I want to use it, and how would I use it?
 The [masonclj
 documentation](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/README.md)
 is in the doc/masonclj directory.
+
+## Useful background material
 
 [General-purpose notes on Clojure with MASON or other approaches to
 ABMs](https://github.com/mars0i/masonclj/blob/master/doc/general/README.md)
