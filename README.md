@@ -1,7 +1,7 @@
 masonclj
 ===
 
-*masonclj* is a very small library that provides functions and macros
+**masonclj** is a very small library that provides functions and macros
 that smooth a few rough edges to using MASON in Clojure.  (Most of the
 rough edges are due to design choices by the architects of both
 Clojure and MASON that are very reasonable choices on their own within
@@ -10,17 +10,17 @@ somewhat awkward when combined.)
 
 ## What's here?
 
-[masonclj
+What is masonclj, why would I want to use it, and how would I use it?
+The [masonclj
 documentation](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/README.md)
 is in the doc/masonclj directory.
 
 [General-purpose notes on Clojure with MASON or other approaches to
 ABMs](https://github.com/mars0i/masonclj/blob/master/doc/general/README.md)
 are in the doc/general directory.  This provides rationales for some of
-the design choices assumed by masonclj, but it might also be of interest
-to people who want to write ABMs in Clojure without MASON.  (Some of
-the notes are about Clojure-Java interop, and might be useful to a
-wider audience.)
+the design choices assumed by masonclj, but might also be of interest
+to people who want to write ABMs in Clojure without MASON.  Some of
+the Clojure-Java interop notes might of broader interest.
 
 The *example* directory contains a simple MASON model in Clojure using
 masonclj.  The masonclj source is under *src*.
@@ -38,14 +38,13 @@ source under the *example* directory with good interop resources at hand
 is probably a good strategy.
 
 The book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly
-is the best single source of information about Clojure-Java interop that
-I have encountered.  Some of the documents here may help, but they don't
-go into detail.  (Not all of the corners of Clojure-Java interop are
-well documented.)
+is the best single source of information about Clojure-Java interop I've
+encountered.  Some of the documents here may help, too, but they don't
+go into detail.
 
 ## License
 
-This software is copyright 2016, 2017, 2018, 2019 by [Marshall
+This software and text is copyright 2016, 2017, 2018, 2019 by [Marshall
 Abrams](http://members.logical.net/~marshall/), and is distributed under
 the [Gnu Lesser General Public License version
 3.0](https://www.gnu.org/licenses/lgpl.html) as specified in the file
