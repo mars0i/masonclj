@@ -1,4 +1,5 @@
-# Introduction to the masonclj *example* model
+## Introduction to the masonclj *example* model
+Marshall Abrams
 
 Sections:<br/>
 <a href="#overview">Overview</a>,

@@ -1,6 +1,5 @@
 doc
 ===
-Marshall Abrams
 
 [masonclj
 documentation](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/README.md)
