@@ -5,7 +5,7 @@ masonclj
 that smooth a few rough edges to using
 [MASON](https://cs.gmu.edu/~eclab/projects/mason) in
 [Clojure](https://clojure.org).  The rough edges are due to
-reasonable design choices by the Clojure and MASON architects; masonclj
+reasonable design choices by Clojure and MASON architects; masonclj
 makes available workarounds easier to use.
 
 ## What is in masonclj and how does one use it?
