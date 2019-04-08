@@ -40,7 +40,7 @@ MASON manual and classdocs at hand is probably a good strategy.
 
 The book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly
 is the best single source of information about Clojure-Java interop I've
-encountered, although I know of no completely comprehensive source.
+encountered (but I know of no completely comprehensive source).
 Some of the documents here may help, too, but they don't go into detail.
 
 ## License
