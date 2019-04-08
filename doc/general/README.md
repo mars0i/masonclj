@@ -1,6 +1,5 @@
 General notes on Clojure, MASON, and ABMs
 ====
-Marshall Abrams
 
 These documents don't concern the masonclj library per se.  They might
 be useful for anyone interested in using MASON with Clojure, or
