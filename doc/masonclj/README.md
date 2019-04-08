@@ -48,7 +48,7 @@ I usually have the following in a project.clj for a MASON project:
                  [org.beanshell/bsh "2.0b4"]]
 ```
 
-(TODO: How to install these in my maven repository .m2?)
+(TODO: How to install these in a maven repository.)
 
 
 ## Model parameters coordination
