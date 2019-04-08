@@ -51,20 +51,21 @@ I have the following in my usual project.clj for a MASON project:
 (TODO: How to install these in my maven repository .m2?)
 
 
-
-
 ### Model parameters coordination
 
 See [params.md](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/params.md)
 for documentation on the `defparams` macro in the `masonclj.params`
 package.  `defparams` does two things:
 
-1. Generates a series of coordinated definitions for model
-parameters.  It's useful to include a series of related definitions
-for model parameters.  In Clojure, many of would naturally be put in
-diffent locations in your code, and in some cases they must be put
-in different places.  `defparams` generates these definitions
-all at once, making it easier to keep them coordinated.
+1. Generates a series of coordinated definitions for model parameters.
+It's useful to include a series of related definitions for model
+parameters.  In Clojure, many of these would most naturally be put in
+diffent locations in your code, and in some cases they *must* be put in
+different places in your code.  This is a pain and can lead to bugs if
+your model has a lot of configurable parameters.  In that case adding or
+removing a parameter or changing its definition can lead to having to
+update several parts of your code.  `defparams` generates these
+definitions all at once, making it easier to keep them coordinated.
 
 2. Moves global configuration data into its own namespace.  There
 are some situations in which it's useful to put global
