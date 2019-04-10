@@ -83,8 +83,7 @@ configuration data is used by the model parameter definitions.
 See
 [properties.md](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/properties.md)
 for documentation on the definitions in `masonclj.properties`.  These
-allow you to use functionally updated defrecord objects as MASON
-agents,
+allow you to use functionally updated defrecord objects as MASON agents,
 while still making it possible to track an agent in the GUI using
 MASON's inspector functionality.
 
