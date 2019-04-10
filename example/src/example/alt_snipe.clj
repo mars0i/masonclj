@@ -26,6 +26,7 @@
   [cfg-data$ first-slice] ; pass cfg-data$ and not @cfg-data$ so the fn always uses the latest data.
   (fn [] ((:snipe-map (:popenv @cfg-data$)) (:id first-slice))))
 
+;; DIFFERENT FROM DEFAGENT VERSION:
 (defrecord RSnipe [circled$ id energy subenv x y cfg-data$]
   Propertied
   (properties [first-slice]
@@ -41,6 +42,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SNIPE MAKER FUNCTIONS
 
+;; DIFFERENT FROM DEFAGENT VERSION:
 (defn make-r-snipe
   [cfg-data$ energy subenv new-id x y]
   (->RSnipe (atom false) new-id energy subenv x y cfg-data$))
