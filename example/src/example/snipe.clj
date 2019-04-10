@@ -14,10 +14,7 @@
      :name example.snipe)) ; without :name other aot classes won't find it
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; INITIAL UTILITY DEFS
-
-(declare make-properties make-k-snipe make-r-snipe is-k-snipe? is-r-snipe? rand-energy)
+(declare rand-energy)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFRECORD CLASS DEFS
@@ -26,8 +23,8 @@
   "Return a function that can be the value of getObject in Properties,
   i.e. that will return the current time-slice of a particular snipe.
   The function returned will be a closure over cfg-data$."
-  [cfg-data$ original-snipe] ; pass cfg-data$ and not @cfg-data$ so the fn always uses the latest data.
-  (fn [] ((:snipe-map (:popenv @cfg-data$)) (:id original-snipe))))
+  [cfg-data$ first-slice] ; pass cfg-data$ and not @cfg-data$ so the fn always uses the latest data.
+  (fn [] ((:snipe-map (:popenv @cfg-data$)) (:id first-slice))))
 
 (props/defagent RSnipe [id energy subenv x y cfg-data$] 
   (partial make-get-curr-obj cfg-data$)
@@ -67,8 +64,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MISCELLANEOUS LITTLE FUNCTIONS
 
-;; SHOULD THIS BE GAUSSIAN?
-;; Is birth-threshold the right limit?
 (defn rand-energy
   "Generate random energy value uniformly distributed in [0, birth-threshold)."
   [rng cfg-data]
