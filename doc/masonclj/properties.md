@@ -83,8 +83,8 @@ passed to the `properties()` method.
 ### `make-properties` and `defagent`
 
 Setting up the `Properties` instance returned by `properties()` method
-is a little bit of trouble, so I wrote a function to make it easier: ```
-make-properties ``` You can use this directly to help create the return
+is a little bit of trouble, so I wrote a function to make it easier:
+`make-properties`. You can use this directly to help create the return
 value of the `properties()` method for the `Propertied` interface thaty
 your defrecord should implement.  This means that your `defrecord`
 should probably have a field named `id` that you will keep filled with a
@@ -93,13 +93,22 @@ initialized with an atom containing a boolean.  (I always name variables
 containing atoms with a final "$".)
 
 Alternatively, you can use the `defagent` macro to define your agent
-defrecord.  This automatically adds the `circled$` field, and defines 
-a constructor function whose name is "-->" followed by the defrecord
-name.  This constructor is just like the normal "->Name" constructor for
-defrecords, except that it automatically initializes `circled$` with
-`(atom false)`.  More importantly, `defagent` calls `make-properties`
-for you, with additional arguments that are passed to it, simplifying
-the process of implementing `Propertied`.
+defrecord.  This automatically adds the `circled$` field, and defines a
+constructor function whose name is "-->" (two dashes) followed by the
+defrecord name.  This constructor is just like the normal "->Name"
+constructor for defrecords, except that it automatically initializes
+`circled$` with `(atom false)`.  More importantly, `defagent` calls
+`make-properties` for you, with additional arguments that are passed to
+it, simplifying the process of implementing `Propertied`.  `defagent`
+also adds `Object` and its `toString` method to your defrecord.
+
+(*example/src/example/snipe.clj* contains illustrations both with
+and without `defagent`.)
+
+NOTE: If you ever don't change the internal state of an agent defrecord,
+then there is no need to use `make-properties` or `defagent`, since then
+the defrecord will always remain the same obejct, and MASON can track
+the defrecord by its pointer.
 
 ## The time-slice look up function
 
