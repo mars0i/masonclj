@@ -79,14 +79,9 @@ have a library or environment that's designed for ABMs.  This is why,
 although I have written an ABM in pure Clojure, I probably won't do that
 again.
 
-There is a list of ABM libraries and environments here:
-
-[en.m.wikipedia.org/wiki/comparison_of_agent-based_modeling_software](
-en.m.wikipedia.org/wiki/comparison_of_agent-based_modeling_software)
-
-
-It's a long list, but many of the tools are designed for special, narrow
-purposes, and many seem to be old and probably not well maintained.
+There is a subset of the ABM libraries and environments are listed here:
+[comparison_of_agent-based_modeling_software](https://en.m.wikipedia.org/wiki/Comparison_of_agent-based_modeling_software).  Some of the tools seem to be esigned for special, narrow purposes, and I
+suspect that some (e.g. Swarm?) may be old and not well maintained.
 
 AFAIK there are no ABM libraries written in Clojure.  I don't expect
 to see any soon, since the intersection of those interested in Clojure
@@ -128,7 +123,7 @@ designed to allow you to write models in Java itself.)
 
 #### Repast
 
-I investigated Repast a little bit, and the design and documentation
+I investigated [Repast](https://repast.github.io/index.html) a little bit, and the design and documentation
 didn't appeal to me.  It seemed more confusing and more difficult to
 use with Clojure than MASON.  I might be wrong about that, and I know
 that Repast has fans, but I decided to use MASON. If you're interested
@@ -137,7 +132,7 @@ if you feel like it.
 
 #### MASON
 
-MASON is a well thought out, well-designed, very flexible ABM library.
+[MASON](https://cs.gmu.edu/~eclab/projects/mason/) is a well thought out, well-designed, very flexible ABM library.
 It has many advanced capabilities.
 
 Clojure is a well thought out, well-designed, very flexible language.
