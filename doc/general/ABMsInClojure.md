@@ -187,23 +187,24 @@ to write all of this code and keep it coordinated.)
 you are doing functional and not imperative updating to agents'
 internal states, but you can just update the arrays that 
 MASON expects agents to live in, and it will dutifully display the
-agents in the GUI, ignoring the fact that you removed an old agentt
-and inserted a brand new one that represents the same entity as far as
+agents in the GUI, ignoring the fact that you removed an old agent
+and inserted a brand new one that represents the same entity, as far as
 you are concerned.
 
 However, this will break down if you want to use MASON's built-in method
 for displaying an agent's internal state while it runs.  You can
 double-click on an agent in the GUI, and it will be highlighted and you
 will see its internal variables in another window.  This is very useful
-sometimes.  This doesn't work with `defrecord` agents because when you
+sometimes.  This doesn't work
+outof the box with `defrecord` agents because when you
 decide to "watch" an agent, MASON stores a pointer to it, and when you
 do a functional update of the defrecord, the pointer now points to
 the old version of the agent, which will never change.  You could
 instead use a `deftype`, but then you lose the many conveniences of
 defrecords, and Clojure becomes less fun, ... and less Clojurely.
-Since I bother trying to write ABMs with MASON only because I want to
-have the convenience and fun of working Clojure, this is not an option
-I like.
+(Since one of the main reasons I wanted to use MASON with Clojure was
+that I wanted the convenience and fun of working Clojure, this is not
+an option I like.)
 
 Fortunately, MASON provides a workaround for this situation; you can
 define a method that MASON can call to get the current state of an
