@@ -147,9 +147,8 @@ features that make it a bit awkward to use with Clojure.  Some of the
 difficulties are due to the the FP-orientation of Clojure, and the fact
 that there's no reason that a Java ABM library should worry about FP
 concerns.  Some of the difficulties come from the fact that some of the
-ways in which "Clojure is an opinionated language" is that it is not
-intented to make it easy to deal with certain kinds of common Java
-design.
+ways in which Clojure is "[opinionated](https://clojure.org/reference/datatypes#_datatypes_and_protocols_are_opinionated)" language" is that it is not intended to make it easy to deal with certain
+kinds of common Java designs.
 
 Item 1: If you add some Bean-style accessors for model parameters,
 MASON will automatically tie them to GUI elements, so that you can
