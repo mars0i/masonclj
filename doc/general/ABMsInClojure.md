@@ -211,7 +211,7 @@ define a method that MASON can call to get the current state of an
 agent, but it's a bit of work to write.  I defined a function
 [`make-properties`](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/properties.md) and a macro `defagent` to do most of the work for you.
 
-**Item 3:** I you add type hints to avoid reflection for the sake of
+**Item 3:** If you add type hints to avoid reflection for the sake of
 speed, and you're not careful, you can get cyclic dependencies that
 won't compile.  The design of MASON can make it easy to end up in this
 situation.  (Java doesn't prevent cyclic dependencies in the way that
