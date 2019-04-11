@@ -133,7 +133,7 @@ that Repast has fans, but I decided to use MASON. If you're interested
 in Repast, please feel free to try it, and let me know what you think
 if you feel like it.
 
-### #MASON
+#### MASON
 
 MASON is a well thought out, well-designed, very flexible ABM library.
 It has many advanced capabilities.
