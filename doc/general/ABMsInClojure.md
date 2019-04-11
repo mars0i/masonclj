@@ -92,8 +92,12 @@ and in ABMs seems small.
 
 However, there are a few Java ABM libraries, and at least one Javascript
 (Coffeescript, actually) ABM library.  So one can consider using them
-with Clojure.
-
+with Clojure.  I don't spend a lot of time researching every library that
+might possibly be useful.  When choosing ABM libraries, I haven't tried to
+investigate libraries that do not seem to be widely used and currently
+maintained. Someone else might want to cast a wider net, and might find 
+something very worthwhile to use, but I don't have time.  (I'm open to
+suggestions, though.)
 
 ### Agentscript
 
@@ -106,10 +110,7 @@ than it offerred, and I decided to use a Java library.
 
 ### Java ABM libraries:
 
-In choosing Java ABM libraries, I don't want to try to investigate
-anything that doesn't seem to be widely used and currently maintained.
-Someone else might want to cast a wider net, and might find something
-very worthwhile to use, but I don't have time.
+
 
 Using this heuristic, there are exactly two Java ABM libraries worth
 considering for use with Clojure:  Repast, and MASON.  Both seem to be
