@@ -110,11 +110,9 @@ than it offerred, and I decided to use a Java library.
 
 ### Java ABM libraries:
 
-
-
-Using this heuristic, there are exactly two Java ABM libraries worth
-considering for use with Clojure:  Repast, and MASON.  Both seem to be
-used quite a bit in the ABM community.
+Using my crude search heuristic (see above), there appear to be exactly
+two Java ABM libraries worth considering for use with Clojure:  Repast,
+and MASON. Both seem to be used quite a bit in the ABM community.
 
 I investigated Repast a little bit, and the design and documentation
 didn't appeal to me.  It seemed more confusing to use than MASON.  I
