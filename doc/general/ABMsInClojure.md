@@ -124,7 +124,7 @@ designed to allow you to write models in Java itself.)
 #### Repast
 
 I investigated [Repast](https://repast.github.io/index.html) a little bit, and the design and documentation
-didn't appeal to me.  It seemed more confusing and more difficult to
+didn't appeal to me.  It seemed more difficult to
 use with Clojure than MASON.  I might be wrong about that, and I know
 that Repast has fans, but I decided to use MASON. If you're interested
 in Repast, please feel free to try it, and let me know what you think
