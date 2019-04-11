@@ -34,7 +34,7 @@ can turn off the graphical component.
 (If you're not familiar with agent-based modeling, you might want to experiment
 with NetLogo before working in ABMs in Clojure.   NetLogo is a very popular
 modeling environment and language for agent-based modeling.  The language
-ias pretty easy to learn, and the language and environment have many features
+is pretty easy to learn, and the language and environment have many features
 designed to make agent-based modeling easy. So if you want to get a feel for
 common patterns in agent-based modeling, download NetLogo or run the web
 version, and experiment with various sample models available in the
