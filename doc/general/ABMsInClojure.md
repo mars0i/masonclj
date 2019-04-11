@@ -57,7 +57,7 @@ agents' locations are imperatively modified.  There are various ways to
 do just this in Clojure, but you lose a lot of the conveniences of that
 Clojure provides.  For example, you can define agents as `deftypes` that
 are set up to be imperatively modified, or you can put atoms in the
-fields of a `defrecord`, but `deftypes` are less convienient that
+fields of a `defrecord`, but `deftypes` are less convienient than
 `defrecords`, and constantly `swap`ing on atoms clutters your code.
 
 TALK ABOUT IDENTITY OVER TIME HERE
