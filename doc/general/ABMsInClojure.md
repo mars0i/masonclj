@@ -79,7 +79,7 @@ have a library or environment that's designed for ABMs.  This is why,
 although I have written an ABM in pure Clojure, I probably won't do that
 again.
 
-There is a subset of the ABM libraries and environments are listed here:
+A subset of the ABM libraries and environments are listed here:
 [comparison_of_agent-based_modeling_software](https://en.m.wikipedia.org/wiki/Comparison_of_agent-based_modeling_software).  Some of the tools seem to be esigned for special, narrow purposes, and I
 suspect that some (e.g. Swarm?) may be old and not well maintained.
 
