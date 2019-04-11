@@ -99,7 +99,7 @@ maintained. Someone else might want to cast a wider net, and might find
 something very worthwhile to use, but I don't have time.  (I'm open to
 suggestions, though.)
 
-### Agentscript
+### A browser-based ABM library: Agentscript
 
 This is an ABM library written in Coffeescript.  I have experimented a
 little bit with using it with Clojurescript.  That seemed pretty easy
@@ -124,7 +124,7 @@ capabilities.  Implementing a Clojure-to-NetLogoDSL interface would be a
 lot of work.  It's easier to use Clojure with an ABM library that's
 designed to allow you to write models in Java itself.)
 
-### Repast
+#### Repast
 
 I investigated Repast a little bit, and the design and documentation
 didn't appeal to me.  It seemed more confusing and more difficult to
@@ -133,7 +133,7 @@ that Repast has fans, but I decided to use MASON. If you're interested
 in Repast, please feel free to try it, and let me know what you think
 if you feel like it.
 
-### MASON
+### #MASON
 
 MASON is a well thought out, well-designed, very flexible ABM library.
 It has many advanced capabilities.
