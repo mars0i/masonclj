@@ -2,7 +2,7 @@ Notes toward functional-style MASON
 ====
 Marshall Abrams
 
-Mostly notes t self while I was working on the intermittran repo.
+Mostly notes to self while I was working on the intermittran repo.
 
 ## defrecord vs. deftype
 
