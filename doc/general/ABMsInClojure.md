@@ -72,9 +72,6 @@ though.  In practice, even if you structure you code to update large-scale
 things like positions in environments in a functional manner, you will
 probably want to do selected updates imperatively.
 
-
-
-
 ### Agent-based modeling in Clojure?
 
 You can write an ABM in any language, of course, but it's nicer if you
