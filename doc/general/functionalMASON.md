@@ -11,9 +11,9 @@ Mostly notes to self while I was working on the intermittran repo.
 Note it's possible to use defrecord with protocols if needed.  This
 allows a defrecord to implement a MASON interface.  cf.  Sim.clj in
 intermittran, in which the deftype Indiv implements MASON's Oriented2D
-interface.  You can do something similar with defrecord.  
-(I'd rather keep the agents free of explicit MASON stuff, but it doesn't
-actually hurt anything (other than code modularity and library inclusion)
+interface.  You can do something similar with defrecord.   (I'd rather 
+keep the agents free of explicit MASON stuff, but it doesn't actually
+hurt anything (other than code modularity and library inclusion)
 to do this.)
 
 The real display stuff is all Protrayal stuff.  In intermittran,
