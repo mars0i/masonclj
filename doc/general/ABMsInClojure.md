@@ -219,7 +219,7 @@ reflect concerns about cyclic dependencies.) One feature in `defparams`
 attempts to make it easier to avoid cyclic dependencies with type hints.
 However, if your model is fast enough without type hints, or type hints
 would be unlikely to speed it up, then there's no reason to worry about
-this iisue.
+this issue.
 
 **Item 4:** Another issue with defrecords occurs *if* you want your agents to
 move with continuous coordinates rather than on a grid.  MASON
