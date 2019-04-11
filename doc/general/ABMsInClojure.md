@@ -81,7 +81,9 @@ again.
 
 There is a list of ABM libraries and environments here:
 
-en.m.wikipedia.org/wiki/comparison_of_agent-based_modeling_software
+[en.m.wikipedia.org/wiki/comparison_of_agent-based_modeling_software](
+en.m.wikipedia.org/wiki/comparison_of_agent-based_modeling_software)
+
 
 It's a long list, but many of the tools are designed for special, narrow
 purposes, and many seem to be old and probably not well maintained.
