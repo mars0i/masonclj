@@ -31,7 +31,7 @@ you know what you are doing with a model, you might want to perform a
 series of runs and record data from them.  This will be faster if you
 can turn off the graphical component.
 
-(If you're not familiar with agent-based modeling, you might to experiment
+(If you're not familiar with agent-based modeling, you might want to experiment
 with NetLogo before working in ABMs in Clojure.   NetLogo is a very popular
 modeling environment and language for agent-based modeling.  The language
 ias pretty easy to learn, and the language and environment have many features
