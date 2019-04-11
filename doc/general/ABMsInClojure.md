@@ -213,7 +213,13 @@ agent, but it's a bit of work to write.  I defined a function
 **Item 3:** I you add type hints to avoid reflection for the sake of
 speed, and you're not careful, you can get cyclic dependencies that
 won't compile.  The design of MASON can make it easy to end up in this
-situation.  One feature in `defparams` attempts to prevent this.
+situation.  (Java doesn't prevent cyclic dependencies in the way that
+Clojure does, so there would be no reason to expect MASON's design to
+reflect concerns about cyclic dependencies.) One feature in `defparams`
+attempts to make it easier to avoid cyclic dependencies with type hints.
+However, if your model is fast enough without type hints, or type hints
+would be unlikely to speed it up, then there's no reason to worry about
+this iisue.
 
 **Item 4:** Another issue with defrecords occurs *if* you want your agents to
 move with continuous coordinates rather than on a grid.  MASON
