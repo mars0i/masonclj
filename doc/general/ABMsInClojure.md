@@ -114,10 +114,6 @@ Using my crude search heuristic (see above), there appear to be exactly
 two Java ABM libraries worth considering for use with Clojure:  Repast,
 and MASON. Both seem to be used quite a bit in the ABM community.
 
-I investigated Repast a little bit, and the design and documentation
-didn't appeal to me.  It seemed more confusing to use than MASON.  I
-might be wrong about that, but I decided to use MASON.
-
 (Could you use NetLogo from Clojure?  NetLogo is written in Java and
 Scala, so in theory you could call it from Clojure.  There are a few
 well-defined ways to interact with NetLogo from external code, too.  You
@@ -128,6 +124,14 @@ capabilities.  Implementing a Clojure-to-NetLogoDSL interface would be a
 lot of work.  It's easier to use Clojure with an ABM library that's
 designed to allow you to write models in Java itself.)
 
+### Repast
+
+I investigated Repast a little bit, and the design and documentation
+didn't appeal to me.  It seemed more confusing and more difficult to
+use with Clojure than MASON.  I might be wrong about that, and I know
+that Repast has fans, but I decided to use MASON. If you're interested
+in Repast, please feel free to try it, and let me know what you think
+if you feel like it.
 
 ### MASON
 
