@@ -177,11 +177,9 @@ line, then you'll also need:
 or whatever method you use for processing command line options.
 
 When you add or change anything concerning model parameters, you may
-have to update all of the above at the same time.
-
-
-I defined a big macro, `defparam`, to write all of this code and keep it
-coordinated.  `defparam` is a work in progress.
+have to update all of the above at the same time.  (I defined a big
+macro, [`defparams`](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/params.md),
+to write all of this code and keep it coordinated.)
 
 
 Item 2: The natural thing to do is to define your agents using
