@@ -210,7 +210,6 @@ define a method that MASON can call to get the current state of an
 agent, but it's a bit of work to write.  I defined a function
 [`make-properties`](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/properties.md) and a macro `defagent` to do most of the work for you.
 
-
 **Item 3:** I you add type hints to avoid reflection for the sake of
 speed, and you're not careful, you can get cyclic dependencies that
 won't compile.  The design of MASON can make it easy to end up in this
@@ -228,8 +227,7 @@ things up by using deftypes that are defined to be updated imperatively,
 but your code will be less idiomatic, and you'll have to work harder to
 write it.  (It's possible to [overide some of the methods](https://clojuredocs.org/clojure.core/defrecord) defined for
 defrecords by Clojure, *but not* the equality and hash methods.  This
-is undocumented afaik.  Try it.)
-
-However, many ABMs either don't involve movement or use movement on a
-grid, which doesn't involve hashing.)
+is undocumented afaik.  Try it.)  However, many ABMs use movement on
+a grid, and don't need continous coordinates, in which case you can
+use defrecords without a slowdown due to hashing.
 
