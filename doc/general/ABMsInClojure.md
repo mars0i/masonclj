@@ -31,15 +31,15 @@ you know what you are doing with a model, you might want to perform a
 series of runs and record data from them.  This will be faster if you
 can turn off the graphical component.
 
-NetLogo is a very popular modeling environment and language for
-agent-based modeling.  (The language is pretty easy to learn, and the
-language and environment have many features designed to make agent-based
-modeling easy.  For example, if you use the built in agents, a graphical
-display will automatically be created.) So if you want to get a feel for
+(If you're not familiar with agent-based modeling, you might to experiment
+with NetLogo before working in ABMs in Clojure.   NetLogo is a very popular
+modeling environment and language for agent-based modeling.  The language
+ias pretty easy to learn, and the language and environment have many features
+designed to make agent-based modeling easy. So if you want to get a feel for
 common patterns in agent-based modeling, download NetLogo or run the web
 version, and experiment with various sample models available in the
 Models Library dropdown.  There are docs and source code for each on the
-Info and Code tabs, respectively.
+Info and Code tabs, respectively.)
 
 
 ### FP and ABMs: general challenges
