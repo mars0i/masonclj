@@ -153,8 +153,8 @@ control the model from the GUI.  This is very nice.  However, the
 accessors have to be tied to data that would normally be stored in a
 subclass of MASON's SimState class.  In addition, it appears that the
 only way to get all of the effects of subclassing that are needed is to
-use the poorly documented, black art of `genclass`.  `proxy`, `reify`,
-`defrecord`, and `deftype` are not enough.  What this means is that for
+use the poorly documented, black art of `genclass`.  (`proxy`, `reify`,
+`defrecord`, and `deftype` are not enough.)  What this means is that for
 each model parameter that you want controlled from the GUI, you will
 probably want:
 
