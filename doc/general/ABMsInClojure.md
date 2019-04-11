@@ -98,7 +98,7 @@ suggestions, though.)
 
 ### A browser-based ABM library: Agentscript
 
-This is an ABM library written in Coffeescript.  I have experimented a
+This is an ABM library written in Coffeescript.  I have [experimented](https://github.com/mars0i/clj-agentscript1) a
 little bit with using it with Clojurescript.  That seemed pretty easy
 once I figued out how Agentscript worked.  (The docs were not ideal.)
 Agentscript seems like a nice library, but I decided I wanted more
