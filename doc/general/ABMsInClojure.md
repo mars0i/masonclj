@@ -144,7 +144,7 @@ features that make it a bit awkward to use with Clojure.  Some of the
 difficulties are due to the the FP-orientation of Clojure, and the fact
 that there's no reason that a Java ABM library should worry about FP
 concerns.  Some of the difficulties come from the fact that some of the
-ways in which Clojure is "[opinionated](https://clojure.org/reference/datatypes#_datatypes_and_protocols_are_opinionated)" language" mean that it is not intended to make it easy to deal with certain
+ways in which Clojure is "[opinionated](https://clojure.org/reference/datatypes#_datatypes_and_protocols_are_opinionated)" mean that it is not intended to make it easy to deal with certain
 kinds of common Java designs.
 
 **Item 1:** If you add some Bean-style accessors for model parameters,
@@ -196,7 +196,7 @@ for displaying an agent's internal state while it runs.  You can
 double-click on an agent in the GUI, and it will be highlighted and you
 will see its internal variables in another window.  This is very useful
 sometimes.  This doesn't work
-outof the box with `defrecord` agents because when you
+out of the box with `defrecord` agents because when you
 decide to "watch" an agent, MASON stores a pointer to it, and when you
 do a functional update of the defrecord, the pointer now points to
 the old version of the agent, which will never change.  You could
