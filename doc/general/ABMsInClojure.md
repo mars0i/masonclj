@@ -238,7 +238,7 @@ worry about this anyway.
 **Issue 4:** Another issue with defrecords occurs *if* you want your
 agents to move with continuous coordinates rather than on a grid. 
 MASON implements continuous coordinates with a hashtable, using the
-`hashCode()` method, defined by the Java `Object` class, for example.
+`hashCode()` method, defined originally by the Java `Object` class.
 However, `defrecord` overrides the normal pointer identity `hashCode`
 method, defining a defrecord's `hashCode` and `equals` methods over
 all of the contents of the defrecord instance's fields.  That is,
