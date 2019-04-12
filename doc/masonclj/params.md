@@ -107,7 +107,7 @@ Example of the use of `defparams` from *masonclj/example/src/example/Sim.clj*:
 (mp/defparams  [;field name   initial-value type  in gui? with range?
                 [num-r-snipes       25      long    [0,500]    ["-R" "Size of r-snipe subpopulation"
                                                                 :parse-fn #(Long. %)]]
-                [max-energy         20.0    double  [1.0,50.0] ["-e" "Maximum energy level for snipes."
+                [max-energy         20.0    double  true       ["-e" "Maximum energy level for snipes."
                                                                 :parse-fn #(Double. %)]]
                 [env-width          40      long    [10,250]   ["-W" "Width of env.  Must be an even number."
                                                                 :parse-fn #(Long. %)]]
@@ -259,13 +259,13 @@ to `(clojure.pprint/pprint (macroexpand-1 ...))`.  Then I copied,
 edited the output, and added some comments:.
 ```clojure
 (do
- ;; Define a special namespace for global data, defining a data
- ;; structure for the data:
+ ;; Define a special namespace for global data with a structure for the data:
  (clojure.core/ns example.data)
  (clojure.core/defrecord SimData [num-r-snipes max-energy env-width
                                   env-height env-display-size use-gui
                                   seed in-gui])
- ;; Now back to the main simulation namespace:
+
+ ;; Now back to the namespace in which defparams was invoked:
  (clojure.core/ns example.Sim
   (:require [example.data]) ; so we can access the global data structure
   (:import example.Sim)     ; weird, but seems to be needed
@@ -273,12 +273,12 @@ edited the output, and added some comments:.
   (:gen-class
    :name example.Sim
    :extends sim.engine.SimState
-   :state simData  ; This will hold an example.data.SimData 
+   :state simData ; gen-class allows only one (!) instance var; it will hold a SimData.
    :exposes-methods {start superStart, finish superFinish} ; superclass method aliases
    :init init-sim-data
-   :main true        ; we do want a main()
+   :main true   ; we do want a main()
    ;; Declare methods that we want the MASON GUI to find and invoke:
-   :methods [[getNumRSnipes [] long]
+   :methods [[getNumRSnipes [] long]      
              [setNumRSnipes [long] void]
              [getMaxEnergy [] double]
              [setMaxEnergy [double] void]
@@ -286,8 +286,7 @@ edited the output, and added some comments:.
              [setEnvWidth [long] void]
              [getEnvHeight [] long]
              [setEnvHeight [long] void]
-             [domNumRSnipes [] java.lang.Object]
-             [domMaxEnergy [] java.lang.Object]
+             [domNumRSnipes [] java.lang.Object] ; causes GUI to make sliders
              [domEnvWidth [] java.lang.Object]
              [domEnvHeight [] java.lang.Object]
              [getPopSize [] long]]))
@@ -299,10 +298,12 @@ edited the output, and added some comments:.
              (example.data/->SimData 25 20.0 40 40 12.0 false nil false))])
 
  ;; Now start defining those methods we declared above:
+ ;; These cause GUI to make fields displaying data:
  (defn -getNumRSnipes [this] (:num-r-snipes @(.simData this)))
  (defn -getMaxEnergy [this] (:max-energy @(.simData this)))
  (defn -getEnvWidth [this] (:env-width @(.simData this)))
  (defn -getEnvHeight [this] (:env-height @(.simData this)))
+ ;; These cause GUI to make the fields editable:
  (defn -setNumRSnipes
    [this newval]
    (clojure.core/swap! (.simData this)
@@ -319,8 +320,8 @@ edited the output, and added some comments:.
    [this newval]
    (clojure.core/swap! (.simData this)
                        clojure.core/assoc :env-height newval))
+ ;; If these exist, GUI makes sliders, not just editable fields:
  (defn -domNumRSnipes [this] (Interval. 0 500))
- (defn -domMaxEnergy [this] (Interval. 1.0 50.0))
  (defn -domEnvWidth [this] (Interval. 10 250))
  (defn -domEnvHeight [this] (Interval. 10 250))
 
@@ -348,7 +349,7 @@ edited the output, and added some comments:.
                    "How large to display the env in gui by default."
                    :parse-fn (fn* [p1__1557#] (Double. p1__1557#))]
                   ["-g" "--use-gui"
-                   "If -g, use GUI; otherwise use GUI if and only if +g or there are no commandline options."
+		   "If -g, use GUI; otherwise GUI if +g or no options."
                    :parse-fn (fn* [p1__1558#] (Boolean. p1__1558#))]]
      usage-fmt__971__auto__ ; the second let binding
        (clojure.core/fn
@@ -364,7 +365,6 @@ edited the output, and added some comments:.
          (clojure.core/run! clojure.core/println errors)
          (clojure.core/println "MASON options should appear at the end of the command line after '--'.")
          (java.lang.System/exit 1))
-       (clojure.core/reset! commandline$ cmdline) ;; Store the data into global for example.Sim
        ;; Help request handling: Second println will print out options and descriptions:
        (clojure.core/when (:help options)
          (clojure.core/println "Command line options (defaults in parentheses):")
@@ -372,5 +372,7 @@ edited the output, and added some comments:.
          (clojure.core/println "MASON options can also be used after these options and after '--'.")
          (clojure.core/println "For example, you can use -for to stop after a specific number of steps.")
          (clojure.core/println "-help (note single dash): Print help message for MASON.")
-         (java.lang.System/exit 0)))))
+         (java.lang.System/exit 0))
+       ;; store data in example.Sim/commandline$ global so start routines can find it:
+       (clojure.core/reset! commandline$ cmdline))))
 ```
