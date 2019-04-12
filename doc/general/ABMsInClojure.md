@@ -63,7 +63,7 @@ are various ways to do just this in Clojure, but you lose a lot of the
 conveniences of that Clojure provides.  For example, you can define
 agents as `deftypes` that are set up to be imperatively modified, or you
 can put atoms in the fields of a `defrecord`, but `deftypes` are less
-convienient that `defrecords`, and constantly `swap`ing on atoms
+convenient that `defrecords`, and constantly `swap`ing on atoms
 clutters your code.  (See item 2 in the discussion of MASON below for an
 additional challenge that can arise with defrecords.)
 
@@ -116,9 +116,9 @@ I suspect that some (e.g. Swarm?) may be old and not well maintained.
 
 This is an ABM library written in Coffeescript.  I have
 [experimented](https://github.com/mars0i/clj-agentscript1) a little bit
-with using it with Clojurescript.  That seemed pretty easy once I figued
+with using it with Clojurescript.  That seemed pretty easy once I figured
 out how Agentscript worked.  (The docs were not ideal.) Agentscript
-seems like a nice library, but I decided I wanted more than it offerred,
+seems like a nice library, but I decided I wanted more than it offered,
 and I decided to use a Java library.
 
 
@@ -174,10 +174,10 @@ probably want:
 variable allowed by `genclass`, containing a data element for each 
 parameter.
 
-2. An instances state initialization function that initalizes each of
+2. An instances state initialization function that initializes each of
 those data elements.
 
-3. At least two accessor functions for each data element.
+3. At least two accessors functions for each data element.
 
 4. A declaration for each of these functions in the `:methods` element
 of the `genclass` map.
@@ -246,12 +246,12 @@ defrecord objects have the same hash code if and only if they have the
 same fields with the same contents; it doesn't matter whether they are
 physically distinct. Hashing on all of the field contents is slow
 compared to hashing on a pointer, so a MASON/Clojure model with
-continous coordinates using  defrecords might be *a lot* slower than
+continuous coordinates using  defrecords might be *a lot* slower than
 the same model written in Java.  You can speed  things up by using
 deftypes that are defined to be updated imperatively, but your code
 will be less idiomatic, and you'll have to work harder to write it (it
 won't be as fun).  However, many ABMs use movement on a grid--or don't
-use movement at all--and don't need continous coordinates, in which
+use movement at all--and don't need continuous coordinates, in which
 case defrecords' `hashCode` function shouldn't slow things down. (It's
 [possible](https://github.com/mars0i/masonclj/blob/master/example/src/example/snipe.clj#L67)
 to [override some of the Object
@@ -280,7 +280,7 @@ books](https://www.amazon.com/s?k=agent-based+modeling&ref=nb_sb_noss)
 on agent-based modeling.
 
 Journals that routinely include agent-based modeling papers include
-*Journal of Artifical Societies and Social Simulation*, *Artifical
+*Journal of Artificial Societies and Social Simulation*, *Artificial
 Life*, *Journal of Theoretical Biology*, *Ecological Modeling*, and
 *Complex Adaptive Systems Modeling*.  Those are just a few that occur
 to me given my interests and experience; no doubt there are many
