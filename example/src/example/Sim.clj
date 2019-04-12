@@ -6,7 +6,7 @@
 
 (ns example.Sim
   (:require [clojure.tools.cli]
-            [masonclj.params :as sp]
+            [masonclj.params :as mp]
             [example.snipe :as sn]
             [example.popenv :as pe])
   (:import [sim.engine Steppable Schedule Stoppable]
@@ -30,7 +30,7 @@
 ;; uses them for single-dash options: c d f h p q r s t u.  Also avoid numbers, because
 ;; MASON allows setting '-seed <old seed number>', and old seed number may be a negative
 ;; number, in which case the app gets confused if I use e.g. -2 as an option below.
-(sp/defparams  [;field name   initial-value type  in gui? with range?
+(mp/defparams  [;field name   initial-value type  in gui? with range?
                 [num-r-snipes       25      long    [0,500]    ["-R" "Size of r-snipe subpopulation" :parse-fn #(Long. %)]]
                 [max-energy         20.0    double  [1.0,50.0] ["-e" "Maximum energy level for snipes." :parse-fn #(Double. %)]]
                 [env-width          40      long    [10,250]   ["-W" "Width of env.  Must be an even number." :parse-fn #(Long. %)]]
