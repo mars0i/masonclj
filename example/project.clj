@@ -1,4 +1,4 @@
-(defproject example "0.1.0-SNAPSHOT"
+(defproject example "0.1.0"
   :description "Example of use of masonclj in agent-based simulation using MASON"
   :url "http://example.com/FIXME"
   :license {:name "LGPL 3.0"
@@ -18,7 +18,7 @@
   :aot [example.snipe example.popenv example.Sim example.GUI example.core]
   :jvm-opts ["-Xms2g"]
   :source-paths ["src"]
-  :profiles {:nogui {:main example.Sim}      ; execute this with 'lein with-profile nogui run'
+  :profiles {:nogui {:main example.Sim}  ; execute this with 'lein with-profile nogui run'
              :gui   {:main example.GUI}  ; execute this with 'lein with-profile gui run'
              :core  {:main example.core}
              :uberjar {:prep-tasks [["compile" "example.GUI"]
