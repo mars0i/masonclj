@@ -122,7 +122,7 @@
   information on its parameters.  (Note that make-properties prefers
   that the defrecord have a circled$ field, which is why defagent adds
   circled$ to the new defrecord type.)"
-  [agent-type fields make-curr-agent-slice gui-fields-specs
+  [agent-type fields get-curr-agent-slice gui-fields-specs
    & addl-defrecord-args]
   (let [clojure-constructor-sym# (symbol (str "->" agent-type))
         defagent-constructor-sym# (symbol (str "-->" agent-type))]
@@ -130,7 +130,7 @@
        (defrecord ~agent-type [~'circled$ ~@fields]
          Propertied
          (properties [first-slice#]
-           (make-properties (~make-curr-agent-slice first-slice#)
+           (make-properties (~get-curr-agent-slice first-slice#)
                             [:circled$ java.lang.Boolean
                              "Field that indicates whether agent is circled in GUI."]
                             ~@gui-fields-specs))
