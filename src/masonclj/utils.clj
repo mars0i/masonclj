@@ -44,11 +44,3 @@
   (if (>= (count xs) 5)
     (nth xs 4)
     nil))
-
-(defn set-pprint-width 
-  "Sets repl window width for pretty-printing with pprint and pp to 
-  cols columns."
-  [cols] 
-  (alter-var-root 
-    #'clojure.pprint/*print-right-margin* 
-    (constantly cols)))
