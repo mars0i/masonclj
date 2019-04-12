@@ -15,12 +15,10 @@ with the Clojure language agent concept.
 ## Files in this directory:
 
 * [ABMsInClojure.md](https://github.com/mars0i/masonclj/blob/master/doc/general/ABMsInClojure.md):
-General notes on options for writing ABMs in Clojure.
+General remarks on writing ABMs in Clojure.
 
 * [functionalMASON.md](https://github.com/mars0i/masonclj/blob/master/doc/general/functionalMASON.md):
- Notes on strategies for writing in a more
-functional-programming style using MASON.
+ Notes on strategies for writing in a more functional-programming style using MASON.
 
 * [ClojureMASONinteropTips.md](https://github.com/mars0i/masonclj/blob/master/doc/general/ClojureMASONinteropTips.md):
-General notes on Clojure-Java interop relevant to use of Clojure with
-MASON. 
+Notes on Clojure-Java interop options relevant to use of Clojure with MASON. 
