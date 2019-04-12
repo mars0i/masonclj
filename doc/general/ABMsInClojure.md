@@ -107,7 +107,7 @@ maintained. (Someone else may want to cast a wider net, and might find
 something very worthwhile to use, but I haven't have time.  I'm open to
 suggestions, though.)
 
-A subset of available ABM libraries and environments are listed here:
+Some available ABM libraries and environments are listed here:
 [comparison_of_agent-based_modeling_software](https://en.m.wikipedia.org/wiki/Comparison_of_agent-based_modeling_software).
 Some of the tools seem to be designed for special, narrow purposes, and
 I suspect that some (e.g. Swarm?) may be old and not well maintained.
