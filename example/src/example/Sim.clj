@@ -33,7 +33,7 @@
 (mp/defparams  [;field name   initial-value type  in gui? with range?
                 [num-r-snipes       25      long    [0,500]    ["-R" "Size of r-snipe subpopulation"
                                                                 :parse-fn #(Long. %)]]
-                [max-energy         20.0    double  [1.0,50.0] ["-e" "Maximum energy level for snipes."
+                [max-energy         20.0    double  true       ["-e" "Maximum energy level for snipes."
                                                                 :parse-fn #(Double. %)]]
                 [env-width          40      long    [10,250]   ["-W" "Width of env.  Must be an even number."
                                                                 :parse-fn #(Long. %)]]
