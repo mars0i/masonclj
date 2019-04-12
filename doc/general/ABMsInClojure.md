@@ -3,9 +3,9 @@ Notes on writing agent-based models in Clojure
 
 Marshall Abrams
 
-These remarks may be incomplete, and are the result of my sometimes
-biased intuitions and unsystematic, un-thorough research---which may be
-outdated.
+These remarks *may* be incomplete, and are *definitely* the result of my
+sometimes biased intuitions and unsystematic, un-thorough
+research---which may be outdated.
 
 ### What are ABMs?
 
@@ -34,12 +34,10 @@ can turn off the graphical component.
 NetLogo is a very popular modeling environment and language for
 agent-based modeling.  (The language is pretty easy to learn, and the
 language and environment have many features designed to make agent-based
-modeling easy.  For example, if you use the built in agents, a graphical
-display will automatically be created.) So if you want to get a feel for
-common patterns in agent-based modeling, download NetLogo or run the web
-version, and experiment with various sample models available in the
-Models Library dropdown.  There are docs and source code for each on the
-Info and Code tabs, respectively.
+modeling easy.) So if you want to get a feel for common patterns in
+agent-based modeling, try NetLogo experiment with various sample models
+available in the Models Library dropdown.  (There are docs and source
+code for each model on the Info and Code tabs, respectively.)
 
 
 ### FP and ABMs: general challenges
@@ -50,52 +48,63 @@ other and the environment change, or all of the above.  For example, a
 model might include organisms with internal energy levels that change,
 and that move around in an environment.
 
-It's very natural to model agents as persistent data structures with
-internal states that are imperatively modified, and to treat the
-environment in which they move as a persistent data structure in which
-agents' locations are imperatively modified.  There are various ways to
-do just this in Clojure, but you lose a lot of the conveniences of that
-Clojure provides.  For example, you can define agents as `deftypes` that
-are set up to be imperatively modified, or you can put atoms in the
-fields of a `defrecord`, but `deftypes` are less convienient that
-`defrecords`, and constantly `swap`ing on atoms clutters your code.
+There's no reason in principle that this can't be done in a purely
+functional manner. A method I like is to define a
+`next-population-state` function and then throw that and an initial
+state into `iterate`.  Then you can `take` as many time steps as you
+want, or `map` functions through the sequence to create side-effects
+such as writing data to a file.  You can back up and look at earlier
+stages at any point.
 
-TALK ABOUT IDENTITY OVER TIME HERE
+However, it *is* very natural to model agents as persistent data
+structures with internal states that are imperatively modified.  There
+are various ways to do just this in Clojure, but you lose a lot of the
+conveniences of that Clojure provides.  For example, you can define
+agents as `deftypes` that are set up to be imperatively modified, or you
+can put atoms in the fields of a `defrecord`, but `deftypes` are less
+convienient that `defrecords`, and constantly `swap`ing on atoms
+clutters your code.  (See item 2 in the discussion of MASON below for an
+additional challenge that can arise with defrecords.)
 
-For an environment, you can use a core.matrix or Java matrices or arrays
-that you modify imperatively.  This is OK, but you have to be careful.
-It is sometimes reasonable to update environments functionally; this
-works if you can structure your code so that all changes of
-relationships to the environment or of relationships between agents
-happen simultaneously.  For some models, this will be unreasonable,
-though.  In practice, even if you structure you code to update large-scale
-things like positions in environments in a functional manner, you will
-probably want to do selected updates imperatively.
+In many ABMs, agents move on a grid.  You will probably want to use one
+or more matrices or two-dimensional array structures to represent the
+field on which agents move.  If all agents are conceived as moving
+simultaneously, then you can update the matrices functionally, in the
+sense that a matrix goes into a function, and a new, modified matrix
+comes out, although within the function you will use imperative methods.
 
+However, in many models agents move sequentially or move at different
+times for other reasons.  You don't have to allow such "asynchronous"
+movement, but it might be a more accurate way to model some systems, and
+it could be slightly easier to code.  (With simultaneous movement, you
+might need a rule to deal with agents that want to move to the same
+spot, whereas with sequential movement it's natural to simply prevent
+movement into already-filled spots.)  If you try to do this purely
+functionally, you would probably have to create a new matrix for every
+movement by a single agent, even though most of the matrix is unchanged.
+So for this kind of model, imperative updating of a single matrix be
+significantly more efficient.  (Fortunately, there are good matrix
+libraries for Clojure, or you can use Java data structures.)
 
-
-
-### Agent-based modeling in Clojure?
+### Agent-based modeling libraries for Clojure?
 
 You can write an ABM in any language, of course, but it's nicer if you
 have a library or environment that's designed for ABMs.  This is why,
-although I have written an ABM in pure Clojure, I probably won't do that
-again.
+although I have written an ABM in pure Clojure, I won't do that again
+very often.
 
 There is a list of ABM libraries and environments here:
 
-en.m.wikipedia.org/wiki/comparison_of_agent-based_modeling_software
+* en.m.wikipedia.org/wiki/comparison_of_agent-based_modeling_software
 
 It's a long list, but many of the tools are designed for special, narrow
 purposes, and many seem to be old and probably not well maintained.
 
 AFAIK there are no ABM libraries written in Clojure.  I don't expect
 to see any soon, since the intersection of those interested in Clojure
-and in ABMs seems small.
-
-However, there are a few Java ABM libraries, and at least one Javascript
-(Coffeescript, actually) ABM library.  So one can consider using them
-with Clojure.
+and in ABMs seems small. However, there are a few Java ABM libraries,
+and at least one Javascript (Coffeescript, actually) ABM library.  So
+one can consider using them with Clojure.
 
 
 ### Agentscript
