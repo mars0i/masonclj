@@ -23,25 +23,21 @@
 
 ;(use '[clojure.pprint]) ; DEBUG
 
-(declare setup-popenv-config! make-popenv next-popenv organism-setter 
+(declare make-popenv next-popenv organism-setter 
          add-organism-to-rand-loc!  ;add-mush!  maybe-add-mush! add-mushs! 
          move-snipes move-snipe!  choose-next-loc ;perceive-mushroom 
          add-to-energy eat-if-appetizing snipes-eat snipes-die snipes-reproduce
          cull-snipes cull-snipes-to-max age-snipes excess-snipes snipes-in-subenv 
          obey-carrying-capacity add-snipes! add-snipes-to-min)
 
+;; IN the Example model, THERE IS NO east- anything.  It's all west-.
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TOP LEVEL FUNCTIONS
 
 (defrecord SubEnv [snipe-field])  ; snipe-field is an ObjectGrid2D
 
-(defrecord PopEnv [west 
-                   snipe-map curr-snipe-id$]) ; two SubEnvs, and map from ids to snipes
-
-(defn setup-popenv-config!
-  [cfg-data$]
-  (let [{:keys [env-width env-height carrying-proportion mush-low-size mush-high-size]} @cfg-data$]
-    (swap! cfg-data$ assoc :max-subenv-pop-size (int (* env-width env-height carrying-proportion)))))
+(defrecord PopEnv [west snipe-map curr-snipe-id$]) ; two SubEnvs, and map from ids to snipes
 
 (defn make-subenv
   "Returns new SubEnv with mushs and snipes.  subenv-key is :west or :east."
@@ -72,9 +68,7 @@
   (swap! curr-snipe-id$ inc))
 
 (defn die-move-spawn
-  "Remove snipes that have no energy or are too old, cull snipes or increase 
-  their number with newborn snipes if there is a population size specification,
-  cull snipes if carrying capacity is exceeded, move snipes, increment snipe ages."
+  "In Example (unlike pasta), this only implements movement."
   [rng cfg-data$ subenv subenv-key curr-snipe-id$]
   ;; Note that order of bindings below is important.  e.g. we shouldn't worry
   ;; about carrying capacity until energy-less snipes have been removed.

@@ -17,9 +17,9 @@
 ;; SUPPORT FUNCTIONS
 
 (defn rand-energy
-  "Generate random energy value uniformly distributed in [0, birth-threshold)."
+  "Generate random energy value uniformly distributed in [0, max-energy)."
   [rng cfg-data]
-  (math/round (* (:birth-threshold cfg-data) ; round isn't essential. just makes it easier to watch individual snipes.
+  (math/round (* (:max-energy cfg-data) ; round isn't essential. just makes it easier to watch individual snipes.
                  (ran/next-double rng))))
 
 (defn get-curr-agent-slice

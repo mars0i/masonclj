@@ -98,6 +98,7 @@
   (.superStart this-gui) ; this will call start() on the sim, i.e. in our SimState object
   (setup-portrayals this-gui))
 
+;; IN the Example model, THERE IS NO east- anything.  It's all west-.
 (defn setup-portrayals
   "Set up MASON 'portrayals' of agents and background fields.  That is, associate 
   with a given entity one or moreJava classes that will determine appearances in 
@@ -112,8 +113,6 @@
         popenv (:popenv sim-data) ; In the pasta model this is more complicated
         west (:west popenv)
         max-energy (:max-energy sim-data)
-        birth-threshold (:birth-threshold sim-data)
-        effective-max-energy birth-threshold ; In the pasta model this is more complicated
         west-display @(:west-display gui-config)
         ;; Set up the appearance of RSnipes with a main portrayal inside one 
         ;; that can display a circle around it:
@@ -122,7 +121,7 @@
                                                       ShapePortrayal2D/Y_POINTS_TRIANGLE_UP ; this one is more flexible
                                                       (* 1.1 snipe-size)]
                                    (draw [snipe graphics info]
-                                     (set! (.-paint this) (r-snipe-color-fn effective-max-energy snipe)) ; paint var is in superclass
+                                     (set! (.-paint this) (r-snipe-color-fn max-energy snipe)) ; paint var is in superclass
                                      (proxy-super draw snipe graphics (DrawInfo2D. info (* 0.75 org-offset) (* 0.55 org-offset))))))
         west-snipe-field-portrayal (:west-snipe-field-portrayal gui-config)] ; appearance of the field on which snipes run around
     (.setField west-snipe-field-portrayal (:snipe-field west))
