@@ -121,14 +121,14 @@
             (run! println ~'errors)
             (println "MASON options should appear at the end of the command line after '--'.")
             (System/exit 1))
-          (reset! ~'commandline$ ~'cmdline) ; commandline should be defined previously in Sim
           (when (:help ~'options)
             (println "Command line options (defaults in parentheses):")
             (println (usage-fmt# ~'cli-options))
             (println "MASON options can also be used after these options and after '--'.")
 	    (println "For example, you can use -for to stop after a specific number of steps.")
             (println "-help (note single dash): Print help message for MASON.")
-            (System/exit 0)))))))
+            (System/exit 0))
+          (reset! ~'commandline$ ~'cmdline)))))) ; commandline$ should be defined previously in Sim
 
 (defn make-gui-vars-html
   "Given a sequence of Java variable name strings and descriptions of them
