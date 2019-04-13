@@ -246,7 +246,7 @@ pass the output of of that to `pprint`.  Note that first you
 should switch to the namespace of your main `Sim` class and `use` or
 `require` `masonclj.params`.
 
-For example, the following illustrates what the [above `defparams` call](###The `defparams` call) from
+For example, the following illustrates what the [above `defparams` call](#The `defparams` call) from
 *example/src/example/Sim.clj* expands to.  I generated this code by running
 `lein repl` from the toplevel *example* directory under *masonclj*, and
 then running:
