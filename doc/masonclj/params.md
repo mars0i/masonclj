@@ -105,18 +105,18 @@ Here's an example of use of the `defparams` macro from *masonclj/example/src/exa
 
 ```clojure
 (mp/defparams  [;field name   initial-value type  in gui? with range?
-                [num-r-snipes       25      long    [0,500]    ["-R" "Size of r-snipe subpopulation"
-                                                                :parse-fn #(Long. %)]]
-                [max-energy         20.0    double  true       ["-e" "Maximum energy level for snipes."
-                                                                :parse-fn #(Double. %)]]
-                [env-width          40      long    [10,250]   ["-W" "Width of env.  Must be an even number."
-                                                                :parse-fn #(Long. %)]]
-                [env-height         40      long    [10,250]   ["-H" "Height of env. Must be an even number."
-                                                                :parse-fn #(Long. %)]]
-                [env-display-size   12.0    double  false      ["-G" "How large to display the env in gui."
-                                                                :parse-fn #(Double. %)]]
-                [use-gui           false    boolean false      ["-g" "If -g, use GUI; otherwise GUI if +g or no options."
-                                                                :parse-fn #(Boolean. %)]]
+                [num-r-snipes       25      long    [0,500]  ["-R" "Size of r-snipe subpopulation"
+                                                              :parse-fn #(Long. %)]]
+                [max-energy         20.0    double  true     ["-e" "Maximum energy level for snipes."
+                                                              :parse-fn #(Double. %)]]
+                [env-width          40      long    [10,250] ["-W" "Width of env.  Must be an even number."
+                                                              :parse-fn #(Long. %)]]
+                [env-height         40      long    [10,250] ["-H" "Height of env. Must be an even number."
+                                                              :parse-fn #(Long. %)]]
+                [env-display-size   12.0    double  false    ["-G" "How large to display the env in gui."
+                                                              :parse-fn #(Double. %)]]
+                [use-gui           false    boolean false    ["-g" "If -g, use GUI; otherwise GUI if +g or no options."
+                                                              :parse-fn #(Boolean. %)]]
                 [seed               nil     long    false]  ; convenience field to store Sim's seed
                 [in-gui           false     boolean false]] ; convenience field to store Boolean re whether in GUI
   :exposes-methods {finish superFinish} ; name for function to call finish() in the superclass
