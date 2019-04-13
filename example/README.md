@@ -1,4 +1,4 @@
-## Introduction to the masonclj *example* model
+## Introduction to the masonclj *Example* model
 Marshall Abrams
 
 Sections:<br/>
@@ -21,14 +21,12 @@ understand Example, it will be easier to see what's going on in pasta.
 (Let me know if you feel that I have made Example too difficult to
 understand.)
 
-<p>The agents here are called "snipes", or more specifically `Snipes`.
-They're defined in snipes.clj.</p>
-
-<p>Snipes run around in an environment and don't do anything else.  The
-snipe behavior is implemented in popenv.clj.  ("Popenv" means
-population-environment; it is the combination of the population and its
-environment. In pasta, the environment contains mushrooms, and snipes
-and mushrooms interact; snipes eat mushrooms.)</p>
+<p>The agents here are called "snipes",  They're defined in
+snipes.clj. Snipes run around in an environment and don't do anything
+else.  The snipe behavior is implemented in popenv.clj.  ("Popenv"
+means population-environment; it is the combination of the population
+and its environment. In pasta, the environment contains mushrooms, and
+snipes and mushrooms interact; snipes eat mushrooms.)</p>
 
 <p>The main MASON control file is Sim.clj, which subclasses MASON's
 `SimState` class.  Another important file is `GUI.clj`, which
