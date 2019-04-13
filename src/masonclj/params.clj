@@ -149,7 +149,8 @@
   expression in which their signatures are defined along with an instance 
   variable containing a Clojure map for their corresponding values; an 
   initializer function for the map; and a call to clojure.tools.cli/parse-opts
-  to define corresponding commandline options.  fields is a sequence of 4- or 
+  to define corresponding commandline options, whose values will be stored
+  in a map in an atom in commandline$.  fields is a sequence of 4- or 
   5-element sequences starting with names of fields in which configuration 
   data will be stored and accessed, followed by initial values and Java 
   type identifiers for the field.  The fourth element is either false to 
@@ -232,6 +233,8 @@
           (:require [~qualified-data-class#])
           (:import ~qualified-sim-class#)
           (:gen-class ~@(apply concat gen-class-opts#)))  ; NOTE qualified-data-rec must be aot-compiled, or you'll get class not found errors.
+
+        (def ~'commandline$ (atom nil)) ; Used by record-commandline-args! defined above.  Can be referenced in user code.
 
         ;; FUNCTION THAT INITIALIZES DATA RECORD STORED IN SIM CONFIG CLASS:
         (defn ~init-defn-sym [~'seed] [[~'seed] (atom (~qualified-data-rec-constructor# ~@field-inits#))])

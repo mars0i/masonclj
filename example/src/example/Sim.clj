@@ -24,8 +24,6 @@
 ;; Then pass the defparams expression below, single-quoted, to 
 ;; (clojure.pprint/pprint (macroexpand-1 ...)).
 
-(def commandline$ (atom nil)) ; Used by record-commandline-args!, which is defined by defsim, and below
-
 ;; Note: There is no option below for max number of steps.  Use MASON's -for instead.
 ;; Avoid the following characters for single-character options, because MASON already
 ;; uses them for single-dash options: c d f h p q r s t u.  Also avoid numbers, because

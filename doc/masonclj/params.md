@@ -89,15 +89,6 @@ discover the name of the `SimState` subclass, but I don't have a need
 for this change.  If you use `defparams`, and this bothers you, let me
 know and I'll fix it.)
 
-You also must typically precede the call to `defparams` with this:
-
-```clojure
-(def commandline$ (atom nil))
-```
-
-I couldn't figure out how to move this into the `defparams` definition.
-(I name variables that contain atoms with "$" as a suffix.)
-
 ### The `defparams` call
 
 Here's an example of use of the `defparams` macro from *masonclj/example/src/example/Sim.clj*.  (You can see what it expands into [below](#what-defparams-expands-to).)
@@ -163,7 +154,8 @@ expression in which their signatures are defined along with an instance
 variable containing a Clojure map for their corresponding values; an
 initializer function for the map; and a call to
 clojure.tools.cli/parse-opts to define corresponding commandline
-options.  `fields` is a sequence of 4- or 5-element sequences starting
+options, whose values will be stored in a map in an atom in `commandline$`.
+`fields` is a sequence of 4- or 5-element sequences starting
 with names of fields in which configuration data will be stored and
 accessed, followed by initial values and a Java type identifiers for the
 field.  The fourth element is either false to indicate that the field
@@ -285,6 +277,8 @@ a bit and added comments.
              [domEnvHeight [] java.lang.Object]
              [getPopSize [] long]]))
  ;; end of gen-class and ns
+
+ (def commandline$ (atom nil)) ; Used by record-commandline-args! below, and user code.
  
  ;; Function that initializes the simData state var:
  (clojure.core/defn -init-sim-data [seed]
