@@ -300,20 +300,16 @@ a bit and added comments.
  ;; These cause GUI to make the fields editable:
  (defn -setNumRSnipes
    [this newval]
-   (clojure.core/swap! (.simData this)
-                       clojure.core/assoc :num-r-snipes newval))
+   (clojure.core/swap! (.simData this) clojure.core/assoc :num-r-snipes newval))
  (defn -setMaxEnergy
    [this newval]
-   (clojure.core/swap! (.simData this)
-                       clojure.core/assoc:max-energy newval))
+   (clojure.core/swap! (.simData this) clojure.core/assoc:max-energy newval))
  (defn -setEnvWidth
    [this newval]
-   (clojure.core/swap! (.simData this)
-                       clojure.core/assoc :env-width newval))
+   (clojure.core/swap! (.simData this) clojure.core/assoc :env-width newval))
  (defn -setEnvHeight
    [this newval]
-   (clojure.core/swap! (.simData this)
-                       clojure.core/assoc :env-height newval))
+   (clojure.core/swap! (.simData this) clojure.core/assoc :env-height newval))
  ;; If these exist, GUI makes sliders, not just editable fields:
  (defn -domNumRSnipes [this] (Interval. 0 500))
  (defn -domEnvWidth [this] (Interval. 10 250))
