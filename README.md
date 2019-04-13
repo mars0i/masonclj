@@ -6,7 +6,7 @@ that smooth a few rough edges to using
 [MASON](https://cs.gmu.edu/~eclab/projects/mason) in
 [Clojure](https://clojure.org).  The rough edges are due to
 reasonable design choices by Clojure and MASON architects; masonclj
-makes available workarounds easier to use.
+makes some available workarounds easier to use.
 
 (MASON is a Java library for [agent-based
 modeling](https://en.wikipedia.org/wiki/Agent-based_model).  Note: This
@@ -34,23 +34,27 @@ the Clojure-Java interop notes might of broader interest.
 ## What else do you need to know?
 
 The documentation here doesn't provide introductions to Clojure or
-MASON.  MASON has a detailed PDF manual that begins with a tutorial and
-a example. To read the MASON manual, you'll need to know a little bit of
-Java or have enough experience to figure it out as you read.
- You will also have to learn a bit more
-about Clojure-Java interop than is usually necessary, but studying the
-source under the *example* directory with good interop resources and the
-MASON manual and classdocs at hand is probably a good strategy.  (My
-*majure* repo includes some Clojure implementations of the Students
-example from the MASON tutorial.  It's possible that it might be useful
-to look at that while reading the tutorial in the MASON manual.
-However, the examples in that repo are poor illustrations of good
-Clojure style.)
+MASON.  MASON has a detailed PDF manual that begins with a tutorial
+and a example. To read the MASON manual, you'll need to know a little
+bit of Java or have enough experience to figure it out as you read.
+You will also have to learn a bit more about Clojure-Java interop than
+is usually necessary, but studying the source under the *example*
+directory with good interop resources and the MASON manual and
+classdocs at hand is probably a good strategy.  (My *majure* repo
+includes some Clojure implementations of the Students example from the
+MASON tutorial.  It's possible that it might be useful to look at that
+while reading the tutorial in the MASON manual. However, the examples
+in that repo are poor illustrations of good Clojure style.)
 
 The book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly
 is the best single source of information about Clojure-Java interop I've
 encountered, but I know of no completely comprehensive source.
 Some of the documents here may help a little, but they don't go into detail.
+
+## And
+
+Please feel free to ask questions, provide feedback, submit issues,
+pull requests, etc.
 
 ## License
 
