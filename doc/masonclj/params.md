@@ -240,12 +240,6 @@ like this:
 
 ## What `defparams` expands to
 
-To see what your `defparams` call does, you can pass the  quoted
-expression containing it to `macroexpand-1`.  You might also want to
-pass the output of of that to `pprint`.  Note that first you
-should switch to the namespace of your main `Sim` class and `use` or
-`require` `masonclj.params`.
-
 For example, the following illustrates what the [above `defparams` call](#the-defparams-call) from
 *example/src/example/Sim.clj* expands to.  I generated this code by running
 `lein repl` from the toplevel *example* directory under *masonclj*, and
