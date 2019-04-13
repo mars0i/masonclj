@@ -19,9 +19,10 @@
 ;; Generate Sim class as subclass of SimState using genclass, with an init 
 ;; function, import statement, and Bean/MASON field accessors.
 ;; To see what code will be generated, try this in a repl:
-;; FIXME:
-;;    (require '[utils.defsim :as defsim])
-;;    (pprint (macroexpand-1 '<insert defsim call>))
+;;    (in-ns 'example.Sim)
+;;    (require '[masonclj.params :as mp])
+;; Then pass the defparams expression below, single-quoted, to 
+;; (clojure.pprint/pprint (macroexpand-1 ...)).
 
 (def commandline$ (atom nil)) ; Used by record-commandline-args!, which is defined by defsim, and below
 
