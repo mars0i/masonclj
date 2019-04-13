@@ -8,7 +8,7 @@ language agent concept.
 
 ## Overview
 
-masonclj provides two kinds functions and macros for two purposes:
+masonclj provides functions and macros for two purposes:
 
 * Making it easier to define parameters for control of a model via the
   GUI and the command line.
