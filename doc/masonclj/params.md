@@ -100,7 +100,7 @@ I couldn't figure out how to move this into the `defparams` definition.
 
 ### The `defparams` call
 
-Here's an example of use of the `defparams` macro from *masonclj/example/src/example/Sim.clj*.  (You can see what it expands to [below](#what-defparams-expands-to).)
+Here's an example of use of the `defparams` macro from *masonclj/example/src/example/Sim.clj*.  (You can see what it expands into [below](#what-defparams-expands-to).)
 
 
 ```clojure
