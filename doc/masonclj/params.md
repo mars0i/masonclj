@@ -242,15 +242,15 @@ like this:
 
 The code below shows what the [above `defparams` call](#the-defparams-call) from
 *example/src/example/Sim.clj* expands into.  I generated this code by running
-`lein repl` from the toplevel *example* directory under *masonclj*, and
+`lein repl` from the toplevel *example* directory under *masonclj*,
 then running:
 ```clojure
 (in-ns 'example.Sim)
 (require '[masonclj.params :as mp])
 ```
-and then passing the `defparams` expression in Sim.clj, single-quoted,
-to `(clojure.pprint/pprint (macroexpand-1 ...))`.  Then I copied, 
-edited the output, and added some comments:.
+before passing the `defparams` expression in Sim.clj, single-quoted,
+to `(clojure.pprint/pprint (macroexpand-1 ...))`.  I reformatted the output
+a bit and added comments.
 ```clojure
 (do
  ;; Define a special namespace for global data with a structure for the data:
