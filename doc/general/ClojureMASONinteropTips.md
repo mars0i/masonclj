@@ -78,7 +78,7 @@ for the syntax for declaring a method static in `gen-class`.
 ### How not to do it
 
 The preceding means that you don't have to and should not do the
-followint (which would be natural in other contexts).
+following (which would be natural in other contexts).
 
 When a method has multiple arities in the super, you you can use a
 Clojure multiple-arity method.  But if there are different *types* to
@@ -240,6 +240,11 @@ and `deftype` probably won't matter.  MASON implements this kind of
 grid with Java arrays, and finding an object in arrays just involves
 indexing into them.
 
+Note: You might also find Chas Emerick's
+[Flowchart for choosing the right Clojure type definition form](https://cemerick.com/2011/07/05/flowchart-for-choosing-the-right-clojure-type-definition-form)
+a useful heuristic, but note that there may be cases in which a
+different choice is warranted.
+
 
 ### Mutable state
 
@@ -306,7 +311,6 @@ this probably isn't needed.  For example, it was easy to define
 probably better style to use `definterface` if you don't need
 `gen-interface`'s extra functionality.  However, unlike `gen-class`,
 `gen-interface` is simple to use.)
-
 
 ### Type hints
 
