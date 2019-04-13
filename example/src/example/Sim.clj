@@ -32,7 +32,7 @@
 ;; MASON allows setting '-seed <old seed number>', and old seed number may be a negative
 ;; number, in which case the app gets confused if I use e.g. -2 as an option below.
 (mp/defparams  [;field name   initial-value type  in gui? with range?
-                [num-r-snipes       25      long    [0,500]  ["-R" "Size of r-snipe subpopulation"
+                [num-snipes       25      long    [0,500]  ["-R" "Size of snipe population"
                                                               :parse-fn #(Long. %)]]
                 [max-energy         20.0    double  true     ["-e" "Maximum energy level for snipes."
                                                               :parse-fn #(Double. %)]]

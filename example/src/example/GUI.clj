@@ -55,7 +55,7 @@
 (def display-backdrop-color (Color. 64 64 64)) ; border around subenvs
 (def snipe-size 0.55)
 (defn snipe-shade-fn [max-energy snipe] (int (+ 64 (* 190 (/ (:energy snipe) max-energy)))))
-(defn r-snipe-color-fn [max-energy snipe] (Color. 0 0 (snipe-shade-fn max-energy snipe)))
+(defn snipe-color-fn [max-energy snipe] (Color. 0 0 (snipe-shade-fn max-energy snipe)))
 (def org-offset 0.6) ; with simple hex portrayals to display grid, organisms off center; pass this to DrawInfo2D to correct.
 
 (defn -init-instance-state
@@ -114,18 +114,18 @@
         west (:west popenv)
         max-energy (:max-energy sim-data)
         west-display @(:west-display gui-config)
-        ;; Set up the appearance of RSnipes with a main portrayal inside one 
+        ;; Set up the appearance of Snipes with a main portrayal inside one 
         ;; that can display a circle around it:
-        r-snipe-portrayal (props/make-fnl-circled-portrayal Color/blue
+        snipe-portrayal (props/make-fnl-circled-portrayal Color/blue
                             (proxy [ShapePortrayal2D][ShapePortrayal2D/X_POINTS_TRIANGLE_UP ; there's a simpler way but
                                                       ShapePortrayal2D/Y_POINTS_TRIANGLE_UP ; this one is more flexible
                                                       (* 1.1 snipe-size)]
                                    (draw [snipe graphics info]
-                                     (set! (.-paint this) (r-snipe-color-fn max-energy snipe)) ; paint var is in superclass
+                                     (set! (.-paint this) (snipe-color-fn max-energy snipe)) ; paint var is in superclass
                                      (proxy-super draw snipe graphics (DrawInfo2D. info (* 0.75 org-offset) (* 0.55 org-offset))))))
         west-snipe-field-portrayal (:west-snipe-field-portrayal gui-config)] ; appearance of the field on which snipes run around
     (.setField west-snipe-field-portrayal (:snipe-field west))
-    (.setPortrayalForClass west-snipe-field-portrayal example.snipe.RSnipe r-snipe-portrayal)
+    (.setPortrayalForClass west-snipe-field-portrayal example.snipe.Snipe snipe-portrayal)
     (.scheduleRepeatingImmediatelyAfter this-gui ; this stuff is going to happen on every timestep as a result:
                                         (reify Steppable 
                                           (step [this sim-state]

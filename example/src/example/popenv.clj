@@ -46,7 +46,7 @@
         {:keys [env-width env-height]} cfg-data
         snipe-field (ObjectGrid2D. env-width env-height)]
     (.clear snipe-field)
-    (add-snipes! rng cfg-data$ snipe-field subenv-key (:num-r-snipes cfg-data) sn/make-rand-r-snipe curr-snipe-id$)
+    (add-snipes! rng cfg-data$ snipe-field subenv-key (:num-snipes cfg-data) sn/make-rand-snipe curr-snipe-id$)
     (SubEnv. snipe-field)))
 
 (defn make-snipe-map

@@ -37,16 +37,16 @@
 ;; last argument, so that the function can be passed the first slice from
 ;; inside a method in the defrecord definition.
 
-(props/defagent RSnipe [id energy subenv x y cfg-data$] 
+(props/defagent Snipe [id energy subenv x y cfg-data$] 
   (partial get-curr-agent-slice cfg-data$)
   [[:energy    java.lang.Double "Energy is what snipes get from mushrooms."]
    [:x         java.lang.Integer "x coordinate in underlying grid"]
    [:y         java.lang.Integer "y coordinate in underlying grid"]])
 
-(defn make-rand-r-snipe 
-  "Create an r-snipe with random energy."
+(defn make-rand-snipe 
+  "Create a snipe with random energy."
   [rng cfg-data$ subenv new-id x y] ; fields out of order for use with partial in popenv.clj
-  (-->RSnipe new-id (rand-energy rng @cfg-data$) subenv x y cfg-data$))
+  (-->Snipe new-id (rand-energy rng @cfg-data$) subenv x y cfg-data$))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFAGENT-FREE VERSION:
@@ -55,7 +55,7 @@
 ;; with both of its arguments (since already inside the method definition.):
 
 (comment
-  (defrecord RSnipe [circled$ id energy subenv x y cfg-data$]
+  (defrecord Snipe [circled$ id energy subenv x y cfg-data$]
     Propertied
     (properties [first-slice]
       (props/make-properties
@@ -65,12 +65,12 @@
         [:x         java.lang.Integer "x coordinate in underlying grid"]
         [:y         java.lang.Integer "y coordinate in underlying grid"]))
     Object
-    (toString [this] (str "<RSnipe " id ">")))
+    (toString [this] (str "<Snipe " id ">")))
 
-  (defn make-rand-r-snipe 
-    "Create an r-snipe with random energy."
+  (defn make-rand-snipe 
+    "Create an snipe with random energy."
     [rng cfg-data$ subenv new-id x y] ; fields out of order for use with partial in popenv.clj
-    (->RSnipe (atom false) new-id (rand-energy rng @cfg-data$) subenv x y cfg-data$))
+    (->Snipe (atom false) new-id (rand-energy rng @cfg-data$) subenv x y cfg-data$))
 )
 
 
