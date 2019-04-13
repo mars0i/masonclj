@@ -113,7 +113,7 @@ Here's an example of use of the `defparams` macro from *masonclj/example/src/exa
                                                                 :parse-fn #(Long. %)]]
                 [env-height         40      long    [10,250]   ["-H" "Height of env. Must be an even number."
                                                                 :parse-fn #(Long. %)]]
-                [env-display-size   12.0    double  false      ["-G" "How large to display the env in gui by default."
+                [env-display-size   12.0    double  false      ["-G" "How large to display the env in gui."
                                                                 :parse-fn #(Double. %)]]
                 [use-gui           false    boolean false      ["-g" "If -g, use GUI; otherwise GUI if +g or no options."
                                                                 :parse-fn #(Boolean. %)]]
@@ -331,7 +331,7 @@ a bit and added comments.
                    :parse-fn (fn* [p1__1555#] (Long. p1__1555#))]
                   ["-H" "--env-height <long> (40)" "Height of env. Must be an even number."
                    :parse-fn (fn* [p1__1556#] (Long. p1__1556#))]
-                  ["-G" "--env-display-size <double> (12.0)" "How large to display the env in gui by default."
+                  ["-G" "--env-display-size <double> (12.0)" "How large to display the env in gui."
                    :parse-fn (fn* [p1__1557#] (Double. p1__1557#))]
                   ["-g" "--use-gui" "If -g, use GUI; otherwise GUI if +g or no options."
                    :parse-fn (fn* [p1__1558#] (Boolean. p1__1558#))]]

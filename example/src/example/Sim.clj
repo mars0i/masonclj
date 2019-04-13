@@ -39,7 +39,7 @@
                                                                 :parse-fn #(Long. %)]]
                 [env-height         40      long    [10,250]   ["-H" "Height of env. Must be an even number."
                                                                 :parse-fn #(Long. %)]]
-                [env-display-size   12.0    double  false      ["-G" "How large to display the env in gui by default."
+                [env-display-size   12.0    double  false      ["-G" "How large to display the env in gui."
                                                                 :parse-fn #(Double. %)]]
                 [use-gui           false    boolean false      ["-g" "If -g, use GUI; otherwise GUI if +g or no options."
                                                                 :parse-fn #(Boolean. %)]]
