@@ -3,13 +3,14 @@ Marshall Abrams
 
 Sections:<br/>
 <a href="#overview">Overview</a>,
+<a href="#run">How to run it</a>,
 <a href="#parameters">Parameters</a>,
 <a href="#license">License</a>
 
 <a name="overview"></a><h2>Overview:</h2>
 
 <em>Example</em> is a relatively simple MASON model written in Clojure
-using the masonclj library.
+using the masonclj library.  
 
 Although Example does nothing but cause little triangles to run around
 on a (hexagonal) grid, some of the code is a little more complicated
@@ -21,7 +22,7 @@ understand Example, it will be easier to see what's going on in pasta.
 (Let me know if you feel that I have made Example too difficult to
 understand.)
 
-<p>The agents here are called "snipes",  They're defined in
+<p>The agents here are called "snipes", defined in
 snipes.clj. Snipes run around in an environment and don't do anything
 else.  The snipe behavior is implemented in popenv.clj.  ("Popenv"
 means population-environment; it is the combination of the population
@@ -37,6 +38,32 @@ contain `main` methods.  The entry point is a traditional one for
 Clojure: core.clj.  This file determines whether the main in Sim.clj or
 the one for the GUI in GUI.clj is called.  (You don't have to set up
 things this way, but that's how I did it.)</p>
+
+
+<a name="run"></a><h2>How to run it:</h2>
+
+To run it, you should have Clojure and Leingingen installed.  You will
+also need to have MASON installed, along with some libraries that it
+depends on.  There is more information on this in the [masonclj
+documentation](https://github.com/mars0i/masonclj/tree/master/doc/masonclj).
+
+Then enter `lein run` from the example directory.  This will execute the
+GUI verison of Example.  If you execute `lein run -- --help`, you will
+get a list of command line options.  Running `lein run -- <options>`
+will run a no-gui version with those options.  (This is not very useful
+in the case of Example, but can be very useful for other models.)
+You can also explicitly run Example with or without the GUI using:
+```
+lein with-profile gui run
+```
+or
+```
+lein with-profile nogui run
+```
+With this last method you can add `-- --help` or `-- -?` to get
+a list of Example options, or `-- -help` (one dash on "help") to
+get a list of MASON options.  For example, the MASON options include
+`-for`, which can be used to set how many timesteps to run.
 
 <a name="parameters"></a><h2>Parameters:</h2>
 
