@@ -42,7 +42,7 @@ things this way, but that's how I did it.)</p>
 
 <a name="run"></a><h2>How to run it:</h2>
 
-To run it, you should have Clojure and Leingingen installed.  You will
+To run it, you should have Clojure and Leiningen installed.  You will
 also need to have MASON installed, along with some libraries that it
 depends on.  There is more information on this in the [masonclj
 documentation](https://github.com/mars0i/masonclj/tree/master/doc/masonclj).
