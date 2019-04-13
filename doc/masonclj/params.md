@@ -240,8 +240,8 @@ like this:
 
 ## What `defparams` expands to
 
-For example, the following illustrates what the [above `defparams` call](#the-defparams-call) from
-*example/src/example/Sim.clj* expands to.  I generated this code by running
+The code below shows what the [above `defparams` call](#the-defparams-call) from
+*example/src/example/Sim.clj* expands into.  I generated this code by running
 `lein repl` from the toplevel *example* directory under *masonclj*, and
 then running:
 ```clojure
