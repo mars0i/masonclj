@@ -327,23 +327,17 @@ a bit and added comments.
   [args__970__auto__]
   (clojure.core/let
     [cli-options [["-?" "--help" "Print this help message."]
-                  ["-R" "--num-r-snipes <long> (25)"
-                   "Size of r-snipe subpopulation"
+                  ["-R" "--num-r-snipes <long> (25)" "Size of r-snipe subpopulation"
                    :parse-fn (fn* [p1__1553#] (Long. p1__1553#))]
-                  ["-e" "--max-energy <double> (20.0)"
-                   "Maximum energy level for snipes."
+                  ["-e" "--max-energy <double> (20.0)" "Maximum energy level for snipes."
                    :parse-fn (fn* [p1__1554#] (Double. p1__1554#))]
-                  ["-W" "--env-width <long> (40)"
-                   "Width of env.  Must be an even number."
+                  ["-W" "--env-width <long> (40)" "Width of env.  Must be an even number."
                    :parse-fn (fn* [p1__1555#] (Long. p1__1555#))]
-                  ["-H" "--env-height <long> (40)"
-                   "Height of env. Must be an even number."
+                  ["-H" "--env-height <long> (40)" "Height of env. Must be an even number."
                    :parse-fn (fn* [p1__1556#] (Long. p1__1556#))]
-                  ["-G" "--env-display-size <double> (12.0)"
-                   "How large to display the env in gui by default."
+                  ["-G" "--env-display-size <double> (12.0)" "How large to display the env in gui by default."
                    :parse-fn (fn* [p1__1557#] (Double. p1__1557#))]
-                  ["-g" "--use-gui"
-		   "If -g, use GUI; otherwise GUI if +g or no options."
+                  ["-g" "--use-gui" "If -g, use GUI; otherwise GUI if +g or no options."
                    :parse-fn (fn* [p1__1558#] (Boolean. p1__1558#))]]
      usage-fmt__971__auto__ ; the second let binding
        (clojure.core/fn
