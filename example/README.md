@@ -41,18 +41,19 @@ things this way, but that's how I did it.)
 
 [If you want your agents to move around on a grid, you don't have to use
 a hexagonal grid. Mason also allows rectangular grids, and they will
-make your code a little simpler in a few spots.  If so, then you may
-need to choose between moving to a cell in the von Neumann neighborhood
-(right, left, up, down) or within the Moore neighborhood (also includes
-diagonally adjacent cells).  Notice that it takes two steps to reach a
-diagonally adjacent cell (with a von Neumann neighborhood) or else one
-step moves agents farther in a diagonal direction than horizontally or
-vertically (with a Moore neighborhood).  The neighborhood structure make
-a big difference in some models, and either one can produce artifactual
-effects.  (J.  McKenzie Alexander's book *The Structural Evolution of
-Morality* is a great source for understanding this point.)  The
-advantage of a hexagonal gride is that it's isotropic: It's one step
-to any adjacent cell, there is no direction in which movement is faster.]
+make your code a little simpler in a few spots.  With a rectangular grid
+you may need to choose between movement from one cell to a cell in its
+von Neumann neighborhood (right, left, up, down) or in its Moore
+neighborhood (also includes diagonally adjacent cells).  Notice it
+takes two steps to reach a diagonally adjacent cell (with a von Neumann
+neighborhood), or else one step will move agents farther in a diagonal
+direction than horizontally or vertically (with a Moore neighborhood).
+The neighborhood structure make a big difference in some models, and
+can produce artifactual effects.  (J.  McKenzie Alexander's
+book *The Structural Evolution of Morality* is a great source.)
+The advantage of a hexagonal gride is that
+it's isotropic: One step to any adjacent cell, and there is no
+direction in which movement is faster.]
 
 
 <a name="run"></a><h2>How to run it:</h2>
