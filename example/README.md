@@ -22,22 +22,37 @@ understand Example, it will be easier to see what's going on in pasta.
 (Let me know if you feel that I have made Example too difficult to
 understand.)
 
-<p>The agents here are called "snipes", defined in
+The agents here are called "snipes", defined in
 snipes.clj. Snipes run around in an environment and don't do anything
 else.  The snipe behavior is implemented in popenv.clj.  ("Popenv"
 means population-environment; it is the combination of the population
 and its environment. In pasta, the environment contains mushrooms, and
-snipes and mushrooms interact; snipes eat mushrooms.)</p>
+snipes and mushrooms interact; snipes eat mushrooms.)
 
-<p>The main MASON control file is Sim.clj, which subclasses MASON's
+The main MASON control file is Sim.clj, which subclasses MASON's
 `SimState` class.  Another important file is `GUI.clj`, which
-controles the GUI; this subclasses MASON's `GUIState`.</p>
+controles the GUI; this subclasses MASON's `GUIState`.
 
-<p>The usual entry point is neither Sim.clj nor GUI.clj, although both
+The usual entry point is neither Sim.clj nor GUI.clj, although both
 contain `main` methods.  The entry point is a traditional one for
 Clojure: core.clj.  This file determines whether the main in Sim.clj or
 the one for the GUI in GUI.clj is called.  (You don't have to set up
-things this way, but that's how I did it.)</p>
+things this way, but that's how I did it.)
+
+[If you want your agents to move around on a grid, you don't have to use
+a hexagonal grid. Mason also allows rectangular grids, and they will
+make your code a little simpler in a few spots.  If so, then you may
+need to choose between moving to a cell in the von Neumann neighborhood
+(right, left, up, down) or within the Moore neighborhood (also includes
+diagonally adjacent cells).  Notice that it takes two steps to reach a
+diagonally adjacent cell (with a von Neumann neighborhood) or else one
+step moves agents farther in a diagonal direction than horizontally or
+vertically (with a Moore neighborhood).  The neighborhood structure make
+a big difference in some models, and either one can produce artifactual
+effects.  (J.  McKenzie Alexander's book *The Structural Evolution of
+Morality* is a great source for understanding this point.)  The
+advantage of a hexagonal gride is that it's isotropic: It's one step
+to any adjacent cell, there is no direction in which movement is faster.]
 
 
 <a name="run"></a><h2>How to run it:</h2>
