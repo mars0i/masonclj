@@ -9,7 +9,7 @@
             [masonclj.properties :as props]
             [clojure.math.numeric-tower :as math])
   (:import [example snipe Sim]
-           [sim.engine Steppable Schedule Stoppable]
+           [sim.engine Steppable]
            [sim.field.grid ObjectGrid2D]
            [sim.portrayal DrawInfo2D]
            [sim.portrayal.grid HexaObjectGridPortrayal2D]
@@ -46,10 +46,8 @@
   []
   "masonclj example")
 
-;(defn -getName
-;  "This doesn't work."
-;  ([this] (println "void version") "Yow!")
-;  ([this cls] (println "sending up to super") (.superGetName this cls)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CONFIGURATION AND UTILITY FUNCTIONS
 
 ;; display parameters:
 (def display-backdrop-color (Color. 200 200 200)) ; border color around hex cells and overall field
@@ -58,12 +56,21 @@
 (defn snipe-color-fn [max-energy snipe] (Color. 0 0 (snipe-shade-fn max-energy snipe)))
 (def org-offset 0.6) ; with simple hex portrayals to display grid, organisms off center; pass this to DrawInfo2D to correct.
 
-(defn -init-instance-state
-  [& args]
-  [(vec args) {:west-display (atom nil)       ; will be replaced in init because we need to pass the GUI instance to it
-               :west-display-frame (atom nil) ; will be replaced in init because we need to pass the display to it
-               :west-snipe-field-portrayal (HexaObjectGridPortrayal2D.)      ; hex grid on which snipes move (required)
-               :hexagonal-bg-field-portrayal (HexaObjectGridPortrayal2D.)}]) ; hex grid for background pattern (not required)
+;; For hex grid, need to rescale display (based on HexaBugsWithUI.java around 
+;; line 200 in Mason 19).  If you use a rectangular grid, you don't need this.
+(defn hex-scale-height
+  "Calculate visually pleasing height for a hex grid relative to normal
+  rectangular height."
+  [height]
+  (+ 0.5 height))
+
+(defn hex-scale-width
+  "Calculate visually pleasing width for a hex grid relative to normal
+  rectangular width."
+  [width] 
+  (* (/ 2.0 (math/sqrt 3)) 
+     (+ 1 (* (- width 1)
+             (/ 3.0 4.0)))))
 
 (defn -getSimulationInspectedObject
   "Override methods in sim.display.GUIState so that GUI can make graphs, etc."
@@ -77,7 +84,18 @@
     (.setVolatile i true)
     i))
 
-;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; gen-class instance variable initialization function
+
+(defn -init-instance-state
+  [& args]
+  [(vec args) {:west-display (atom nil)       ; will be replaced in init because we need to pass the GUI instance to it
+               :west-display-frame (atom nil) ; will be replaced in init because we need to pass the display to it
+               :west-snipe-field-portrayal (HexaObjectGridPortrayal2D.)      ; hex grid on which snipes move (required)
+               :hexagonal-bg-field-portrayal (HexaObjectGridPortrayal2D.)}]) ; hex grid for background pattern (not required)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MAIN GUI SETUP ROUTINES
 
 (declare setup-portrayals)
 
@@ -93,17 +111,48 @@
   [args]
   (apply -main args)) ; have to use apply since already in a seq
 
-;; This is called by the pause and go buttons when starting from fully stopped.
+(defn -init
+  "Initialization function caused to be run by MASON SimState class."
+  [this controller] ; fyi controller is called c in Java version
+  (.superInit this controller)
+  (let [sim (.getState this)
+        gui-config (.getUIState this)
+        sim-data @(.simData sim) ; just for env dimensions
+        display-size (:env-display-size sim-data)
+        width  (hex-scale-width  (int (* display-size (:env-width sim-data))))
+        height (hex-scale-height (int (* display-size (:env-height sim-data))))
+        west-snipe-field-portrayal (:west-snipe-field-portrayal gui-config)
+        hexagonal-bg-field-portrayal (:hexagonal-bg-field-portrayal gui-config)
+        west-display (setup-display! this width height)
+        west-display-frame (setup-display-frame! west-display controller
+                                                "west subenv" true)] ; false supposed to hide it, but fails
+    (reset! (:west-display gui-config) west-display)
+    (reset! (:west-display-frame gui-config) west-display-frame)
+    ;; Attach layers to display; later layers will be on top, and can hide earlier ones:
+    (attach-portrayals! west-display [[hexagonal-bg-field-portrayal "west bg"]    ; background pattern, not required
+                                      [west-snipe-field-portrayal "west snipes"]] ; snipes have to be on top
+                        0 0 width height)))
+
 (defn -start
+  "Function run by pause and go buttons when starting from fully stopped state."
   [this-gui]
   (.superStart this-gui) ; this will call start() on the sim, i.e. in our SimState object
   (setup-portrayals this-gui))
 
+(defn attach-portrayals!
+  "Attach field-portrayals in portrayals-with-labels to display with upper left corner 
+  at x y in display and with width and height.  Order of portrayals determines
+  how they are layered, with earlier portrayals under later ones."
+  [display portrayals-with-labels x y field-width field-height]
+  (doseq [[portrayal label] portrayals-with-labels]
+    (.attach display portrayal label
+             (Rectangle2D$Double. x y field-width field-height)))) ; note Clojure $ syntax for Java static nested classes
+
 ;; IN the Example model, THERE IS NO east- anything.  It's all west-.
 (defn setup-portrayals
   "Set up MASON 'portrayals' of agents and background fields.  That is, associate 
-  with a given entity one or moreJava classes that will determine appearances in 
-  the GUI."
+  with a given entity one or more Java classes that will determine appearances in 
+  the GUI.  Usually called from start."
   [this-gui]  ; instead of 'this': avoid confusion with e.g. proxy below
        ; first get global configuration objects and such:
   (let [sim (.getState this-gui)
@@ -139,31 +188,17 @@
           (.setBackdrop display-backdrop-color) ; bottom level color--will show through around hexagaons
           (.repaint))))
 
-;; For hex grid, need to rescale display (based on HexaBugsWithUI.java around line 200 in Mason 19).
-;; If you use a rectangular grid, you don't need this.
-(defn hex-scale-height
-  "Calculate visually pleasing height for a hex grid relative to normal
-  rectangular height."
-  [height]
-  (+ 0.5 height))
-
-(defn hex-scale-width
-  "Calculate visually pleasing width for a hex grid relative to normal
-  rectangular width."
-  [width] 
-  (* (/ 2.0 (math/sqrt 3)) 
-     (+ 1 (* (- width 1)
-             (/ 3.0 4.0)))))
-
-(defn setup-display
-  "Creates and configures a MASON display object and returns it."
+(defn setup-display!
+  "Creates and configures a MASON display object and returns it.  Usually
+  called from init."
   [gui width height]
   (let [display (Display2D. width height gui)]
     (.setClipping display false)
     display))
 
-(defn setup-display-frame
-  "Creates and configures a MASON display-frame and returns it."
+(defn setup-display-frame!
+  "Creates and configures a MASON display-frame and returns it.  Usually
+  called from init."
   [display controller title visible?]
   (let [display-frame (.createFrame display)]
     (.registerFrame controller display-frame)
@@ -171,37 +206,8 @@
     (.setVisible display-frame visible?)
     display-frame))
 
-(defn attach-portrayals!
-  "Attach field-portrayals in portrayals-with-labels to display with upper left corner 
-  at x y in display and with width and height.  Order of portrayals determines
-  how they are layered, with earlier portrayals under later ones."
-  [display portrayals-with-labels x y field-width field-height]
-  (doseq [[portrayal label] portrayals-with-labels]
-    (.attach display portrayal label
-             (Rectangle2D$Double. x y field-width field-height)))) ; note Clojure $ syntax for Java static nested classes
-
-(defn -init
-  [this controller] ; fyi controller is called c in Java version
-  (.superInit this controller)
-  (let [sim (.getState this)
-        gui-config (.getUIState this)
-        sim-data @(.simData sim) ; just for env dimensions
-        display-size (:env-display-size sim-data)
-        width  (hex-scale-width  (int (* display-size (:env-width sim-data))))
-        height (hex-scale-height (int (* display-size (:env-height sim-data))))
-        west-snipe-field-portrayal (:west-snipe-field-portrayal gui-config)
-        hexagonal-bg-field-portrayal (:hexagonal-bg-field-portrayal gui-config)
-        west-display (setup-display this width height)
-        west-display-frame (setup-display-frame west-display controller
-                                                "west subenv" true)] ; false supposed to hide it, but fails
-    (reset! (:west-display gui-config) west-display)
-    (reset! (:west-display-frame gui-config) west-display-frame)
-    ;; Attach layers to display; later layers will be on top, and can hide earlier ones:
-    (attach-portrayals! west-display [[hexagonal-bg-field-portrayal "west bg"]    ; background pattern, not required
-                                      [west-snipe-field-portrayal "west snipes"]] ; snipes have to be on top
-                        0 0 width height)))
-
 (defn -quit
+  "Cleans up state before existing model."
   [this]
   (.superQuit this)
   (let [gui-config (.getUIState this)
