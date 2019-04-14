@@ -46,7 +46,7 @@ you may need to choose between movement from one cell to a cell in its
 von Neumann neighborhood (right, left, up, down) or in its Moore
 neighborhood (also includes diagonally adjacent cells).  Notice it takes
 two steps to reach a diagonally adjacent cell with a von Neumann
-neighborhood, and one step will move agents farther in a diagonal
+neighborhood, but one step will move agents farther in a diagonal
 direction than horizontally or vertically with a Moore neighborhood.
 The neighborhood structure make a big difference in some models, and can
 produce artifactual effects. J. McKenzie Alexander's book *The
