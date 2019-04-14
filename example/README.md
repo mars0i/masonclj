@@ -50,8 +50,8 @@ neighborhood, but one step will move agents farther in a diagonal
 direction than horizontally or vertically with a Moore neighborhood.
 The neighborhood structure make a big difference in some models, and can
 produce artifactual effects. J. McKenzie Alexander's book *The
-Structural Evolution of Morality* is a great source on this point.  The
-advantage of a hexagonal gride is that it's isotropic: One step to any
+Structural Evolution of Morality* is a great source on this point.  So the
+advantage of a hexagonal grid is that it's isotropic: One step to any
 adjacent cell, and there is no direction in which movement is faster.]
 
 
