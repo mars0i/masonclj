@@ -13,7 +13,7 @@
            [sim.field.grid ObjectGrid2D]
            [sim.portrayal DrawInfo2D]
            [sim.portrayal.grid HexaObjectGridPortrayal2D]
-           [sim.portrayal.simple CircledPortrayal2D ShapePortrayal2D HexagonalPortrayal2D]
+           [sim.portrayal.simple CircledPortrayal2D OvalPortrayal2D HexagonalPortrayal2D]
            [sim.display Console Display2D]
            [java.awt.geom Rectangle2D$Double] ; note wierd Clojure syntax for Java static nested class
            [java.awt Color])
@@ -52,8 +52,8 @@
 ;  ([this cls] (println "sending up to super") (.superGetName this cls)))
 
 ;; display parameters:
-(def display-backdrop-color (Color. 64 64 64)) ; border around subenvs
-(def snipe-size 0.55)
+(def display-backdrop-color (Color. 200 200 200)) ; border color around hex cells and overall field
+(def snipe-size 0.70)
 (defn snipe-shade-fn [max-energy snipe] (int (+ 64 (* 190 (/ (:energy snipe) max-energy)))))
 (defn snipe-color-fn [max-energy snipe] (Color. 0 0 (snipe-shade-fn max-energy snipe)))
 (def org-offset 0.6) ; with simple hex portrayals to display grid, organisms off center; pass this to DrawInfo2D to correct.
@@ -119,9 +119,7 @@
         ;; Set up the appearance of Snipes with a main portrayal inside one 
         ;; that can display a circle around it:
         snipe-portrayal (props/make-fnl-circled-portrayal Color/blue
-                            (proxy [ShapePortrayal2D][ShapePortrayal2D/X_POINTS_TRIANGLE_UP ; there's a simpler way but
-                                                      ShapePortrayal2D/Y_POINTS_TRIANGLE_UP ; this one is more flexible
-                                                      (* 1.1 snipe-size)]
+                            (proxy [OvalPortrayal2D][snipe-size]
                                    (draw [snipe graphics info]
                                      (set! (.-paint this) (snipe-color-fn max-energy snipe)) ; paint var is in superclass
                                      (proxy-super draw snipe graphics (DrawInfo2D. info (* 0.75 org-offset) (* 0.55 org-offset)))))) ; center in cell
@@ -138,7 +136,7 @@
     ;; set up display:
     (doto west-display
           (.reset)
-          (.setBackdrop (Color. 200 200 200)) ; bottom level color--will show through around hexagaons
+          (.setBackdrop display-backdrop-color) ; bottom level color--will show through around hexagaons
           (.repaint))))
 
 ;; For hex grid, need to rescale display (based on HexaBugsWithUI.java around line 200 in Mason 19).
