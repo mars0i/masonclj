@@ -13,7 +13,7 @@ Sections:<br/>
 using the masonclj library.  
 
 Although Example does nothing but cause little triangles to run around
-on a (hexagonal) grid, some of the code is a little more complicated
+on a hexagonal grid, some of the code is a little more complicated
 than it needs to be.  I'm not sure whether this is ideal, but I also
 want to make available a full-fledged illustration of a MASON model using and
 masonclj; that is in my [pasta](https://github.com/mars0i/pasta) repo.
