@@ -1,6 +1,9 @@
 masonclj
 ===
 
+Current release: `[mars0i/masonclj "0.2.0"]`
+
+
 **masonclj** is a very small library that provides functions and macros
 that smooth a few rough edges to using
 [MASON](https://cs.gmu.edu/~eclab/projects/mason) in
