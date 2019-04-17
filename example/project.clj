@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure "1.10.0"]  ; Clojure version
                  [org.clojure/tools.cli "0.4.1"] ; command line processing
                  [org.clojure/math.numeric-tower "0.0.4"] ; for a few functions
-                 [mars0i/masonclj "0.1.0"]
+                 [mars0i/masonclj "0.2.0"]
                  [mason "19"]
                  ;; libs used by Mason:
                  [javax.media/jmf "2.1.1e"]
