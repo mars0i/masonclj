@@ -26,8 +26,9 @@ Notes on Clojure-Java interop options relevant to use of Clojure with MASON.
 
 ## Projects that might be of interest:
 
-[masonclj: Library to ease use of the MASON ABM library with Clojure](https://github.com/mars0i/masonclj)
-
-[spork: Sppon's Operations Research Kit](https://github.com/joinr/spork)
+[spork: Spoon's Operations Research Kit](https://github.com/joinr/spork)
 
 [simpro-science: Simulation of spatial processes in Protege-frames by scenarios](https://github.com/rururu/simpro-scene)
+
+[masonclj: Library to ease use of the MASON ABM library with
+Clojure](https://github.com/mars0i/masonclj) (This one.)
