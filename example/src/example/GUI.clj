@@ -31,6 +31,8 @@
     :state getUIState
     :init init-instance-state))
 
+(declare setup-portrayals setup-display! setup-display-frame! attach-portrayals!)
+
 ;; getName() is static in GUIState.  You can't actually override a static
 ;; method, normally, in the sense that the method to run would be chosen
 ;; at runtime by the actual class used.  Rather, with a static method,
@@ -96,8 +98,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAIN GUI SETUP ROUTINES
-
-(declare setup-portrayals)
 
 (defn -main
   [& args]
