@@ -22,3 +22,12 @@ General remarks on writing ABMs in Clojure.
 
 * [ClojureMASONinteropTips.md](https://github.com/mars0i/masonclj/blob/master/doc/general/ClojureMASONinteropTips.md):
 Notes on Clojure-Java interop options relevant to use of Clojure with MASON. 
+
+
+## Projects that might be of interest:
+
+[masonclj: Library to ease use of the MASON ABM library with Clojure](https://github.com/mars0i/masonclj)
+
+[spork: Sppon's Operations Research Kit](https://github.com/joinr/spork)
+
+[simpro-science: Simulation of spatial processes in Protege-frames by scenarios](https://github.com/rururu/simpro-scene)
