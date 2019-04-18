@@ -35,4 +35,4 @@ Clojure](https://github.com/mars0i/masonclj) (This one.)
 
 Rich Hickey wrote an agent-based simulation inspired by ants.  I don't
 think web location exists, but if you do a search for ants.clj, you'll
-find man variants of this simulation.
+find many variants.
