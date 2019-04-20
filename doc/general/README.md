@@ -15,7 +15,8 @@ with the Clojure language agent concept.
 ## Files in this directory:
 
 * [ABMsInClojure.md](https://github.com/mars0i/masonclj/blob/master/doc/general/ABMsInClojure.md):
-General remarks on writing ABMs in Clojure.
+General remarks on writing ABMs in Clojure, with discussion of some
+specific libraries such as MASON.
 
 * [functionalMASON.md](https://github.com/mars0i/masonclj/blob/master/doc/general/functionalMASON.md):
  Notes on strategies for writing in a more functional-programming style using MASON.
