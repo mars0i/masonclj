@@ -93,10 +93,15 @@ good matrix libraries for Clojure, or you can use Java data structures.)
 You don't need a specialized ABM library to write an ABM, obviously.
 You'll have to cook up everything you want in the model yourself, but
 you'll have complete control and you'll always understand what's going
-on under the hood.  I prefer to use an ABM library that provides a lot
-of useful functionality without me having to do much.
+on under the hood.  
 
 ### Agent-based modeling libraries for Clojure?
+
+I prefer to use an ABM library that provides useful
+functionality without me having to do much.  For example, MASON (see
+below) provides, as options, graphical display functions, graphical
+editing of parameters, a hexagonal grid, inspection of agents during a
+run, and plots of model variables and agent variables during a run.
 
 There are very few ABM libraries written in Clojure.  When I first
 looked for them, I didn't find any.  The intersection of
