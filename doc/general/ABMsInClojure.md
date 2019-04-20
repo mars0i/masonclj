@@ -3,7 +3,7 @@ Notes on writing agent-based models in Clojure
 
 Marshall Abrams
 
-These remarks may be incomplete, and *definitely* are the result of my
+These remarks may be incomplete, and definitely are the result of my
 sometimes biased intuitions and unsystematic, un-thorough
 research---which may be outdated anyway.
 
