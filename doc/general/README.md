@@ -31,7 +31,7 @@ Notes on Clojure-Java interop options relevant to use of Clojure with MASON.
 [simpro-science: Simulation of spatial processes in Protege-frames by scenarios](https://github.com/rururu/simpro-scene)
 
 Rich Hickey wrote an agent-based simulation inspired by ants.  I don't
-think web location exists, but if you do a search for ants.clj, you'll
+think the original web location exists, but if you do a search for ants.clj, you'll
 find many variants.
 
 [masonclj: Library to ease use of the MASON ABM library with
