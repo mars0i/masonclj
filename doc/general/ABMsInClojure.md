@@ -55,7 +55,8 @@ define a
 function and then throw that and an initial state into `iterate`.  Then
 you can `take` as many time steps as you want, or `map` functions
 through the sequence to create side-effects such as writing data to a
-file.  You can back up and look at earlier stages at any point.
+file or even to graphical representations of your model.  You can
+back up and look at earlier stages at any point.
 
 However, it *is* very natural to model agents as persistent data
 structures with internal states that are imperatively modified.  There
@@ -258,6 +259,23 @@ to [override some of the Object
 methods](https://clojuredocs.org/clojure.core/defrecord) defined for
 defrecords by Clojure, *but not* the `equals` and `hashCode` methods. 
 This is undocumented afaik. Try it.) 
+
+**Issue 5:** Earlier I mentioned that a nice design for an FP-oriented
+ABM model is to define an initial state and a next-step function, and
+then just iterate the model lazily, with any output created as a
+side-effect.  I had originally hoped to use MASON this way, building my
+model using some of its classes, but letting `iterate` run the model,
+with optional side effects in the MASON GUI.  I decided, however, that
+it seemed as if too much of MASON was tied into its scheduling and
+stepping methods, and that as a practical matter, I had to let them
+drive the process to get all the benefits I wanted from MASON.  So my
+models are (partially) functional in that at each time step, there is a
+state that's fed into a next-step function, but that next-step function
+is called by the MASON scheduler.  (I don't think it's impossible to
+disentangle the MASON goodies from its scheduling routines; after all,
+MASON comes with full Java source.  I just didn't think it was worth my
+time to figure out how to do it.  Someone else may want to pursue
+this possibility further.)
 
 #### Netlogo? No.
 
