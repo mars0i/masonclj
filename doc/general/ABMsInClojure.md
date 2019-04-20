@@ -3,22 +3,22 @@ Notes on writing agent-based models in Clojure
 
 Marshall Abrams
 
-These remarks *may* be incomplete, and *definitely* are the result of my
+These remarks may be incomplete, and *definitely* are the result of my
 sometimes biased intuitions and unsystematic, un-thorough
 research---which may be outdated anyway.
 
 ### What are ABMs?
 
-"[Agent-based model](https://en.m.wikipedia.org/wiki/Agent-based_model)" (ABM) and "individual-based model" are used to that
-refer to simulations that usually involve a large number of interacting
-"agents", i.e. software entities whose behaviors are determined by
-(usually) relatively simple bits of code.  What's interesting about ABMs
-is seeing what happens when a lot of agents interact over time.  That's
-a vague description of the paradigm, but the boundaries of the category
-are necessarily vague.  I've seen ABMs in which the agents represent
-people, or entities within minds, or companies, or associations of
-villages in Bali, or proteins within E. coli, etc.  Those are ones that
-come to mind.
+"[Agent-based model](https://en.m.wikipedia.org/wiki/Agent-based_model)"
+(ABM) and "individual-based model" are used to that refer to simulations
+that usually involve a large number of interacting "agents", i.e.
+software entities whose behaviors are determined by (usually) relatively
+simple bits of code.  What's interesting about ABMs is seeing what
+happens when a lot of agents interact over time.  That's a vague
+description of the paradigm, but the boundaries of the category are
+necessarily vague.  (For example, there are ABMs in which the agents
+represent animals and plants, people, entities within minds, companies,
+associations of villages, and proteins in a cell.)
 
 Often ABMs have a graphical component, so that you can watch the agents
 interacting over time.  This isn't essential, but being able to watch
