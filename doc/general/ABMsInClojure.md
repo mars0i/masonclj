@@ -88,19 +88,31 @@ matrix is unchanged. So for this kind of model, imperative updating of a
 single matrix be significantly more efficient.  (Fortunately, there are
 good matrix libraries for Clojure, or you can use Java data structures.)
 
+### Rolling your own
+
+You don't need a specialized ABM library to write an ABM, obviously.
+You'll have to cook up everything you want in the model yourself, but
+you'll have complete control and you'll always understand what's going
+on under the hood.  I prefer to use an ABM library that provides a lot
+of useful functionality without me having to do much.
+
 ### Agent-based modeling libraries for Clojure?
 
-You can write an ABM in any language, of course, but it's nicer if you
-have a library or environment that's designed for ABMs.  This is why,
-although I have written an ABM in pure Clojure, I probably won't do
-that  often.
+There are very few ABM libraries written in Clojure.  When I first
+looked for them, I didn't find any.  The intersection of
+those interested in Clojure and in ABMs seems small.  However, others
+have pointed out the following libraries that seem worth
+investigating:
 
-AFAIK there are no ABM libraries written in Clojure.  I don't expect
-to see any soon, since the intersection of those interested in Clojure
-and in ABMs seems small.
+* [spork: Spoon's Operations Research Kit](https://github.com/joinr/spork)
+* [simpro-science: Simulation of spatial processes in Protege-frames by scenarios](https://github.com/rururu/simpro-scene)
 
-However, there are a few Java ABM libraries, and at least one Javascript
-(Coffeescript, actually) ABM library.  So one can consider using them
+Also note that Rich Hickey wrote an agent-based simulation inspired by
+ants.  I don't think the original web location exists, but if you do a
+search for ants.clj, you'll find many variants.
+
+There are a few Java ABM libraries, and at least one Javascript
+(Coffeescript, actually) ABM library.  So an option is to use them
 with Clojure.  I have not spent time researching every library that
 might possibly be useful.  Rightly or wrongly, I don't bother 
 examining libraries that do not seem to be widely used and regularly
