@@ -95,7 +95,7 @@ You'll have to cook up everything you want in the model yourself, but
 you'll have complete control and you'll always understand what's going
 on under the hood.  
 
-### Agent-based modeling libraries for Clojure?
+### Agent-based modeling libraries for Clojure
 
 I prefer to use an ABM library that provides useful
 functionality without me having to do much.  For example, MASON (see
@@ -104,10 +104,10 @@ editing of parameters, a hexagonal grid, inspection of agents during a
 run, and plots of model variables and agent variables during a run.
 
 There are very few ABM libraries written in Clojure.  When I first
-looked for them, I didn't find any.  The intersection of
+looked for them, I didn't find any; the intersection of
 those interested in Clojure and in ABMs seems small.  However, others
 have pointed out the following libraries that seem worth
-investigating:
+investigating, although I haven't done so:
 
 * [spork: Spoon's Operations Research Kit](https://github.com/joinr/spork)
 * [simpro-science: Simulation of spatial processes in Protege-frames by scenarios](https://github.com/rururu/simpro-scene)
