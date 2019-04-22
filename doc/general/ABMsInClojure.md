@@ -3,22 +3,22 @@ Notes on writing agent-based models in Clojure
 
 Marshall Abrams
 
-These remarks *may* be incomplete, and *definitely* are the result of my
+These remarks may be incomplete, and definitely are the result of my
 sometimes biased intuitions and unsystematic, un-thorough
 research---which may be outdated anyway.
 
 ### What are ABMs?
 
-"[Agent-based model](https://en.m.wikipedia.org/wiki/Agent-based_model)" (ABM) and "individual-based model" are used to that
-refer to simulations that usually involve a large number of interacting
-"agents", i.e. software entities whose behaviors are determined by
-(usually) relatively simple bits of code.  What's interesting about ABMs
-is seeing what happens when a lot of agents interact over time.  That's
-a vague description of the paradigm, but the boundaries of the category
-are necessarily vague.  I've seen ABMs in which the agents represent
-people, or entities within minds, or companies, or associations of
-villages in Bali, or proteins within E. coli, etc.  Those are ones that
-come to mind.
+"[Agent-based model](https://en.m.wikipedia.org/wiki/Agent-based_model)"
+(ABM) and "individual-based model" are used to that refer to simulations
+that usually involve a large number of interacting "agents", i.e.
+software entities whose behaviors are determined by (usually) relatively
+simple bits of code.  What's interesting about ABMs is seeing what
+happens when a lot of agents interact over time.  That's a vague
+description of the paradigm, but the boundaries of the category are
+necessarily vague.  (For example, there are ABMs in which the agents
+represent animals and plants, people, entities within minds, companies,
+associations of villages, and proteins in a cell.)
 
 Often ABMs have a graphical component, so that you can watch the agents
 interacting over time.  This isn't essential, but being able to watch
@@ -55,7 +55,8 @@ define a
 function and then throw that and an initial state into `iterate`.  Then
 you can `take` as many time steps as you want, or `map` functions
 through the sequence to create side-effects such as writing data to a
-file.  You can back up and look at earlier stages at any point.
+file or even to graphical representations of your model.  You can
+back up and look at earlier stages at any point.
 
 However, it *is* very natural to model agents as persistent data
 structures with internal states that are imperatively modified.  There
@@ -87,19 +88,36 @@ matrix is unchanged. So for this kind of model, imperative updating of a
 single matrix be significantly more efficient.  (Fortunately, there are
 good matrix libraries for Clojure, or you can use Java data structures.)
 
-### Agent-based modeling libraries for Clojure?
+### Rolling your own
 
-You can write an ABM in any language, of course, but it's nicer if you
-have a library or environment that's designed for ABMs.  This is why,
-although I have written an ABM in pure Clojure, I probably won't do
-that  often.
+You don't need a specialized ABM library to write an ABM, obviously.
+You'll have to cook up everything you want in the model yourself, but
+you'll have complete control and you'll always understand what's going
+on under the hood.  
 
-AFAIK there are no ABM libraries written in Clojure.  I don't expect
-to see any soon, since the intersection of those interested in Clojure
-and in ABMs seems small.
+### Agent-based modeling libraries for Clojure
 
-However, there are a few Java ABM libraries, and at least one Javascript
-(Coffeescript, actually) ABM library.  So one can consider using them
+I prefer to use an ABM library that provides useful
+functionality without me having to do much.  For example, MASON (see
+below) provides, as options, graphical display functions, graphical
+editing of parameters, a hexagonal grid, inspection of agents during a
+run, and plots of model variables and agent variables during a run.
+
+There are very few ABM libraries written in Clojure.  When I first
+looked for them, I didn't find any; the intersection of
+those interested in Clojure and in ABMs seems small.  However, others
+have pointed out the following libraries that seem worth
+investigating, although I haven't done so:
+
+* [spork: Spoon's Operations Research Kit](https://github.com/joinr/spork)
+* [simpro-science: Simulation of spatial processes in Protege-frames by scenarios](https://github.com/rururu/simpro-scene)
+
+Also note that Rich Hickey wrote an agent-based simulation inspired by
+ants.  I don't think the original web location exists, but if you do a
+search for ants.clj, you'll find many variants.
+
+There are a few Java ABM libraries, and at least one Javascript
+(Coffeescript, actually) ABM library.  So an option is to use them
 with Clojure.  I have not spent time researching every library that
 might possibly be useful.  Rightly or wrongly, I don't bother 
 examining libraries that do not seem to be widely used and regularly
@@ -258,6 +276,23 @@ to [override some of the Object
 methods](https://clojuredocs.org/clojure.core/defrecord) defined for
 defrecords by Clojure, *but not* the `equals` and `hashCode` methods. 
 This is undocumented afaik. Try it.) 
+
+**Issue 5:** Earlier I mentioned that a nice design for an FP-oriented
+ABM model is to define an initial state and a next-step function, and
+then just iterate the model lazily, with any output created as a
+side-effect.  I had originally hoped to use MASON this way, building my
+model using some of its classes, but letting `iterate` run the model,
+with optional side effects in the MASON GUI.  I decided, however, that
+it seemed as if too much of MASON was tied into its scheduling and
+stepping methods, and that as a practical matter, I had to let them
+drive the process to get all the benefits I wanted from MASON.  So my
+models are (partially) functional in that at each time step, there is a
+state that's fed into a next-step function, but that next-step function
+is called by the MASON scheduler.  (I don't think it's impossible to
+disentangle the MASON goodies from its scheduling routines; after all,
+MASON comes with full Java source.  I just didn't think it was worth my
+time to figure out how to do it.  Someone else may want to pursue
+this possibility further.)
 
 #### Netlogo? No.
 
