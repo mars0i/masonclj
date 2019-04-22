@@ -234,8 +234,8 @@
     [sim gui]))
 
 (defmacro repl-gui-with-defs
-  "Calls repl-gui to start the gui, then creates top-level definitions:
-  sim as a example.Sim (i.e. a SimState), gui as a example.GUI
+  "Calls repl-gui to start the GUI, then creates top-level definitions:
+  sim as an example.Sim (i.e. a SimState), gui as an example.GUI
   (i.e. a GUIState) that references sim, and data$ as an atom containing 
   sim's SimData stru."
   []
@@ -243,6 +243,6 @@
     (def sim sim)
     (def gui gui))
   (def data$ (.simData sim))
-  (println "cfg is defined as a Sim (i.e. a SimState)")
+  (println "sim is defined as a Sim (i.e. a SimState)")
   (println "gui is defined as a GUI (i.e. a GUIState)")
   (println "data$ is defined as an atom containing cfg's SimData stru."))
