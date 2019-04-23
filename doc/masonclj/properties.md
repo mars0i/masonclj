@@ -27,7 +27,7 @@ the GUI (but I don't use that).  Usually if you double-click on an
 agent, the main window will display information about it, and it will be
 circled in the graphical representation of your simulation.  (For detailed
 information see chapter 10 of the v.19 [MASON
-manual](https://cs.gmu.edu/~eclab/projects/mason/manual.pdf).
+manual](https://cs.gmu.edu/~eclab/projects/mason/manual.pdf).)
 
 ### Defrecords with functional updating
 
