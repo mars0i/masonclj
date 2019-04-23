@@ -105,9 +105,9 @@ also adds `Object` and its `toString` method to your defrecord.
 (*example/src/example/snipe.clj* contains illustrations both with
 and without `defagent`.)
 
-NOTE: If you ever don't change the internal state of an agent defrecord,
-then there is no need to use `make-properties` or `defagent`, since then
-the defrecord will always remain the same obejct, and MASON can track
+NOTE: If you never change the internal state of an agent defrecord,
+then there is no need to use `make-properties` or `defagent`.
+The defrecord will always remain the same obejct, and MASON can track
 the defrecord by its pointer.
 
 ## The time-slice look up function
