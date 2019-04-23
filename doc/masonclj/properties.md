@@ -69,15 +69,15 @@ tracking your agent.
 ### The solution
 
 The solution is for your defrecord to implement MASON's `Propertied`
-interface, requires that you provide a `properties()` method that
+interface.  This requires that you provide a `properties()` method that
 returns a subclass of the class `Properties`.  Your `Properties`
 subclass should implement various methods that can be called by the
-inspector facility to communicate with your agent, and determines what
+inspector facility to communicate with your agent.  These determine what
 fields the inspector can see.  The most important method is
 `getObject()`, which gives you control of what agent the inspector is
-getting data from.  What I do is have `getObject` call a method that
+getting data from.  I usually have `getObject` call a method that
 will look up the current agent-time-slice of an agent using an id that
-can be gotten from the agent's first time-slice--which the one argument
+can be gotten from the agent's first time-slice--which is the time-slice
 passed to the `properties()` method.
 
 ### `make-properties` and `defagent`
