@@ -68,7 +68,7 @@ tracking your agent.
 
 ### The solution
 
-The solution is for the your defrecord to implement MASON's `Propertied`
+The solution is for your defrecord to implement MASON's `Propertied`
 interface, requires that you provide a `properties()` method that
 returns a subclass of the class `Properties`.  Your `Properties`
 subclass should implement various methods that can be called by the
