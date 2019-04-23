@@ -85,7 +85,7 @@ passed to the `properties()` method.
 Setting up the `Properties` instance returned by `properties()` method
 is a little bit of trouble, so I wrote a function to make it easier:
 `make-properties`. You can use this directly to help create the return
-value of the `properties()` method for the `Propertied` interface thaty
+value of the `properties()` method for the `Propertied` interface that
 your defrecord should implement.  This means that your `defrecord`
 should probably have a field named `id` that you will keep filled with a
 unique agent id, and a special field named `circled$` that should be
