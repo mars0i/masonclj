@@ -13,8 +13,7 @@ makes some available workarounds easier to use.
 
 (MASON is a Java library for [agent-based
 modeling](https://en.wikipedia.org/wiki/Agent-based_model).  Note: This
-use of "agent" has pretty much nothing to do with the Clojure language
-*agent* concept.)
+use of "agent" has nothing to do with the Clojure language *agent* concept.)
 
 ## What's in masonclj and how does one use it?
 
