@@ -50,11 +50,11 @@ data structure representing the agent's location, even if this is only a
 location on the screen in the GUI.  MASON will display whatever is in
 the data structure on a given time step, and if you are representing
 motion, you will see it.  (The data structures holding the agents will
-probably have include one or more of MASON's built in collection
+probably have to include one or more of MASON's built in collection
 classes, such as `ObjectGrid2D`, if you want to display your ABM in
-MASON's GUI.  You can update these as imperatively or functionally as
-you like, apart from the fact that they must be updated imperatively at
-some points.  i.e. if you want to create a new collection for each
+MASON's GUI.  You can update these imperatively or functionally as
+you like, though they must be updated imperatively at
+some points in time. Still, if you want to create a new collection for each
 timestep, you can.)
 
 ### The problem
