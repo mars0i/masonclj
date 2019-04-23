@@ -15,7 +15,7 @@ masonclj provides functions and macros for two purposes:
   the GUI and the command line.
 
 * Making it easier to [track agents](#tracking-agents-in-the-gui) 
-  using the MASON inspector facilities if you use defrecords to implement agents.
+  using the MASON inspector facilities, if you use defrecords to implement agents.
 
 (See the doc/general directory for notes that provide rationales for
 some of the design choices assumed by masonclj.)
