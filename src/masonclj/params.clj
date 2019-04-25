@@ -209,7 +209,9 @@
                                                (map #(vector % [] 'java.lang.Object) dom-syms#)
                                                (:methods addl-opts-map)))} 
          gen-class-opts# (into gen-class-opts# (dissoc addl-opts-map :exposes-methods :methods))
-         this# (vary-meta 'this assoc :tag qualified-sim-class#)] ; add type hint to Sim arg of bean accessors to avoid reflection
+         this# (vary-meta 'this assoc :tag qualified-sim-class#) ; add type hint to Sim arg of bean accessors to avoid reflection
+         bare-newval-params# (repeatedly (fn [] (gensym 'newval)))
+         hinted-newval-params# (map (fn [param typ] (vary-meta param assoc :tag typ)) bare-newval-params# ui-field-types#)]
          ;; Note re type-hinting the newval param of the setters below, see WhatIsThisBranch.md 
          ;; in branch type-hinted-newval in the pasta repo.
 
@@ -242,8 +244,9 @@
         ;; DEFINE BEAN AND OTHER ACCESSORS FOR MASON UI:
         ~@(map (fn [sym# keyw#] (list 'defn sym# (vector this#) `(~keyw# @(~data-accessor ~'this))))
                -get-syms# ui-field-keywords#)
-        ~@(map (fn [sym# keyw#] (list 'defn sym# (vector this# 'newval) `(swap! (~data-accessor ~'this) assoc ~keyw# ~'newval)))
-               -set-syms# ui-field-keywords#)
+        ~@(map (fn [sym# keyw# hinted-param# bare-param#]
+                   (list 'defn sym# (vector this# hinted-param#) `(swap! (~data-accessor ~this#) assoc ~keyw# ~bare-param#)))
+               -set-syms# ui-field-keywords# hinted-newval-params# bare-newval-params#)
         ~@(map (fn [sym# keyw# range-pair#] (list 'defn sym# (vector this#) `(Interval. ~@range-pair#)))
                -dom-syms# dom-keywords# ranges#)
 
