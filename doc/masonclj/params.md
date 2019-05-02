@@ -25,7 +25,7 @@ be configurable via the GUI, you need to provide:
 
 1. Two to three bean-ish accessor functions.  The first, implicit arg,
 which is `this`, is type-hinted to the `SimState` subclass (see below),
-although this will not be visible in generate source code.
+although this will not be visible in generated source code.
 2. Two to three corresponding signatures, in a `gen-class` specification,
 which cannot be immediately next to the bean function definitions.
 3. An entry in a data structure such as a defrecord or map, defined
