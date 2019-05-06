@@ -39,7 +39,7 @@
 
 (props/defagent Snipe [id energy subenv x y cfg-data$] 
   (partial get-curr-agent-slice cfg-data$)
-  [[:energy    java.lang.Double "Energy doesn't do much in the examle model."]
+  [[:energy    java.lang.Double "Energy doesn't do much in the example model."]
    [:x         java.lang.Integer "x coordinate in underlying grid"]
    [:y         java.lang.Integer "y coordinate in underlying grid"]])
 
