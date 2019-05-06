@@ -5,8 +5,8 @@ Current release: `[mars0i/masonclj "0.2.0"]`
 
 
 **masonclj** is a very small library that provides functions and macros
-that smooth a few rough edges to using
-[MASON](https://cs.gmu.edu/~eclab/projects/mason) in
+that smooth a few rough edges involved in using
+[MASON](https://cs.gmu.edu/~eclab/projects/mason) with
 [Clojure](https://clojure.org).  The rough edges are due to
 reasonable design choices by Clojure and MASON architects; masonclj
 makes some available workarounds easier to use.
