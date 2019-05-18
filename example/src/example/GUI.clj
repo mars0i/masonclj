@@ -209,7 +209,7 @@
     display-frame))
 
 (defn -quit
-  "Cleans up state before existing model."
+  "Cleans up state before exiting model."
   [this]
   (.superQuit this)
   (let [gui-config (.getUIState this)
