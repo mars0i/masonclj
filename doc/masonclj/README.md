@@ -24,7 +24,7 @@ some of the design choices assumed by masonclj.)
 
 You'll need Clojure, Leiningen, MASON, and Java.
 
-Add a dependency to `mars0i/masonclj "0.2.0"` (or whatever is ge latest release version)
+Add a dependency to `mars0i/masonclj "0.2.0"` (or whatever is the latest release version)
 in your Leiningen project.clj, or the equivalent for whatever build management system
 you're using.  For Leingingen, add `[mars0i/masonclj "0.1.0"]` to the
 `:dependencies` vector in project.clj.  Replace "0.1.0" with whatever
