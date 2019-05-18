@@ -1,7 +1,7 @@
 masonclj
 ===
 
-Current release: `[mars0i/masonclj "0.2.0"]`
+Current release: [![Clojars Project](https://img.shields.io/clojars/v/mars0i/masonclj.svg)](https://clojars.org/mars0i/masonclj)
 
 
 **masonclj** is a very small library that provides functions and macros
