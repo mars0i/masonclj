@@ -89,6 +89,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gen-class instance variable initialization function
 
+;; There is no east in Example, only west.  This is for conceptual compatibility
+;; with the mars0i/pasta repo, which has both west and east environments.
 (defn -init-instance-state
   [& args]
   [(vec args) {:west-display (atom nil)       ; will be replaced in init because we need to pass the GUI instance to it
