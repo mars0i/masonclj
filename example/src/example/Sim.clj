@@ -28,7 +28,7 @@
 ;; Avoid the following characters for single-character options, because MASON already
 ;; uses them for single-dash options: c d f h p q r s t u.  Also avoid numbers, because
 ;; MASON allows setting '-seed <old seed number>', and old seed number may be a negative
-;; number, in which case the app gets confused if I use e.g. -2 as an option below.
+;; number, in which case the app gets confused if one used e.g. -2 as an option below.
 (mp/defparams  [;field name   initial-value type  in gui? with range?
                 [num-snipes       25        long    [0,500]  ["-R" "Size of snipe population"
                                                               :parse-fn #(Long. %)]]
