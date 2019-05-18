@@ -172,7 +172,7 @@ concerns.  Some of the difficulties come from the fact that some of the
 ways in which Clojure is "[opinionated](https://clojure.org/reference/datatypes#_datatypes_and_protocols_are_opinionated)" mean that it is not intended to make it easy to deal with certain
 kinds of common Java designs.
 
-Of the four MASON/Clojure issues listed below, I've
+Of the five MASON/Clojure issues listed below, I've
 written helper functions and macros to address the first three.  (The
 third is unlikely to be a problem for most models in any event.) The
 fourth could make a model slow, but only with certain kinds of models.
