@@ -156,7 +156,7 @@
   with a given entity one or more Java classes that will determine appearances in 
   the GUI.  Usually called from start."
   [this-gui]  ; instead of 'this': avoid confusion with e.g. proxy below
-       ; first get global configuration objects and such:
+  ; first get global configuration objects and such:
   (let [sim (.getState this-gui)
         gui-config (.getUIState this-gui) ; provided by MASON
         sim-data$ (.simData sim)  ; configuration data defined by masonclj.params/defparams
