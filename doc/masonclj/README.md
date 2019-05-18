@@ -28,11 +28,6 @@ Add a dependency to `mars0i/masonclj "0.2.0"` (or whatever is the latest release
 to `:dependencies` in your Leiningen project.clj, or the equivalent for whatever build management system
 you're using. 
 
-Eventually, I'll upload masonclj to Clojars, and at that point, running
-`lein deps` should automatically install masonclj.  Before that, you
-first need to install the masonclj git repo, and then run `lein install`
-from the repo's root directory.
-
 When you download MASON from the [MASON
 website](https://cs.gmu.edu/~eclab/projects/mason), there are some
 supplementary libraries available there that you should also download.
