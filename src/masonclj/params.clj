@@ -104,8 +104,8 @@
   (filter identity (map make-cli-spec fields)))
 
 (defn make-commandline-processing-defs
-  "If there any element of fields includes a fifth element, i.e. command-line 
-  specification, generate commandline processing code; otherwise return nil."
+  "If fields includes a fifth element, i.e. command-line specification,
+  generate commandline processing code; otherwise return nil."
   [fields]
   (when (some #(> (count %) 4) fields)
     `((defn ~'record-commandline-args!
