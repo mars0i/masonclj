@@ -50,10 +50,10 @@ many features designed to make agent-based modeling easy.)
 ### FP and ABMs: general challenges
 
 A central idea of agent-based models is that agents persist over time,
-and that their internal states change, or their relationships to each
-other and the environment change, or all of the above.  For example, a
-model might include organisms with internal energy levels that change,
-and that move around in an environment.
+with internal states that change, or relationships to each
+other and the environment that change, or all of those.  For example, a
+model might include organisms that have internal energy levels that change as
+the organisms move around and interact with an environment.
 
 There's no reason in principle that this can't be handled in a purely
 functional manner. A method that I like, other things being equal, is to
