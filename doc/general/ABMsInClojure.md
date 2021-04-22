@@ -107,8 +107,9 @@ on under the hood.
 I prefer to use an ABM library that provides useful
 functionality without me having to do much.  For example, MASON (see
 below) provides, as options, graphical display functions, graphical
-editing of parameters, a hexagonal grid, inspection of agents during a
-run, and plots of model variables and agent variables during a run.
+editing of parameters, an optional hexagonal grid, inspection of agents
+during a run, and plots of model variables and agent variables during a run.
+And more.
 
 I'm not aware of anything written in Clojure that's designed as an
 agent-based modeling library per se.  However, there are other sorts of
