@@ -92,7 +92,7 @@ may need to manage agents that want to move to the same spot.)  If you
 try to do this purely functionally, you would probably have to create a
 new matrix for every movement by a single agent, even though most of the
 matrix is unchanged. So for this kind of model, imperative updating of a
-single matrix be significantly more efficient.  (Fortunately, there are
+single matrix would be significantly more efficient.  (Fortunately, there are
 good matrix libraries for Clojure, or you can use Java data structures.)
 
 ### Rolling your own
