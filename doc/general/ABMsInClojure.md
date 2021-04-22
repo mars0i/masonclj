@@ -11,7 +11,7 @@ research---which may be outdated anyway.
 
 "[Agent-based
 model](https://en.m.wikipedia.org/wiki/Agent-based_model)" (ABM) and
-"individual-based model" are used to that refer to simulations that
+"individual-based model" are used to refer to simulations that
 usually involve a large number of interacting "agents", i.e. software
 entities whose behaviors are determined by (usually) relatively simple
 bits of code.  What's interesting about ABMs is seeing what happens
