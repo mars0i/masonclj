@@ -9,16 +9,23 @@ research---which may be outdated anyway.
 
 ### What are ABMs?
 
-"[Agent-based model](https://en.m.wikipedia.org/wiki/Agent-based_model)"
-(ABM) and "individual-based model" are used to that refer to simulations
-that usually involve a large number of interacting "agents", i.e.
-software entities whose behaviors are determined by (usually) relatively
-simple bits of code.  What's interesting about ABMs is seeing what
-happens when a lot of agents interact over time.  That's a vague
-description of the paradigm, but the boundaries of the category are
-necessarily vague.  (For example, there are ABMs in which the agents
-represent animals and plants, people, entities within minds, companies,
-associations of villages, and proteins in a cell.)
+"[Agent-based
+model](https://en.m.wikipedia.org/wiki/Agent-based_model)" (ABM) and
+"individual-based model" are used to that refer to simulations that
+usually involve a large number of interacting "agents", i.e. software
+entities whose behaviors are determined by (usually) relatively simple
+bits of code.  What's interesting about ABMs is seeing what happens
+when a lot of agents interact over time.  That's a vague description
+of the paradigm, but the boundaries of the category are necessarily
+vague.  For example, there are ABMs in which the agents represent
+animals and plants, people, entities within minds, companies,
+associations of villages, and proteins in a cell. Discrete event
+simulation is a closely related kind of modeling. (I haven't worked in
+the discrete event simulation tradition, so I don't want to say much
+about it.  My sense is that a good rule of thumb is that anything that
+can be done with an ABM library can be done with a DES library, and
+vice versa, though a library designed for the kind of model you want
+to write will make it easier.)
 
 Often ABMs have a graphical component, so that you can watch the agents
 interacting over time.  This isn't essential, but being able to watch
@@ -64,7 +71,7 @@ are various ways to do just this in Clojure, but you lose a lot of the
 conveniences of that Clojure provides.  For example, you can define
 agents as `deftypes` that are set up to be imperatively modified, or you
 can put atoms in the fields of a `defrecord`, but `deftypes` are less
-convenient that `defrecords`, and constantly `swap`ing on atoms
+convenient than `defrecords`, and constantly `swap`ing on atoms
 clutters your code.  (See item 2 in the discussion of MASON below for an
 additional challenge that can arise with defrecords.)
 
@@ -103,16 +110,15 @@ below) provides, as options, graphical display functions, graphical
 editing of parameters, a hexagonal grid, inspection of agents during a
 run, and plots of model variables and agent variables during a run.
 
-I'm not aware of anything written in Clojure that's designed from the
-perspective of agent-based modeling per se.  However, there are other
-sorts of frameworks available in Clojure that can be used for
-agent-based modeling.
-Others
-have pointed out the following libraries that seem worth
-investigating, although I haven't done so.  The first library, for
-example, includes tools for discrete event simulation, which is very
-close cousin of agent-based modeling---to some extent, the difference
-may be only a matter of emphasis.
+I'm not aware of anything written in Clojure that's designed as an
+agent-based modeling library per se.  However, there are other sorts of
+frameworks available in Clojure that can be used for agent-based
+modeling. As I hear about them, I'll list libraries here that might be
+worth investigating for agent-based programming, even if I haven't done
+so.  For example, some of the libraries below include tools for discrete
+event simulation, which as I mentioned above, is closely related to
+agent-based modeling.  Some of these are written primarily for JVM-based
+Clojure, some for Clojurescript, and some for both dialects.
 
 * [spork: Spoon's Operations Research Kit](https://github.com/joinr/spork)
 * [DSim](https://github.com/helins/dsim.cljc)
@@ -125,14 +131,13 @@ search for ants.clj, you'll find many variants.
 
 There are a few Java ABM libraries, and at least one Javascript
 (Coffeescript, actually) ABM library.  So an option is to use them with
-Clojure or Clojurescript.  I have not spent time researching every
-library that might possibly be useful.  Rightly or wrongly, I don't
-bother examining libraries that do not seem to be widely used and
-regularly maintained. (Someone else may want to cast a wider net, and
-might find something very worthwhile to use, but I haven't have time.
-I'm open to suggestions, though.)
-
-Some available ABM libraries and environments are listed here:
+Clojure or Clojurescript.  I'll describe a few below.  I haven't spent
+time researching every library that might possibly be useful.  Rightly
+or wrongly, I don't bother examining libraries that do not seem to be
+widely used and regularly maintained. (Someone else may want to cast a
+wider net, and might find something very worthwhile to use, but I
+haven't have time.  I'm open to suggestions, though.) Some available ABM
+libraries and environments are listed here:
 [comparison_of_agent-based_modeling_software](https://en.m.wikipedia.org/wiki/Comparison_of_agent-based_modeling_software).
 Some of the tools seem to be designed for special, narrow purposes, and
 I suspect that some (e.g. Swarm?) may be old and not well maintained.
@@ -141,26 +146,28 @@ I suspect that some (e.g. Swarm?) may be old and not well maintained.
 
 This is an ABM library written in Coffeescript.  I have
 [experimented](https://github.com/mars0i/clj-agentscript1) a little bit
-with using it with Clojurescript.  That seemed pretty easy once I figured
-out how Agentscript worked.  (The docs were not ideal.) Agentscript
-seems like a nice library, but I decided I wanted more than it offered,
-and I decided to use a Java library.
+with using it with Clojurescript.  That seemed pretty easy once I
+figured out how Agentscript worked.  (The docs were not ideal at the
+time that I played with Agentscript.) Agentscript seems like a nice
+library, but I decided I wanted more than it offered, and I decided to
+use a Java library.
 
 
 ### Java ABM libraries:
 
-Using my very crude search heuristic (see above), there appear to be exactly
-two Java ABM libraries worth considering for use with Clojure:  Repast,
-and MASON. Both seem to be used quite a bit in the ABM community.
+When I used my very crude search heuristic (see above), there appeared
+to to me to be exactly two Java ABM libraries worth considering for use
+with Clojure:  Repast, and MASON. Both seem to be used quite a bit in
+the ABM community.
 
 #### Repast
 
-I investigated [Repast](https://repast.github.io/index.html) a little bit, and the design and documentation
-didn't appeal to me.  It seemed more difficult to
-use with Clojure than MASON.  I might be wrong about that, and I know
-that Repast has fans, but I decided to use MASON. If you're interested
-in Repast, please feel free to try it, and let me know what you think
-if you feel like it.
+I investigated [Repast](https://repast.github.io/index.html) a little
+bit, and the design and documentation didn't appeal to me.  It seemed
+more difficult to use with Clojure than MASON.  I might be wrong about
+that, and I know that Repast has fans, but I decided to use MASON. If
+you're interested in Repast, please feel free to try it with Clojure and
+let me know what you think.
 
 #### MASON
 
@@ -184,16 +191,16 @@ written helper functions and macros to address the first three.  (The
 third is unlikely to be a problem for most models in any event.) The
 fourth could make a model slow, but only with certain kinds of models.
 
-**Issue 1:** If you add some Bean-style accessors for model parameters,
-MASON will automatically tie them to GUI elements, so that you can
-control the model from the GUI.  This is very nice.  However, the
-accessors have to be tied to data that would normally be stored in a
-subclass of MASON's SimState class.  In addition, it appears that the
-only way to get all of the effects of subclassing that are needed is to
-use the poorly documented, black art of `genclass`.  (`proxy`, `reify`,
-`defrecord`, and `deftype` are not enough.)  What this means is that for
-each model parameter that you want controlled from the GUI, you will
-probably want:
+**Issue 1:** If you add some Bean-style accessors for model
+parameters, MASON will automatically tie them to GUI elements, so that
+you can control the model from the GUI.  This is very nice.  However,
+the accessors have to be tied to data that would normally be stored in
+a subclass of MASON's SimState class.  In addition, it appears that
+the only way to get all of the effects of subclassing that are needed
+is to use the poorly documented, black art of `genclass`.&nbsp; 
+(`proxy`, `reify`, `defrecord`, and `deftype` are not enough for this
+purpose.)&nbsp;  What this means is that for each model parameter that
+you want controlled from the GUI, you will probably want:
 
 1. A map, defrecord, etc. that you place in the single instance
 variable allowed by `genclass`, containing a data element for each 
@@ -240,7 +247,7 @@ the old version of the agent, which will never change.  You could
 instead use a `deftype`, but then you lose the many conveniences of
 defrecords, and Clojure becomes less fun, ... and less Clojurely.
 (Since one of the main reasons I wanted to use MASON with Clojure was
-that I wanted the convenience and fun of working Clojure, this is not
+that I wanted the convenience and fun of working Clojure, that's not
 an option I like.)
 
 Fortunately, MASON provides a workaround for this situation; you can
@@ -253,12 +260,12 @@ speed, and you're not careful, you can get cyclic dependencies that
 won't compile.  The design of MASON can make it easy to end up in this
 situation.  (Java doesn't prevent cyclic dependencies in the way that
 Clojure does, so there would be no reason to expect MASON's design to
-reflect concerns about cyclic dependencies.) One feature in 
+reflect concerns about cyclic dependencies.) One feature in  my
 [`defparams`](https://github.com/mars0i/masonclj/blob/master/doc/masonclj/params.md)
-attempts to make it easier to avoid cyclic dependencies with type
-hints. However, if your model is fast enough without type hints, or
-type hints would be unlikely to speed it up, then there's no reason to
-worry about this anyway.
+macro attempts to make it easier to avoid cyclic dependencies with
+type hints. However, if your model is fast enough without type hints,
+or type hints would be unlikely to speed it up, then there's no reason
+to worry about this.
 
 **Issue 4:** Another issue with defrecords occurs *if* you want your
 agents to move with continuous coordinates rather than on a grid. 
@@ -276,8 +283,8 @@ the same model written in Java.  You can speed  things up by using
 deftypes that are defined to be updated imperatively, but your code
 will be less idiomatic, and you'll have to work harder to write it (it
 won't be as fun).  However, many ABMs use movement on a grid--or don't
-use movement at all--and don't need continuous coordinates, in which
-case defrecords' `hashCode` function shouldn't slow things down. (It's
+use movement at all--and thus don't need continuous coordinates.  In that
+case, defrecords' `hashCode` function shouldn't slow things down. (It's
 [possible](https://github.com/mars0i/masonclj/blob/master/example/src/example/snipe.clj#L67)
 to [override some of the Object
 methods](https://clojuredocs.org/clojure.core/defrecord) defined for
@@ -287,21 +294,21 @@ This is undocumented afaik. Try it.)
 **Issue 5:** Earlier I mentioned that a nice design for an FP-oriented
 ABM model is to define an initial state and a next-step function, and
 then just iterate the model lazily, with any output created as a
-side-effect.  I had originally hoped to use MASON this way, building my
-model using some of its classes, but letting `iterate` run the model,
-with optional side effects in the MASON GUI.  I decided, however, that
-it seemed as if too much of MASON was tied into its scheduling and
-stepping methods, and that as a practical matter, I had to let them
-drive the process to get all the benefits I wanted from MASON.  So my
-models are (partially) functional in that at each time step, there is a
-state that's fed into a next-step function, but that next-step function
-is called by the MASON scheduler.  (I don't think it's impossible to
-disentangle the MASON goodies from its scheduling routines; after all,
-MASON comes with full Java source.  I just didn't think it was worth my
-time to figure out how to do it.  Someone else may want to pursue
-this possibility further.)
+side-effect.  I had originally hoped to use MASON this way, building
+my model using some of its classes, but letting `iterate` run the
+model, with optional side effects in the MASON GUI.  I decided,
+however, that it seemed as if too much of MASON was tied into its
+scheduling and stepping methods, and that as a practical matter, I had
+to let those methods drive the process to get all the benefits I
+wanted from MASON.  So my models are (partially) functional in that at
+each time step, there is a state that's fed into a next-step function,
+but that next-step function is called by the MASON scheduler.  (I
+don't think it's impossible to disentangle the MASON goodies from its
+scheduling routines; after all, MASON comes with full Java source.  I
+just didn't think it was worth my time to figure out how to do it. 
+Someone else may want to pursue this possibility further.)
 
-#### Netlogo? No.
+#### Netlogo? Not with Clojure.
 
 Could you use NetLogo from Clojure?  NetLogo is written in Java and
 Scala, so in theory you could call it from Clojure.  There are a few
@@ -312,7 +319,7 @@ language, since that DSL is the interface to all of NetLogo's ABM
 capabilities.  Implementing a Clojure-to-NetLogoDSL interface would be a
 lot of work.  It's easier to use Clojure with an ABM library that's
 designed to allow you to write models in Java itself.  Or to use
-NetLogo's own language.
+NetLogo's own language directly.
 
 
 ### Other resources
