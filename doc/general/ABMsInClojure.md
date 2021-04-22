@@ -103,27 +103,34 @@ below) provides, as options, graphical display functions, graphical
 editing of parameters, a hexagonal grid, inspection of agents during a
 run, and plots of model variables and agent variables during a run.
 
-There are very few ABM libraries written in Clojure.  When I first
-looked for them, I didn't find any; the intersection of
-those interested in Clojure and in ABMs seems small.  However, others
+I'm not aware of anything written in Clojure that's designed from the
+perspective of agent-based modeling per se.  However, there are other
+sorts of frameworks available in Clojure that can be used for
+agent-based modeling.
+Others
 have pointed out the following libraries that seem worth
-investigating, although I haven't done so:
+investigating, although I haven't done so.  The first library, for
+example, includes tools for discrete event simulation, which is very
+close cousin of agent-based modeling---to some extent, the difference
+may be only a matter of emphasis.
 
 * [spork: Spoon's Operations Research Kit](https://github.com/joinr/spork)
+* [DSim](https://github.com/helins/dsim.cljc)
 * [simpro-science: Simulation of spatial processes in Protege-frames by scenarios](https://github.com/rururu/simpro-scene)
+* [odoyle-rules](https://github.com/oakes/odoyle-rules)
 
 Also note that Rich Hickey wrote an agent-based simulation inspired by
 ants.  I don't think the original web location exists, but if you do a
 search for ants.clj, you'll find many variants.
 
 There are a few Java ABM libraries, and at least one Javascript
-(Coffeescript, actually) ABM library.  So an option is to use them
-with Clojure.  I have not spent time researching every library that
-might possibly be useful.  Rightly or wrongly, I don't bother 
-examining libraries that do not seem to be widely used and regularly
-maintained. (Someone else may want to cast a wider net, and might find 
-something very worthwhile to use, but I haven't have time.  I'm open to
-suggestions, though.)
+(Coffeescript, actually) ABM library.  So an option is to use them with
+Clojure or Clojurescript.  I have not spent time researching every
+library that might possibly be useful.  Rightly or wrongly, I don't
+bother examining libraries that do not seem to be widely used and
+regularly maintained. (Someone else may want to cast a wider net, and
+might find something very worthwhile to use, but I haven't have time.
+I'm open to suggestions, though.)
 
 Some available ABM libraries and environments are listed here:
 [comparison_of_agent-based_modeling_software](https://en.m.wikipedia.org/wiki/Comparison_of_agent-based_modeling_software).
