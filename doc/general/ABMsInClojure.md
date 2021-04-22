@@ -20,12 +20,12 @@ of the paradigm, but the boundaries of the category are necessarily
 vague.  For example, there are ABMs in which the agents represent
 animals and plants, people, entities within minds, companies,
 associations of villages, and proteins in a cell. Discrete event
-simulation is a closely related kind of modeling. (I haven't worked in
+simulation is a closely related kind of modeling. I haven't worked in
 the discrete event simulation tradition, so I don't want to say much
 about it.  My sense is that a good rule of thumb is that anything that
 can be done with an ABM library can be done with a DES library, and
 vice versa, though a library designed for the kind of model you want
-to write will make it easier.)
+to write will make it easier.
 
 Often ABMs have a graphical component, so that you can watch the agents
 interacting over time.  This isn't essential, but being able to watch
