@@ -229,7 +229,7 @@ to write all of this code and keep it coordinated.)
 
 **Issue 2:** The natural thing to do is to define your agents using
 `defrecord`.  This can work quite well.  It means that when you
-you are doing functional and not imperative updating to agents'
+are doing functional and not imperative updating to agents'
 internal states, but you can just update the arrays that 
 MASON expects agents to live in, and it will dutifully display the
 agents in the GUI, ignoring the fact that you removed an old agent
