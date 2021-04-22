@@ -176,7 +176,7 @@ let me know what you think.
 It has many advanced capabilities.
 
 Clojure is a well thought out, well-designed, very flexible language.
-(It is a lot of fun, too, which is intimately tied how easy it is to
+(It is a lot of fun, too, which is intimately tied to how easy it is to
 get a lot done with Clojure.)
 
 However, MASON's design uses a lot of inheritance, and has some other
