@@ -50,8 +50,11 @@ in that repo are poor illustrations of good Clojure style.)
 
 The book <em>Clojure Programming</em> by Emerick et al.  from O'Reilly
 is the best single source of information about Clojure-Java interop I've
-encountered, but I know of no completely comprehensive source.
-Some of the documents here may help a little, but they don't go into detail.
+read, but I know of no completely comprehensive source.  However, other
+books on Clojure have come out more recently, as well as new editions of
+older books, so it may be that there are other excellent resources on Java
+interop now. I haven't check.  Some of the documents here may help a little,
+too, but they don't go into detail.
 
 ## And
 
