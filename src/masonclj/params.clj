@@ -1,4 +1,4 @@
-;; This software is copyright 2016, 2017, 2018, 2019 by Marshall Abrams, 
+;; This software is copyright 2016, 2017, 2018, 2019, 2021 by Marshall Abrams, 
 ;; and is distributed under the Gnu Lesser General Public License version 3.0 
 ;; as specified in the the file LICENSE.
 
@@ -104,8 +104,8 @@
   (filter identity (map make-cli-spec fields)))
 
 (defn make-commandline-processing-defs
-  "If there any element of fields includes a fifth element, i.e. command-line 
-  specification, generate commandline processing code; otherwise return nil."
+  "If fields includes a fifth element, i.e. command-line specification,
+  generate commandline processing code; otherwise return nil."
   [fields]
   (when (some #(> (count %) 4) fields)
     `((defn ~'record-commandline-args!
