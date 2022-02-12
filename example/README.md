@@ -12,7 +12,7 @@ Sections:<br/>
 <em>Example</em> is a relatively simple MASON model written in Clojure
 using the masonclj library.  
 
-Although Example does nothing but cause little triangles to run around
+Although Example does nothing but cause little circles to run around
 on a hexagonal grid, some of the code is a little more complicated
 than it needs to be.  I'm not sure whether this is ideal, but I also
 want to make available a full-fledged illustration of a MASON model using and
