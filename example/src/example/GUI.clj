@@ -129,9 +129,9 @@
     (reset! (:display gui-config) display)
     (reset! (:display-frame gui-config) display-frame)
     ;; Attach layers to display; later layers will be on top, and can hide earlier ones:
-    (attach-portrayals! display [[hexagonal-bg-field-portrayal "west bg"]    ; background pattern, not required
-                                      [snipe-field-portrayal "west snipes"]] ; snipes have to be on top
-                        0 0 width height)))
+    (attach-portrayals! display [[hexagonal-bg-field-portrayal "bg"] ; background pattern, not required
+                                 [snipe-field-portrayal "snipes"]]   ; snipes have to be on top
+				 0 0 width height)))
 
 (defn -start
   "Function run by pause and go buttons when starting from fully stopped state."
@@ -148,7 +148,6 @@
     (.attach display portrayal label
              (Rectangle2D$Double. x y field-width field-height)))) ; note Clojure $ syntax for Java static nested classes
 
-;; IN the Example model, THERE IS NO east- anything.  It's all west-.
 (defn setup-portrayals
   "Set up MASON 'portrayals' of agents and background fields.  That is, associate 
   with a given entity one or more Java classes that will determine appearances in 
@@ -161,7 +160,7 @@
         sim-data @sim-data$
         rng (.random sim)         ; a MersenneTwisterFast PRNG provided by MASON
         popenv (:popenv sim-data) ; In the pasta model this is more complicated
-        west (:west popenv)
+        env (:env popenv)
         max-energy (:max-energy sim-data)
         display @(:display gui-config)
         hexagonal-bg-field-portrayal (:hexagonal-bg-field-portrayal gui-config)
@@ -174,14 +173,14 @@
                                      (proxy-super draw snipe graphics (DrawInfo2D. info (* 0.75 org-offset) (* 0.55 org-offset)))))) ; center in cell
         snipe-field-portrayal (:snipe-field-portrayal gui-config)] ; appearance of the field on which snipes run around
     (.setField hexagonal-bg-field-portrayal (ObjectGrid2D. (:env-width sim-data) (:env-height sim-data))) ; dimensions of background grid
-    (.setField snipe-field-portrayal (:snipe-field west))
+    (.setField snipe-field-portrayal (:snipe-field env))
     (.setPortrayalForNull hexagonal-bg-field-portrayal (HexagonalPortrayal2D. (Color. 255 255 255) 0.90)) ; show patches at smaller size so borders show
     (.setPortrayalForClass snipe-field-portrayal example.snipe.Snipe snipe-portrayal)
     (.scheduleRepeatingImmediatelyAfter this-gui ; this stuff is going to happen on every timestep as a result:
                                         (reify Steppable 
                                           (step [this sim-state]
-                                            (let [{:keys [west]} (:popenv @sim-data$)]
-                                              (.setField snipe-field-portrayal (:snipe-field west))))))
+                                            (let [{:keys [env]} (:popenv @sim-data$)]
+                                              (.setField snipe-field-portrayal (:snipe-field env))))))
     ;; set up display:
     (doto display
           (.reset)

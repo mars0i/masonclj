@@ -1,4 +1,4 @@
-;; This software is copyright 2016, 2017, 2018, 2019 by Marshall Abrams, 
+;; This software is copyright 2016, 2017, 2018, 2019, 2022 by Marshall Abrams, 
 ;; and is distributed under the Gnu General Public License version 3.0 
 ;; as specified in the the file LICENSE.
 
@@ -6,7 +6,6 @@
 
 (ns example.popenv
   (:require [example.snipe :as sn]
-            ;[example.mush :as mu]
             [utils.random :as ran]
             [utils.random-utils :as ranu]
             [clojure.math.numeric-tower :as nmath])
@@ -24,29 +23,27 @@
 ;(use '[clojure.pprint]) ; DEBUG
 
 (declare make-popenv next-popenv organism-setter 
-         add-organism-to-rand-loc!  ;add-mush!  maybe-add-mush! add-mushs! 
-         move-snipes move-snipe!  choose-next-loc ;perceive-mushroom 
+         add-organism-to-rand-loc!
+         move-snipes move-snipe!  choose-next-loc
          add-to-energy eat-if-appetizing snipes-eat snipes-die snipes-reproduce
          cull-snipes cull-snipes-to-max age-snipes excess-snipes snipes-in-env 
          obey-carrying-capacity add-snipes! add-snipes-to-min)
-
-;; IN the Example model, THERE IS NO east- anything.  It's all west-.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TOP LEVEL FUNCTIONS
 
 (defrecord Env [snipe-field])  ; snipe-field is an ObjectGrid2D
 
-(defrecord PopEnv [west snipe-map curr-snipe-id$]) ; two Envs, and map from ids to snipes
+(defrecord PopEnv [env snipe-map curr-snipe-id$]) ; an env and a map from ids to snipes
 
 (defn make-env
-  "Returns new Env with mushs and snipes.  env-key is :west or :east."
-  [rng cfg-data$ env-key curr-snipe-id$]
+  "Returns new Env with snipes."
+  [rng cfg-data$ curr-snipe-id$]
   (let [cfg-data @cfg-data$
         {:keys [env-width env-height]} cfg-data
         snipe-field (ObjectGrid2D. env-width env-height)]
     (.clear snipe-field)
-    (add-snipes! rng cfg-data$ snipe-field env-key (:num-snipes cfg-data) sn/make-rand-snipe curr-snipe-id$)
+    (add-snipes! rng cfg-data$ snipe-field (:num-snipes cfg-data) sn/make-rand-snipe curr-snipe-id$)
     (Env. snipe-field)))
 
 (defn make-snipe-map
@@ -58,9 +55,9 @@
 (defn make-popenv
   [rng cfg-data$]
   (let [curr-snipe-id$ (atom 0)
-        west (make-env rng cfg-data$ :west curr-snipe-id$)]
-    (PopEnv. west 
-             (make-snipe-map (:snipe-field west))
+        env (make-env rng cfg-data$ curr-snipe-id$)]
+    (PopEnv. env 
+             (make-snipe-map (:snipe-field env))
              curr-snipe-id$)))
 
 (defn next-snipe-id
@@ -68,12 +65,11 @@
   (swap! curr-snipe-id$ inc))
 
 (defn die-move-spawn
-  "In Example (unlike pasta), this only implements movement."
-  [rng cfg-data$ env env-key curr-snipe-id$]
-  ;; Note that order of bindings below is important.  e.g. we shouldn't worry
-  ;; about carrying capacity until energy-less snipes have been removed.
+  "In Example this only implements movement, but you could add birth and death.
+  (See the pasta repo for an illustration of how to do that.)"
+  [rng cfg-data$ env curr-snipe-id$]
   (let [cfg-data @cfg-data$
-        {:keys [snipe-field ]} env ; mush-field dead-snipes
+        {:keys [snipe-field ]} env
         snipe-field' (move-snipes rng cfg-data snipe-field)]     ; only the living get to move
     (Env. snipe-field')))
 
@@ -81,10 +77,10 @@
   "Given an rng, a simConfigData atom, and a Env, return a new Env for
   the next time step.  Snipes eat, reproduce, die, and move."
   [popenv rng cfg-data$]
-  (let [{:keys [west curr-snipe-id$]} popenv
-        west' (die-move-spawn rng cfg-data$ (assoc west :snipe-field (:snipe-field west)) :west curr-snipe-id$)
-        snipe-map' (make-snipe-map (:snipe-field west'))]
-    (PopEnv. west' snipe-map' curr-snipe-id$)))
+  (let [{:keys [env curr-snipe-id$]} popenv
+        env' (die-move-spawn rng cfg-data$ (assoc env :snipe-field (:snipe-field env)) curr-snipe-id$)
+        snipe-map' (make-snipe-map (:snipe-field env'))]
+    (PopEnv. env' snipe-map' curr-snipe-id$)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CREATE AND PLACE ORGANISMS
@@ -112,12 +108,12 @@
  "Add snipes to field at random locations.  snipe-num-key is a key for 
  the number of snipes of a given type to make, and snipe-maker is a function
  that will make an individual snipe."
- [rng cfg-data$ field env-key num-to-add snipe-maker curr-snipe-id$]
+ [rng cfg-data$ field num-to-add snipe-maker curr-snipe-id$]
  (let [cfg-data @cfg-data$
        {:keys [env-width env-height]} cfg-data]
   (dotimes [_ num-to-add] ; don't use lazy method--it may never be executed
    (add-organism-to-rand-loc! rng cfg-data field env-width env-height 
-    (organism-setter (partial snipe-maker rng cfg-data$ env-key (next-snipe-id curr-snipe-id$)))))))
+    (organism-setter (partial snipe-maker rng cfg-data$ (next-snipe-id curr-snipe-id$)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MOVEMENT

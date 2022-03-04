@@ -37,7 +37,7 @@
 ;; last argument, so that the function can be passed the first slice from
 ;; inside a method in the defrecord definition.
 
-(props/defagent Snipe [id energy env x y cfg-data$] 
+(props/defagent Snipe [id energy x y cfg-data$] 
   (partial get-curr-agent-slice cfg-data$)
   [[:energy    java.lang.Double "Energy doesn't do much in the example model."]
    [:x         java.lang.Integer "x coordinate in underlying grid"]
@@ -45,8 +45,8 @@
 
 (defn make-rand-snipe 
   "Create a snipe with random energy."
-  [rng cfg-data$ env new-id x y] ; fields out of order for use with partial in popenv.clj
-  (-->Snipe new-id (rand-energy rng @cfg-data$) env x y cfg-data$))
+  [rng cfg-data$ new-id x y] ; fields out of order for use with partial in popenv.clj
+  (-->Snipe new-id (rand-energy rng @cfg-data$) x y cfg-data$))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFAGENT-FREE VERSION:
@@ -55,13 +55,13 @@
 ;; with both of its arguments (since already inside the method definition.):
 
 (comment
-  (defrecord Snipe [circled$ id energy env x y cfg-data$]
+  (defrecord Snipe [circled$ id energy x y cfg-data$]
     Propertied
     (properties [first-slice]
       (props/make-properties
         (get-curr-agent-slice cfg-data$ first-slice) ; NOTE: get-curr-agent-slice with all args
         [:circled$ java.lang.Boolean "Field that indicates whether agent is circled in GUI."]
-        [:energy    java.lang.Double "Energy is what snipes get from mushrooms."]
+        [:energy    java.lang.Double "Energy is what snipes would get from food (if there was any)."]
         [:x         java.lang.Integer "x coordinate in underlying grid"]
         [:y         java.lang.Integer "y coordinate in underlying grid"]))
     Object
@@ -69,8 +69,8 @@
 
   (defn make-rand-snipe 
     "Create an snipe with random energy."
-    [rng cfg-data$ env new-id x y] ; fields out of order for use with partial in popenv.clj
-    (->Snipe (atom false) new-id (rand-energy rng @cfg-data$) env x y cfg-data$))
+    [rng cfg-data$ new-id x y] ; fields out of order for use with partial in popenv.clj
+    (->Snipe (atom false) new-id (rand-energy rng @cfg-data$) x y cfg-data$))
 )
 
 
