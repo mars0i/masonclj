@@ -35,19 +35,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TOP LEVEL FUNCTIONS
 
-(defrecord SubEnv [snipe-field])  ; snipe-field is an ObjectGrid2D
+(defrecord Env [snipe-field])  ; snipe-field is an ObjectGrid2D
 
-(defrecord PopEnv [west snipe-map curr-snipe-id$]) ; two SubEnvs, and map from ids to snipes
+(defrecord PopEnv [west snipe-map curr-snipe-id$]) ; two Envs, and map from ids to snipes
 
 (defn make-env
-  "Returns new SubEnv with mushs and snipes.  env-key is :west or :east."
+  "Returns new Env with mushs and snipes.  env-key is :west or :east."
   [rng cfg-data$ env-key curr-snipe-id$]
   (let [cfg-data @cfg-data$
         {:keys [env-width env-height]} cfg-data
         snipe-field (ObjectGrid2D. env-width env-height)]
     (.clear snipe-field)
     (add-snipes! rng cfg-data$ snipe-field env-key (:num-snipes cfg-data) sn/make-rand-snipe curr-snipe-id$)
-    (SubEnv. snipe-field)))
+    (Env. snipe-field)))
 
 (defn make-snipe-map
   "Make a map from snipe ids to snipes."
@@ -75,10 +75,10 @@
   (let [cfg-data @cfg-data$
         {:keys [snipe-field ]} env ; mush-field dead-snipes
         snipe-field' (move-snipes rng cfg-data snipe-field)]     ; only the living get to move
-    (SubEnv. snipe-field')))
+    (Env. snipe-field')))
 
 (defn next-popenv
-  "Given an rng, a simConfigData atom, and a SubEnv, return a new SubEnv for
+  "Given an rng, a simConfigData atom, and a Env, return a new Env for
   the next time step.  Snipes eat, reproduce, die, and move."
   [popenv rng cfg-data$]
   (let [{:keys [west curr-snipe-id$]} popenv
