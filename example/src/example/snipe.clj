@@ -37,7 +37,7 @@
 ;; last argument, so that the function can be passed the first slice from
 ;; inside a method in the defrecord definition.
 
-(props/defagent Snipe [id energy subenv x y cfg-data$] 
+(props/defagent Snipe [id energy env x y cfg-data$] 
   (partial get-curr-agent-slice cfg-data$)
   [[:energy    java.lang.Double "Energy doesn't do much in the example model."]
    [:x         java.lang.Integer "x coordinate in underlying grid"]
@@ -45,8 +45,8 @@
 
 (defn make-rand-snipe 
   "Create a snipe with random energy."
-  [rng cfg-data$ subenv new-id x y] ; fields out of order for use with partial in popenv.clj
-  (-->Snipe new-id (rand-energy rng @cfg-data$) subenv x y cfg-data$))
+  [rng cfg-data$ env new-id x y] ; fields out of order for use with partial in popenv.clj
+  (-->Snipe new-id (rand-energy rng @cfg-data$) env x y cfg-data$))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFAGENT-FREE VERSION:
@@ -55,7 +55,7 @@
 ;; with both of its arguments (since already inside the method definition.):
 
 (comment
-  (defrecord Snipe [circled$ id energy subenv x y cfg-data$]
+  (defrecord Snipe [circled$ id energy env x y cfg-data$]
     Propertied
     (properties [first-slice]
       (props/make-properties
@@ -69,8 +69,8 @@
 
   (defn make-rand-snipe 
     "Create an snipe with random energy."
-    [rng cfg-data$ subenv new-id x y] ; fields out of order for use with partial in popenv.clj
-    (->Snipe (atom false) new-id (rand-energy rng @cfg-data$) subenv x y cfg-data$))
+    [rng cfg-data$ env new-id x y] ; fields out of order for use with partial in popenv.clj
+    (->Snipe (atom false) new-id (rand-energy rng @cfg-data$) env x y cfg-data$))
 )
 
 
@@ -78,6 +78,6 @@
 (defn clean
   "Returns a copy of the snipe with its cfg.data$ atom removed so that
   it can be displayed in a repl without creating an infinite loop (since
-  cfg-data$ contains a subenv which contains a hash of all snipes)."
+  cfg-data$ contains an env which contains a hash of all snipes)."
   [snipe]
   (dissoc snipe :cfg-data$))

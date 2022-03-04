@@ -27,7 +27,7 @@
          add-organism-to-rand-loc!  ;add-mush!  maybe-add-mush! add-mushs! 
          move-snipes move-snipe!  choose-next-loc ;perceive-mushroom 
          add-to-energy eat-if-appetizing snipes-eat snipes-die snipes-reproduce
-         cull-snipes cull-snipes-to-max age-snipes excess-snipes snipes-in-subenv 
+         cull-snipes cull-snipes-to-max age-snipes excess-snipes snipes-in-env 
          obey-carrying-capacity add-snipes! add-snipes-to-min)
 
 ;; IN the Example model, THERE IS NO east- anything.  It's all west-.
@@ -39,26 +39,26 @@
 
 (defrecord PopEnv [west snipe-map curr-snipe-id$]) ; two SubEnvs, and map from ids to snipes
 
-(defn make-subenv
-  "Returns new SubEnv with mushs and snipes.  subenv-key is :west or :east."
-  [rng cfg-data$ subenv-key curr-snipe-id$]
+(defn make-env
+  "Returns new SubEnv with mushs and snipes.  env-key is :west or :east."
+  [rng cfg-data$ env-key curr-snipe-id$]
   (let [cfg-data @cfg-data$
         {:keys [env-width env-height]} cfg-data
         snipe-field (ObjectGrid2D. env-width env-height)]
     (.clear snipe-field)
-    (add-snipes! rng cfg-data$ snipe-field subenv-key (:num-snipes cfg-data) sn/make-rand-snipe curr-snipe-id$)
+    (add-snipes! rng cfg-data$ snipe-field env-key (:num-snipes cfg-data) sn/make-rand-snipe curr-snipe-id$)
     (SubEnv. snipe-field)))
 
 (defn make-snipe-map
   "Make a map from snipe ids to snipes."
-  [^ObjectGrid2D west-snipe-field] ; ^ObjectGrid2D east-snipe-field
+  [^ObjectGrid2D snipe-field] ; ^ObjectGrid2D east-snipe-field
   (into {} (map #(vector (:id %) %)) ; transducer w/ vector: may be slightly faster than alternatives
-        (concat (.elements west-snipe-field)))) ; btw cost compared to not constructing a snipes map is trivial
+        (concat (.elements snipe-field)))) ; btw cost compared to not constructing a snipes map is trivial
 
 (defn make-popenv
   [rng cfg-data$]
   (let [curr-snipe-id$ (atom 0)
-        west (make-subenv rng cfg-data$ :west curr-snipe-id$)]
+        west (make-env rng cfg-data$ :west curr-snipe-id$)]
     (PopEnv. west 
              (make-snipe-map (:snipe-field west))
              curr-snipe-id$)))
@@ -69,11 +69,11 @@
 
 (defn die-move-spawn
   "In Example (unlike pasta), this only implements movement."
-  [rng cfg-data$ subenv subenv-key curr-snipe-id$]
+  [rng cfg-data$ env env-key curr-snipe-id$]
   ;; Note that order of bindings below is important.  e.g. we shouldn't worry
   ;; about carrying capacity until energy-less snipes have been removed.
   (let [cfg-data @cfg-data$
-        {:keys [snipe-field ]} subenv ; mush-field dead-snipes
+        {:keys [snipe-field ]} env ; mush-field dead-snipes
         snipe-field' (move-snipes rng cfg-data snipe-field)]     ; only the living get to move
     (SubEnv. snipe-field')))
 
@@ -98,7 +98,7 @@
   "Create and add an organism to field using organism-setter!, which expects 
   x and y coordinates as arguments.  Looks for an empty location, so could
   be inefficient if a large proportion of cells in the field are filled.
-  If :left or :right is passed for subenv, only looks for locations in
+  If :left or :right is passed for env, only looks for locations in
   the left or right portion of the world."
   [rng cfg-data ^ObjectGrid2D field width height organism-setter!]
   (loop []
@@ -112,12 +112,12 @@
  "Add snipes to field at random locations.  snipe-num-key is a key for 
  the number of snipes of a given type to make, and snipe-maker is a function
  that will make an individual snipe."
- [rng cfg-data$ field subenv-key num-to-add snipe-maker curr-snipe-id$]
+ [rng cfg-data$ field env-key num-to-add snipe-maker curr-snipe-id$]
  (let [cfg-data @cfg-data$
        {:keys [env-width env-height]} cfg-data]
   (dotimes [_ num-to-add] ; don't use lazy method--it may never be executed
    (add-organism-to-rand-loc! rng cfg-data field env-width env-height 
-    (organism-setter (partial snipe-maker rng cfg-data$ subenv-key (next-snipe-id curr-snipe-id$)))))))
+    (organism-setter (partial snipe-maker rng cfg-data$ env-key (next-snipe-id curr-snipe-id$)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MOVEMENT
