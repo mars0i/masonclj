@@ -15,10 +15,10 @@
            [java.util Collection])) ; for a type hint below
 
 ;; Conventions:
-;; * Adding an apostrophe to a var name--e.g. making x into x-prime--means
+;; * Var names containing atoms have "$" as a suffix.
+;; * Adding an apostrophe to a var name, e.g. making x into x', means
 ;;   that this is the next value of that thing.  Sometimes this name will
 ;;   be reused repeatedly in a let as the value is sequentially updated.
-;; * Var names containing atoms have "$" as a suffix.
 
 ;(use '[clojure.pprint]) ; DEBUG
 
@@ -31,6 +31,12 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TOP LEVEL FUNCTIONS
+
+;; Note: The Env vs PopEnv distinction made sense in the original simulation
+;; repo, pasta, from which this one is derived.  Here it does no work,
+;; though, so I should merge the two defrecord classes.  However, that
+;; involves refactoring or removing several functions here, in Gui.clj,
+;; and perhaps elsewhere, so I haven't done it yet.
 
 (defrecord Env [snipe-field])  ; snipe-field is an ObjectGrid2D
 
